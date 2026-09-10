@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Vocabulary Lab | AI Lingua Lab</title>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background: #0b1519;
+      color: #f5f7f7;
+      min-height: 100vh;
+    }
+
+    nav {
+      height: 76px;
+      padding: 0 7%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      background: #0d191d;
+    }
+
+    .logo {
+      font-size: 22px;
+      font-weight: 800;
+      letter-spacing: 1px;
+      color: #35d6a0;
+    }
+
+    .back-link {
+      color: #9aabad;
+      text-decoration: none;
+      font-size: 14px;
+    }
+
+    .back-link:hover {
+      color: #35d6a0;
+    }
+
+    main {
+      width: 86%;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 55px 0 80px;
+    }
+
+    .header {
+      margin-bottom: 45px;
+    }
+
+    .eyebrow {
+      color: #35d6a0;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      margin-bottom: 14px;
+    }
+
+    h1 {
+      font-size: clamp(40px, 6vw, 64px);
+      line-height: 1;
+      letter-spacing: -2px;
+      margin-bottom: 18px;
+    }
+
+    .intro {
+      color: #9eadaf;
+      font-size: 16px;
+      line-height: 1.7;
+      max-width: 680px;
+    }
+
+    .overview {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: 22px;
+    }
+
+    .tag {
+      padding: 8px 13px;
+      border-radius: 30px;
+      background: #112a26;
+      border: 1px solid rgba(53,214,160,0.18);
+      color: #70e0ba;
+      font-size: 12px;
+    }
+
+    .section-heading {
+      display: flex;
+      justify-content: space-between;
+      align-items: end;
+      margin-bottom: 22px;
+    }
+
+    .section-heading h2 {
+      font-size: 24px;
+    }
+
+    .section-heading p {
+      color: #718185;
+      font-size: 13px;
+    }
+
+    .levels {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+
+    .level-card {
+      background: #101d21;
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 20px;
+      padding: 25px;
+      min-height: 190px;
+      position: relative;
+      transition: 0.2s;
+    }
+
+    .level-card.available {
+      cursor: pointer;
+    }
+
+    .level-card.available:hover {
+      transform: translateY(-4px);
+      border-color: rgba(53,214,160,0.45);
+    }
+
+    .level-card.locked {
+      opacity: 0.48;
+    }
+
+    .level-number {
+      color: #35d6a0;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      margin-bottom: 18px;
+    }
+
+    .level-icon {
+      font-size: 28px;
+      margin-bottom: 14px;
+    }
+
+    .level-card h3 {
+      font-size: 20px;
+      margin-bottom: 8px;
+    }
+
+    .level-card p {
+      color: #839296;
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    .status {
+      position: absolute;
+      top: 22px;
+      right: 22px;
+      font-size: 18px;
+    }
+
+    .progress-info {
+      margin-top: 14px;
+      color: #35d6a0;
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    .info-card {
+      margin-top: 35px;
+      padding: 24px;
+      border-radius: 18px;
+      border: 1px solid rgba(53,214,160,0.14);
+      background: #0f211e;
+    }
+
+    .info-card h3 {
+      font-size: 16px;
+      margin-bottom: 8px;
+    }
+
+    .info-card p {
+      color: #91a1a3;
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    footer {
+      text-align: center;
+      padding: 30px;
+      border-top: 1px solid rgba(255,255,255,0.07);
+      color: #617174;
+      font-size: 13px;
+    }
+
+    @media (max-width: 850px) {
+      .levels {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 560px) {
+      nav {
+        padding: 0 5%;
+      }
+
+      main {
+        width: 90%;
+      }
+
+      .levels {
+        grid-template-columns: 1fr;
+      }
+
+      .section-heading {
+        display: block;
+      }
+
+      .section-heading p {
+        margin-top: 7px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <nav>
+    <div class="logo">AI LINGUA LAB</div>
+
+    <a
+      href="student-dashboard.html"
+      class="back-link">
+      ← Dashboard
+    </a>
+  </nav>
+
+
+  <main>
+
+    <section class="header">
+
+      <div class="eyebrow">
+        VOCABULARY LAB
+      </div>
+
+      <h1>
+        Build your<br>
+        vocabulary.
+      </h1>
+
+      <p class="intro">
+        Progress through 15 levels of health-related
+        English vocabulary. Each level contains 15 questions
+        across diverse health and professional contexts.
+      </p>
+
+      <div class="overview">
+        <span class="tag">15 Levels</span>
+        <span class="tag">225 Questions</span>
+        <span class="tag">Mixed Health Contexts</span>
+        <span class="tag">15 Questions / Level</span>
+      </div>
+
+    </section>
+
+
+    <section>
+
+      <div class="section-heading">
+
+        <h2>Choose your level</h2>
+
+        <p>
+          Complete each level to progress.
+        </p>
+
+      </div>
+
+
+      <div class="levels" id="levelsContainer">
+        <!-- Levels generated by JavaScript -->
+      </div>
+
+
+      <div class="info-card">
+
+        <h3>
+          🧪 How the Vocabulary Lab works
+        </h3>
+
+        <p>
+          Each level contains 15 questions.
+          Your score is recorded after you complete
+          the experiment. Progression through the levels
+          is based on your actual learning results.
+        </p>
+
+      </div>
+
+    </section>
+
+  </main>
+
+
+  <footer>
+    AI LINGUA LAB — Experiment. Practise. Improve.
+  </footer>
+
+
+  <script>
+
+    const SUPABASE_URL =
+      "https://glwpjsnwdzufyiumxikk.supabase.co";
+
+
+    const SUPABASE_PUBLISHABLE_KEY =
+      "sb_publishable_Bbu_RSEmPsNUWjroJB7HUQ_Gonq02F8";
+
+
+    const supabaseClient =
+      window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_PUBLISHABLE_KEY
+      );
+
+
+    async function loadLevels() {
+
+      // Check login
+      const {
+        data: {
+          user
+        }
+      } = await supabaseClient.auth.getUser();
+
+
+      if (!user) {
+
+        window.location.href =
+          "login.html";
+
+        return;
+      }
+
+
+      // Get completed vocabulary levels
+      const {
+        data: results,
+        error
+      } = await supabaseClient
+        .from("learning_results")
+        .select("activity_type, score, total_questions")
+        .eq("user_id", user.id)
+        .like("activity_type", "vocabulary_level_%");
+
+
+      if (error) {
+
+        console.error(error);
+
+      }
+
+
+      const completedLevels = {};
+
+
+      if (results) {
+
+        results.forEach(result => {
+
+          const match =
+            result.activity_type.match(
+              /vocabulary_level_(\d+)/
+            );
+
+
+          if (match) {
+
+            const level =
+              Number(match[1]);
+
+
+            completedLevels[level] =
+              result;
+
+          }
+
+        });
+
+      }
+
+
+      const container =
+        document.getElementById(
+          "levelsContainer"
+        );
+
+
+      for (
+        let level = 1;
+        level <= 15;
+        level++
+      ) {
+
+        const previousResult =
+          completedLevels[level];
+
+
+        /*
+          Level 1 is available by default.
+
+          Other levels become available when
+          the previous level has been completed
+          with a passing score.
+        */
+
+        let available = false;
+
+
+        if (level === 1) {
+
+          available = true;
+
+        } else {
+
+          const previous =
+            completedLevels[level - 1];
+
+
+          if (
+            previous &&
+            previous.total_questions > 0 &&
+            (
+              previous.score /
+              previous.total_questions
+            ) >= 0.8
+          ) {
+
+            available = true;
+
+          }
+
+        }
+
+
+        const card =
+          document.createElement("div");
+
+
+        card.className =
+          "level-card " +
+          (available
+            ? "available"
+            : "locked");
+
+
+        let statusIcon;
+
+
+        if (previousResult) {
+
+          const percentage =
+            Math.round(
+              (
+                previousResult.score /
+                previousResult.total_questions
+              ) * 100
+            );
+
+
+          statusIcon =
+            percentage >= 80
+              ? "✓"
+              : "↻";
+
+
+          card.innerHTML = `
+            <div class="level-number">
+              LEVEL ${level}
+            </div>
+
+            <div class="level-icon">
+              ${percentage >= 80 ? "🏆" : "🧪"}
+            </div>
+
+            <h3>
+              Level ${level}
+            </h3>
+
+            <p>
+              15 vocabulary questions
+            </p>
+
+            <div class="progress-info">
+              ${previousResult.score}/
+              ${previousResult.total_questions}
+              · ${percentage}%
+            </div>
+
+            <div class="status">
+              ${statusIcon}
+            </div>
+          `;
+
+        } else {
+
+          card.innerHTML = `
+            <div class="level-number">
+              LEVEL ${level}
+            </div>
+
+            <div class="level-icon">
+              ${available ? "🧪" : "🔒"}
+            </div>
+
+            <h3>
+              Level ${level}
+            </h3>
+
+            <p>
+              15 vocabulary questions
+            </p>
+
+            <div class="status">
+              ${available ? "→" : "🔒"}
+            </div>
+          `;
+
+        }
+
+
+        if (available) {
+
+          card.addEventListener(
+            "click",
+            function() {
+
+              window.location.href =
+                `vocabulary-level.html?level=${level}`;
+
+            }
+          );
+
+        }
+
+
+        container.appendChild(card);
+
+      }
+
+    }
+
+
+    loadLevels();
+
+  </script>
+
+</body>
+</html>
