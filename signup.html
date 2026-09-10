@@ -847,18 +847,22 @@
         }
 
 
-        // Success
+       // Success
 
-        message.className =
-          "message success";
+message.className =
+  "message success";
 
-        message.textContent =
-          "Account created! Please check your email to confirm your account.";
+message.textContent =
+  "Account created successfully! You can now log in.";
 
-        signupBtn.disabled = false;
+signupBtn.disabled = false;
 
-        signupBtn.textContent =
-          "Account Created";
+signupBtn.textContent =
+  "Account Created";
+
+setTimeout(() => {
+  window.location.href = "login.html";
+}, 1500);
 
       }
 
