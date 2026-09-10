@@ -22,8 +22,6 @@
       min-height: 100vh;
     }
 
-    /* NAVBAR */
-
     nav {
       height: 76px;
       padding: 0 7%;
@@ -68,8 +66,6 @@
       color: #07120f;
     }
 
-    /* MAIN */
-
     main {
       width: 86%;
       max-width: 1200px;
@@ -103,8 +99,6 @@
       max-width: 650px;
     }
 
-    /* SECTION */
-
     .section-title {
       display: flex;
       justify-content: space-between;
@@ -120,8 +114,6 @@
       color: #819194;
       font-size: 14px;
     }
-
-    /* LAB GRID */
 
     .lab-grid {
       display: grid;
@@ -167,8 +159,6 @@
       font-size: 13px;
       line-height: 1.5;
     }
-
-    /* PROGRESS */
 
     .progress-card {
       background: #101d21;
@@ -217,8 +207,6 @@
       font-size: 14px;
       line-height: 1.6;
     }
-
-    /* EXPERIMENT */
 
     .experiment-card {
       background: linear-gradient(
@@ -273,8 +261,6 @@
       opacity: 0.9;
     }
 
-    /* FOOTER */
-
     footer {
       text-align: center;
       padding: 30px;
@@ -282,8 +268,6 @@
       color: #617174;
       font-size: 13px;
     }
-
-    /* RESPONSIVE */
 
     @media (max-width: 1000px) {
       .lab-grid {
@@ -334,8 +318,6 @@
 
 <body>
 
-  <!-- NAVIGATION -->
-
   <nav>
     <div class="logo">AI LINGUA LAB</div>
 
@@ -350,12 +332,7 @@
     </div>
   </nav>
 
-
-  <!-- MAIN CONTENT -->
-
   <main>
-
-    <!-- WELCOME -->
 
     <section class="welcome">
 
@@ -377,8 +354,6 @@
     </section>
 
 
-    <!-- LEARNING LAB -->
-
     <section>
 
       <div class="section-title">
@@ -388,7 +363,6 @@
 
         <p>Choose what you want to practise.</p>
       </div>
-
 
       <div class="lab-grid">
 
@@ -400,7 +374,6 @@
           </p>
         </div>
 
-
         <div class="lab-card">
           <div class="lab-icon">📖</div>
           <h3>Reading</h3>
@@ -408,7 +381,6 @@
             Explore texts and develop reading comprehension.
           </p>
         </div>
-
 
         <div class="lab-card">
           <div class="lab-icon">🎧</div>
@@ -418,7 +390,6 @@
           </p>
         </div>
 
-
         <div class="lab-card">
           <div class="lab-icon">🎤</div>
           <h3>Speaking</h3>
@@ -426,7 +397,6 @@
             Practise speaking and receive AI feedback.
           </p>
         </div>
-
 
         <div class="lab-card">
           <div class="lab-icon">✍️</div>
@@ -441,8 +411,6 @@
     </section>
 
 
-    <!-- PROGRESS -->
-
     <section class="progress-card">
 
       <div class="progress-header">
@@ -454,7 +422,6 @@
         </span>
 
       </div>
-
 
       <div class="empty-progress">
 
@@ -476,8 +443,6 @@
     </section>
 
 
-    <!-- TODAY'S EXPERIMENT -->
-
     <section class="experiment-card">
 
       <div class="experiment-content">
@@ -498,7 +463,6 @@
 
       </div>
 
-
       <button class="experiment-button">
         Start Experiment
       </button>
@@ -508,14 +472,10 @@
   </main>
 
 
-  <!-- FOOTER -->
-
   <footer>
     AI LINGUA LAB — Experiment. Practise. Improve.
   </footer>
 
-
-  <!-- SUPABASE -->
 
   <script>
 
@@ -523,7 +483,7 @@
       "https://glwpjsnwdzufyiumxikk.supabase.co";
 
     const SUPABASE_PUBLISHABLE_KEY =
-      "sb_publishable_Bbu_RSEmPsNUWjroJB7HUQ_Gonq02F8";
+      "Psb_publishable_Bbu_RSEmPsNUWjroJB7HUQ_Gonq02F8";
 
 
     const supabaseClient =
@@ -533,53 +493,83 @@
       );
 
 
-    async function loadStudent() {
+    async function loadStudentProfile() {
 
+      // Check current login session
       const {
         data: {
           user
         },
-        error
+        error: userError
       } = await supabaseClient.auth.getUser();
 
 
-      if (error || !user) {
+      if (userError || !user) {
 
-        window.location.href =
-          "login.html";
+        window.location.href = "login.html";
 
         return;
       }
 
 
-      const fullName =
-        user.user_metadata?.full_name;
+      // Get profile from database
+      const {
+        data: profile,
+        error: profileError
+      } = await supabaseClient
+        .from("profiles")
+        .select("full_name, email, role")
+        .eq("id", user.id)
+        .single();
 
 
-      const email =
-        user.email;
+      if (profileError) {
 
+        console.error(
+          "Profile error:",
+          profileError
+        );
 
-      if (fullName) {
+        alert(
+          "We could not load your profile."
+        );
 
-        document.getElementById(
-          "studentName"
-        ).textContent = fullName;
-
+        return;
       }
 
 
-      if (email) {
+      // Security check:
+      // This page is for students only.
+      if (profile.role !== "student") {
 
-        document.getElementById(
-          "studentEmail"
-        ).textContent = email;
+        alert(
+          "This dashboard is for student accounts."
+        );
 
+        await supabaseClient.auth.signOut();
+
+        window.location.href = "login.html";
+
+        return;
       }
+
+
+      // Display profile data
+      document.getElementById(
+        "studentName"
+      ).textContent =
+        profile.full_name || "Student";
+
+
+      document.getElementById(
+        "studentEmail"
+      ).textContent =
+        profile.email || user.email || "Student";
 
     }
 
 
+    // Sign out
     document.getElementById(
       "logoutBtn"
     ).addEventListener(
@@ -608,7 +598,7 @@
     );
 
 
-    loadStudent();
+    loadStudentProfile();
 
   </script>
 
