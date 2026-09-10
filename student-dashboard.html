@@ -588,47 +588,69 @@
     /* =====================================
        LOAD STUDENT
        ===================================== */
+async function loadStudentProfile() {
 
-    async function loadStudentProfile() {
+  console.log("Checking Supabase session...");
 
-      try {
+  const {
+    data: { session },
+    error: sessionError
+  } = await supabaseClient.auth.getSession();
 
-        const {
-          data,
-          error
-        } =
-          await supabaseClient.auth.getSession();
+  console.log("Session:", session);
+  console.log("Session error:", sessionError);
 
+  if (sessionError) {
+    console.error("Session error:", sessionError);
+    alert("Session error: " + sessionError.message);
+    return;
+  }
 
-        if (error) {
+  if (!session) {
+    console.log("No active session.");
+    alert("No active login session. Please login again.");
+    window.location.href = "login.html";
+    return;
+  }
 
-          console.error(
-            "Session error:",
-            error
-          );
+  const user = session.user;
 
-          window.location.href =
-            "login.html";
+  console.log("Logged in user:", user.email);
+  console.log("User ID:", user.id);
 
-          return;
-        }
+  const {
+    data: profile,
+    error: profileError
+  } = await supabaseClient
+    .from("profiles")
+    .select("full_name, email, role")
+    .eq("id", user.id)
+    .single();
 
+  console.log("Profile:", profile);
+  console.log("Profile error:", profileError);
 
-        const session =
-          data.session;
+  if (profileError) {
+    console.error("Profile error:", profileError);
+    alert("Profile error: " + profileError.message);
+    return;
+  }
 
+  if (profile.role !== "student") {
+    alert("This dashboard is for student accounts.");
+    await supabaseClient.auth.signOut();
+    window.location.href = "login.html";
+    return;
+  }
 
-        if (!session) {
+  document.getElementById("studentName").textContent =
+    profile.full_name || "Student";
 
-          window.location.href =
-            "login.html";
+  document.getElementById("studentEmail").textContent =
+    profile.email || user.email || "Student";
 
-          return;
-        }
-
-
-        const user =
-          session.user;
+  console.log("Student dashboard loaded successfully.");
+}
 
 
         /* ===============================
