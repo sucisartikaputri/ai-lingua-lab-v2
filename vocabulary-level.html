@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <title>Vocabulary Level | AI Lingua Lab</title>
 
@@ -44,7 +44,6 @@
     .back-link {
       color: #9eb1b7;
       font-size: 18px;
-      transition: 0.2s;
     }
 
     .back-link:hover {
@@ -74,6 +73,10 @@
       letter-spacing: -2px;
     }
 
+    .level-number {
+      color: #43e0b1;
+    }
+
     .subtitle {
       color: #9eb1b7;
       font-size: 19px;
@@ -87,10 +90,6 @@
       align-items: flex-end;
       gap: 30px;
       margin-bottom: 45px;
-    }
-
-    .level-number {
-      color: #43e0b1;
     }
 
     .question-info {
@@ -115,12 +114,12 @@
       transition: width 0.3s ease;
     }
 
-    .quiz-card {
+    .quiz-card,
+    .result-card {
       background: #0d1b1f;
       border: 1px solid #1e3034;
       border-radius: 24px;
       padding: 45px;
-      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
     }
 
     .field-label {
@@ -158,10 +157,10 @@
       padding: 20px 22px;
       font-size: 17px;
       cursor: pointer;
-      transition: 0.2s;
       display: flex;
       align-items: center;
       gap: 15px;
+      transition: 0.2s;
     }
 
     .option:hover {
@@ -199,7 +198,7 @@
       gap: 15px;
     }
 
-    button.nav-btn {
+    .nav-btn {
       border: none;
       border-radius: 12px;
       padding: 14px 25px;
@@ -210,36 +209,25 @@
 
     .previous-btn {
       background: transparent;
-      border: 1px solid #314349 !important;
+      border: 1px solid #314349;
       color: #a7b9bd;
     }
 
-    .previous-btn:hover {
-      border-color: #43e0b1 !important;
-      color: #43e0b1;
-    }
-
     .next-btn,
-    .submit-btn {
+    .submit-btn,
+    .primary-action {
       background: #43e0b1;
       color: #061311;
     }
 
-    .next-btn:hover,
-    .submit-btn:hover {
-      transform: translateY(-1px);
-    }
-
-    .next-btn:disabled,
-    .submit-btn:disabled {
+    .nav-btn:disabled {
       opacity: 0.45;
       cursor: not-allowed;
-      transform: none;
     }
 
     .loading {
       text-align: center;
-      padding: 80px 20px;
+      padding: 100px 20px;
       color: #9eb1b7;
       font-size: 18px;
     }
@@ -248,16 +236,26 @@
       background: #241618;
       border: 1px solid #63383d;
       color: #f0b8bd;
-      padding: 25px;
-      border-radius: 15px;
-      line-height: 1.6;
+      padding: 28px;
+      border-radius: 16px;
+      line-height: 1.7;
+    }
+
+    .error-title {
+      font-size: 20px;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+
+    .error-detail {
+      font-family: monospace;
+      font-size: 14px;
+      white-space: pre-wrap;
+      word-break: break-word;
+      color: #ffd5d8;
     }
 
     .result-card {
-      background: #0d1b1f;
-      border: 1px solid #1e3034;
-      border-radius: 24px;
-      padding: 55px 45px;
       text-align: center;
     }
 
@@ -284,7 +282,7 @@
     }
 
     .result-message {
-      max-width: 600px;
+      max-width: 650px;
       margin: 0 auto 35px;
       font-size: 22px;
       line-height: 1.5;
@@ -293,7 +291,7 @@
     .result-details {
       display: flex;
       justify-content: center;
-      gap: 45px;
+      gap: 55px;
       margin-bottom: 40px;
     }
 
@@ -320,21 +318,14 @@
       border-radius: 12px;
       font-weight: 700;
       font-size: 16px;
-    }
-
-    .primary-action {
-      background: #43e0b1;
-      color: #061311;
+      border: none;
+      cursor: pointer;
     }
 
     .secondary-action {
       border: 1px solid #314349;
       color: #a7b9bd;
-    }
-
-    .secondary-action:hover {
-      border-color: #43e0b1;
-      color: #43e0b1;
+      background: transparent;
     }
 
     .hidden {
@@ -342,6 +333,7 @@
     }
 
     @media (max-width: 700px) {
+
       .navbar {
         height: 85px;
         padding: 0 22px;
@@ -369,7 +361,8 @@
         margin-bottom: 30px;
       }
 
-      .quiz-card {
+      .quiz-card,
+      .result-card {
         padding: 28px 20px;
       }
 
@@ -387,16 +380,12 @@
         align-items: stretch;
       }
 
-      button.nav-btn {
+      .nav-btn {
         width: 100%;
       }
 
       .score {
         font-size: 70px;
-      }
-
-      .result-card {
-        padding: 40px 22px;
       }
 
       .result-details {
@@ -410,8 +399,12 @@
 
   <nav class="navbar">
     <div class="logo">AI LINGUA LAB</div>
-    <a href="vocabulary.html" class="back-link">← Vocabulary Lab</a>
+
+    <a href="vocabulary.html" class="back-link">
+      ← Vocabulary Lab
+    </a>
   </nav>
+
 
   <main class="container">
 
@@ -420,8 +413,18 @@
       Loading your experiment...
     </div>
 
+
     <!-- ERROR -->
-    <div id="errorBox" class="error-box hidden"></div>
+    <div id="errorBox" class="error-box hidden">
+
+      <div class="error-title">
+        We couldn't load this experiment.
+      </div>
+
+      <div id="errorDetail" class="error-detail"></div>
+
+    </div>
+
 
     <!-- QUIZ -->
     <section id="quizSection" class="hidden">
@@ -429,64 +432,96 @@
       <div class="top-row">
 
         <div>
-          <div class="eyebrow">Vocabulary Experiment</div>
+
+          <div class="eyebrow">
+            Vocabulary Experiment
+          </div>
 
           <h1>
-            Level <span id="levelNumber" class="level-number">1</span>
+            Level
+            <span
+              id="levelNumber"
+              class="level-number"
+            >
+              1
+            </span>
           </h1>
 
           <p class="subtitle">
-            Test your understanding of health-related English vocabulary.
+            Test your understanding of health-related
+            English vocabulary.
           </p>
+
         </div>
 
         <div class="question-info">
-          Question <span id="currentQuestionNumber">1</span>
+          Question
+          <span id="currentQuestionNumber">1</span>
           of 15
         </div>
 
       </div>
 
+
       <div class="progress-track">
-        <div id="progressBar" class="progress-bar"></div>
+
+        <div
+          id="progressBar"
+          class="progress-bar"
+        ></div>
+
       </div>
+
 
       <div class="quiz-card">
 
-        <div id="fieldLabel" class="field-label">
+        <div
+          id="fieldLabel"
+          class="field-label"
+        >
           Health
         </div>
 
-        <div id="questionText" class="question">
+
+        <div
+          id="questionText"
+          class="question"
+        >
           Loading question...
         </div>
 
-        <div id="optionsContainer" class="options">
-        </div>
+
+        <div
+          id="optionsContainer"
+          class="options"
+        ></div>
+
 
         <div class="navigation">
 
           <button
             id="previousBtn"
             class="nav-btn previous-btn"
-            onclick="previousQuestion()"
+            type="button"
           >
             ← Previous
           </button>
 
+
           <button
             id="nextBtn"
             class="nav-btn next-btn"
-            onclick="nextQuestion()"
+            type="button"
             disabled
           >
             Next →
           </button>
 
+
           <button
             id="submitBtn"
             class="nav-btn submit-btn hidden"
-            onclick="submitQuiz()"
+            type="button"
             disabled
           >
             Submit Experiment
@@ -498,8 +533,12 @@
 
     </section>
 
+
     <!-- RESULT -->
-    <section id="resultSection" class="hidden">
+    <section
+      id="resultSection"
+      class="hidden"
+    >
 
       <div class="result-card">
 
@@ -507,17 +546,30 @@
           Experiment Complete
         </div>
 
-        <div id="scoreDisplay" class="score">
+
+        <div
+          id="scoreDisplay"
+          class="score"
+        >
           0%
         </div>
 
-        <div id="scoreText" class="score-text">
+
+        <div
+          id="scoreText"
+          class="score-text"
+        >
           0 out of 15 correct
         </div>
 
-        <div id="resultMessage" class="result-message">
+
+        <div
+          id="resultMessage"
+          class="result-message"
+        >
           Your result is ready.
         </div>
+
 
         <div class="result-details">
 
@@ -538,6 +590,7 @@
 
         </div>
 
+
         <div class="result-actions">
 
           <a
@@ -547,12 +600,13 @@
             ← Back to Levels
           </a>
 
+
           <button
             id="retryBtn"
             class="result-action primary-action"
-            onclick="retryLevel()"
+            type="button"
           >
-            Try Again
+            Retry Level
           </button>
 
         </div>
@@ -567,10 +621,11 @@
   <!-- SUPABASE -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
+
   <script>
 
     /* =========================================
-       SUPABASE CONFIGURATION
+       SUPABASE
        ========================================= */
 
     const SUPABASE_URL =
@@ -587,27 +642,86 @@
 
 
     /* =========================================
-       GLOBAL VARIABLES
+       STATE
        ========================================= */
 
-    const urlParams =
-      new URLSearchParams(window.location.search);
+    const params =
+      new URLSearchParams(
+        window.location.search
+      );
 
     const level =
-      parseInt(urlParams.get("level")) || 1;
+      Number(params.get("level")) || 1;
 
     let questions = [];
 
-    let currentQuestion = 0;
+    let currentQuestionIndex = 0;
 
-    let userAnswers = {};
+    let answers = {};
 
     let currentUser = null;
 
 
     /* =========================================
-       START
+       ELEMENTS
        ========================================= */
+
+    const loading =
+      document.getElementById("loading");
+
+    const errorBox =
+      document.getElementById("errorBox");
+
+    const errorDetail =
+      document.getElementById("errorDetail");
+
+    const quizSection =
+      document.getElementById("quizSection");
+
+    const resultSection =
+      document.getElementById("resultSection");
+
+    const levelNumber =
+      document.getElementById("levelNumber");
+
+    const currentQuestionNumber =
+      document.getElementById(
+        "currentQuestionNumber"
+      );
+
+    const progressBar =
+      document.getElementById("progressBar");
+
+    const fieldLabel =
+      document.getElementById("fieldLabel");
+
+    const questionText =
+      document.getElementById("questionText");
+
+    const optionsContainer =
+      document.getElementById(
+        "optionsContainer"
+      );
+
+    const previousBtn =
+      document.getElementById("previousBtn");
+
+    const nextBtn =
+      document.getElementById("nextBtn");
+
+    const submitBtn =
+      document.getElementById("submitBtn");
+
+    const retryBtn =
+      document.getElementById("retryBtn");
+
+
+    /* =========================================
+       INITIALIZE
+       ========================================= */
+
+    levelNumber.textContent = level;
+
 
     document.addEventListener(
       "DOMContentLoaded",
@@ -617,80 +731,130 @@
 
     async function initialize() {
 
-      document.getElementById("levelNumber").textContent = level;
-
       try {
 
-        /* CHECK LOGIN */
+        if (
+          level < 1 ||
+          level > 15
+        ) {
+
+          throw new Error(
+            "Invalid vocabulary level. Please open Level 1 from the Vocabulary Lab."
+          );
+
+        }
+
+
+        /* ==============================
+           CHECK SUPABASE CLIENT
+           ============================== */
+
+        if (
+          !window.supabase ||
+          !supabaseClient
+        ) {
+
+          throw new Error(
+            "Supabase could not be initialized."
+          );
+
+        }
+
+
+        /* ==============================
+           CHECK LOGIN
+           ============================== */
 
         const {
           data: {
             user
           },
           error: authError
-        } = await supabaseClient.auth.getUser();
+        } =
+          await supabaseClient.auth.getUser();
 
-        if (authError || !user) {
 
-          window.location.href = "login.html";
-          return;
+        if (authError) {
+
+          throw new Error(
+            "Authentication error: " +
+            authError.message
+          );
+
         }
+
+
+        if (!user) {
+
+          window.location.href =
+            "login.html";
+
+          return;
+
+        }
+
 
         currentUser = user;
 
 
-        /* CHECK VALID LEVEL */
-
-        if (level < 1 || level > 15) {
-
-          showError(
-            "This vocabulary level does not exist."
-          );
-
-          return;
-        }
-
-
-        /* CHECK PREVIOUS LEVEL */
+        /* ==============================
+           CHECK PREVIOUS LEVEL
+           ============================== */
 
         if (level > 1) {
 
+          const previousLevel =
+            level - 1;
+
+
           const {
-            data: previousResult,
+            data: previousResults,
             error: previousError
-          } = await supabaseClient
-            .from("learning_results")
-            .select(
-              "score, total_questions"
-            )
-            .eq(
-              "user_id",
-              user.id
-            )
-            .eq(
-              "activity_type",
-              `vocabulary_level_${level - 1}`
-            )
-            .order(
-              "completed_at",
-              {
-                ascending: false
-              }
-            )
-            .limit(1)
-            .maybeSingle();
+          } =
+            await supabaseClient
+              .from("learning_results")
+              .select(
+                "score, total_questions, completed_at"
+              )
+              .eq(
+                "user_id",
+                user.id
+              )
+              .eq(
+                "activity_type",
+                `vocabulary_level_${previousLevel}`
+              )
+              .order(
+                "completed_at",
+                {
+                  ascending: false
+                }
+              )
+              .limit(1);
 
 
           if (previousError) {
-            console.error(previousError);
+
+            throw new Error(
+              "Learning results error: " +
+              previousError.message
+            );
+
           }
+
+
+          const previousResult =
+            previousResults &&
+            previousResults.length > 0
+              ? previousResults[0]
+              : null;
 
 
           const previousPercentage =
             previousResult &&
-            previousResult.total_questions > 0
-              ? previousResult.score /
-                previousResult.total_questions
+            Number(previousResult.total_questions) > 0
+              ? Number(previousResult.score) /
+                Number(previousResult.total_questions)
               : 0;
 
 
@@ -703,70 +867,115 @@
               "vocabulary.html";
 
             return;
+
           }
+
         }
 
 
-        /* LOAD QUESTIONS */
+        /* ==============================
+           LOAD QUESTIONS
+           ============================== */
 
         const {
           data,
-          error
-        } = await supabaseClient
-          .from("vocabulary_questions")
-          .select(
-            "id, level, field, question, option_a, option_b, option_c, option_d, correct_answer, explanation"
-          )
-          .eq(
-            "level",
-            level
-          )
-          .order(
-            "id",
-            {
-              ascending: true
-            }
+          error: questionError
+        } =
+          await supabaseClient
+            .from("vocabulary_questions")
+            .select(
+              "id, level, field, question, option_a, option_b, option_c, option_d, correct_answer, explanation"
+            )
+            .eq(
+              "level",
+              level
+            )
+            .order(
+              "id",
+              {
+                ascending: true
+              }
+            );
+
+
+        if (questionError) {
+
+          throw new Error(
+            "Vocabulary questions error: " +
+            questionError.message
           );
 
-
-        if (error) {
-          throw error;
         }
 
 
-        if (!data || data.length !== 15) {
+        if (!data) {
 
-          showError(
-            `Level ${level} should contain 15 questions, but ${data ? data.length : 0} questions were found.`
+          throw new Error(
+            "No question data was returned from Supabase."
           );
 
-          return;
+        }
+
+
+        if (data.length === 0) {
+
+          throw new Error(
+            `Level ${level} has no questions in the database.`
+          );
+
+        }
+
+
+        if (data.length !== 15) {
+
+          throw new Error(
+            `Level ${level} contains ${data.length} questions. It should contain exactly 15 questions.`
+          );
+
         }
 
 
         questions = data;
 
 
-        /* SHOW QUIZ */
+        /* ==============================
+           SHOW QUIZ
+           ============================== */
 
-        document
-          .getElementById("loading")
-          .classList.add("hidden");
+        loading.classList.add("hidden");
 
-        document
-          .getElementById("quizSection")
-          .classList.remove("hidden");
+        quizSection.classList.remove(
+          "hidden"
+        );
+
 
         renderQuestion();
 
+
       } catch (error) {
 
-        console.error(error);
-
-        showError(
-          "Something went wrong while loading this experiment. Please try again."
+        console.error(
+          "AI Lingua Lab Vocabulary Error:",
+          error
         );
+
+
+        loading.classList.add(
+          "hidden"
+        );
+
+
+        errorBox.classList.remove(
+          "hidden"
+        );
+
+
+        errorDetail.textContent =
+          error.message ||
+          "Unknown error.";
+
       }
+
     }
 
 
@@ -777,25 +986,25 @@
     function renderQuestion() {
 
       const question =
-        questions[currentQuestion];
+        questions[
+          currentQuestionIndex
+        ];
 
 
-      document.getElementById(
-        "currentQuestionNumber"
-      ).textContent =
-        currentQuestion + 1;
+      currentQuestionNumber.textContent =
+        currentQuestionIndex + 1;
 
 
-      document.getElementById(
-        "fieldLabel"
-      ).textContent =
+      fieldLabel.textContent =
         question.field;
 
 
-      document.getElementById(
-        "questionText"
-      ).textContent =
+      questionText.textContent =
         question.question;
+
+
+      optionsContainer.innerHTML =
+        "";
 
 
       const options = [
@@ -823,95 +1032,113 @@
       ];
 
 
-      const container =
-        document.getElementById(
-          "optionsContainer"
-        );
+      options.forEach(
+        option => {
 
-      container.innerHTML = "";
-
-
-      options.forEach(option => {
-
-        const button =
-          document.createElement("button");
-
-        button.className = "option";
-
-        button.type = "button";
-
-        button.innerHTML = `
-          <span class="option-letter">
-            ${option.letter}
-          </span>
-          <span>
-            ${escapeHTML(option.text)}
-          </span>
-        `;
+          const button =
+            document.createElement(
+              "button"
+            );
 
 
-        if (
-          userAnswers[question.id] ===
-          option.letter
-        ) {
+          button.type = "button";
 
-          button.classList.add(
-            "selected"
-          );
-        }
+          button.className =
+            "option";
 
 
-        button.onclick = () => {
+          if (
+            answers[question.id] ===
+            option.letter
+          ) {
 
-          userAnswers[question.id] =
+            button.classList.add(
+              "selected"
+            );
+
+          }
+
+
+          const letter =
+            document.createElement(
+              "span"
+            );
+
+          letter.className =
+            "option-letter";
+
+          letter.textContent =
             option.letter;
 
-          renderQuestion();
-        };
+
+          const text =
+            document.createElement(
+              "span"
+            );
+
+          text.textContent =
+            option.text;
 
 
-        container.appendChild(button);
+          button.appendChild(
+            letter
+          );
 
-      });
+          button.appendChild(
+            text
+          );
 
 
-      /* PROGRESS */
+          button.addEventListener(
+            "click",
+            function() {
+
+              answers[question.id] =
+                option.letter;
+
+              renderQuestion();
+
+            }
+          );
+
+
+          optionsContainer.appendChild(
+            button
+          );
+
+        }
+      );
+
+
+      /* ==============================
+         PROGRESS
+         ============================== */
 
       const progress =
-        ((currentQuestion + 1) /
-          questions.length) *
-        100;
-
-      document.getElementById(
-        "progressBar"
-      ).style.width =
-        `${progress}%`;
+        (
+          (currentQuestionIndex + 1) /
+          questions.length
+        ) * 100;
 
 
-      /* BUTTONS */
+      progressBar.style.width =
+        progress + "%";
 
-      const previousBtn =
-        document.getElementById(
-          "previousBtn"
-        );
 
-      const nextBtn =
-        document.getElementById(
-          "nextBtn"
-        );
-
-      const submitBtn =
-        document.getElementById(
-          "submitBtn"
-        );
-
+      /* ==============================
+         BUTTONS
+         ============================== */
 
       previousBtn.disabled =
-        currentQuestion === 0;
+        currentQuestionIndex === 0;
+
+
+      const selectedAnswer =
+        answers[question.id];
 
 
       if (
-        currentQuestion ===
+        currentQuestionIndex ===
         questions.length - 1
       ) {
 
@@ -924,7 +1151,7 @@
         );
 
         submitBtn.disabled =
-          !userAnswers[question.id];
+          !selectedAnswer;
 
       } else {
 
@@ -937,7 +1164,8 @@
         );
 
         nextBtn.disabled =
-          !userAnswers[question.id];
+          !selectedAnswer;
+
       }
 
     }
@@ -947,65 +1175,68 @@
        NEXT
        ========================================= */
 
-    function nextQuestion() {
+    nextBtn.addEventListener(
+      "click",
+      function() {
 
-      const question =
-        questions[currentQuestion];
+        if (
+          currentQuestionIndex <
+          questions.length - 1
+        ) {
 
-      if (
-        !userAnswers[question.id]
-      ) {
-        return;
+          currentQuestionIndex++;
+
+          renderQuestion();
+
+          window.scrollTo({
+            top: 0,
+            behavior: "smooth"
+          });
+
+        }
+
       }
-
-
-      if (
-        currentQuestion <
-        questions.length - 1
-      ) {
-
-        currentQuestion++;
-
-        renderQuestion();
-
-        window.scrollTo({
-          top: 0,
-          behavior: "smooth"
-        });
-      }
-    }
+    );
 
 
     /* =========================================
        PREVIOUS
        ========================================= */
 
-    function previousQuestion() {
+    previousBtn.addEventListener(
+      "click",
+      function() {
 
-      if (currentQuestion > 0) {
+        if (
+          currentQuestionIndex > 0
+        ) {
 
-        currentQuestion--;
+          currentQuestionIndex--;
 
-        renderQuestion();
+          renderQuestion();
 
-        window.scrollTo({
-          top: 0,
-          behavior: "smooth"
-        });
+          window.scrollTo({
+            top: 0,
+            behavior: "smooth"
+          });
+
+        }
+
       }
-    }
+    );
 
 
     /* =========================================
-       SUBMIT QUIZ
+       SUBMIT
        ========================================= */
 
-    async function submitQuiz() {
+    submitBtn.addEventListener(
+      "click",
+      submitQuiz
+    );
 
-      const submitBtn =
-        document.getElementById(
-          "submitBtn"
-        );
+
+    async function submitQuiz() {
 
       submitBtn.disabled = true;
 
@@ -1016,21 +1247,25 @@
       let correct = 0;
 
 
-      questions.forEach(question => {
+      questions.forEach(
+        question => {
 
-        if (
-          userAnswers[question.id] ===
-          question.correct_answer
-        ) {
+          if (
+            answers[question.id] ===
+            question.correct_answer
+          ) {
 
-          correct++;
+            correct++;
+
+          }
+
         }
-
-      });
+      );
 
 
       const total =
         questions.length;
+
 
       const percentage =
         Math.round(
@@ -1038,61 +1273,71 @@
         );
 
 
-      /* SAVE RESULT */
+      /* ==============================
+         SAVE RESULT
+         ============================== */
 
       const {
         error
-      } = await supabaseClient
-        .from("learning_results")
-        .insert({
+      } =
+        await supabaseClient
+          .from("learning_results")
+          .insert({
 
-          user_id:
-            currentUser.id,
+            user_id:
+              currentUser.id,
 
-          activity_type:
-            `vocabulary_level_${level}`,
+            activity_type:
+              `vocabulary_level_${level}`,
 
-          score:
-            correct,
+            score:
+              correct,
 
-          total_questions:
-            total,
+            total_questions:
+              total,
 
-          answers:
-            userAnswers
+            answers:
+              answers
 
-        });
+          });
 
 
       if (error) {
 
-        console.error(error);
-
-        showError(
-          "Your score could not be saved. Please try again."
+        console.error(
+          "Save result error:",
+          error
         );
 
-        submitBtn.disabled = false;
+
+        showError(
+          "Your score could not be saved: " +
+          error.message
+        );
+
+
+        submitBtn.disabled =
+          false;
 
         submitBtn.textContent =
           "Submit Experiment";
 
         return;
+
       }
 
-
-      /* SHOW RESULT */
 
       showResult(
         correct,
         total,
         percentage
       );
+
     }
 
 
     /* =========================================
-       RESULT
+       SHOW RESULT
        ========================================= */
 
     function showResult(
@@ -1101,19 +1346,20 @@
       percentage
     ) {
 
-      document
-        .getElementById("quizSection")
-        .classList.add("hidden");
+      quizSection.classList.add(
+        "hidden"
+      );
 
-      document
-        .getElementById("resultSection")
-        .classList.remove("hidden");
+
+      resultSection.classList.remove(
+        "hidden"
+      );
 
 
       document.getElementById(
         "scoreDisplay"
       ).textContent =
-        `${percentage}%`;
+        percentage + "%";
 
 
       document.getElementById(
@@ -1137,7 +1383,7 @@
       document.getElementById(
         "percentageDisplay"
       ).textContent =
-        `${percentage}%`;
+        percentage + "%";
 
 
       const message =
@@ -1146,9 +1392,13 @@
         );
 
 
-      if (percentage >= 80) {
+      if (
+        percentage >= 80
+      ) {
 
-        if (level < 15) {
+        if (
+          level < 15
+        ) {
 
           message.textContent =
             `Excellent work. You passed Level ${level}. Your next level is now unlocked.`;
@@ -1163,26 +1413,20 @@
       } else {
 
         message.textContent =
-          `You need at least 80% to pass Level ${level}. Review the vocabulary and try the experiment again.`;
+          `You need at least 80% to pass Level ${level}. Review the vocabulary and try again.`;
+
       }
 
 
-      const retryBtn =
-        document.getElementById(
-          "retryBtn"
-        );
-
-
       retryBtn.textContent =
-        percentage >= 80
-          ? "Try Again"
-          : "Retry Level";
+        "Retry Level";
 
 
       window.scrollTo({
         top: 0,
         behavior: "smooth"
       });
+
     }
 
 
@@ -1190,54 +1434,40 @@
        RETRY
        ========================================= */
 
-    function retryLevel() {
+    retryBtn.addEventListener(
+      "click",
+      function() {
 
-      window.location.href =
-        `vocabulary-level.html?level=${level}`;
-    }
+        window.location.href =
+          `vocabulary-level.html?level=${level}`;
+
+      }
+    );
 
 
     /* =========================================
        ERROR
        ========================================= */
 
-    function showError(message) {
+    function showError(
+      message
+    ) {
 
-      document
-        .getElementById("loading")
-        .classList.add("hidden");
-
-      document
-        .getElementById("quizSection")
-        .classList.add("hidden");
-
-      const box =
-        document.getElementById(
-          "errorBox"
-        );
-
-      box.textContent =
-        message;
-
-      box.classList.remove(
+      quizSection.classList.add(
         "hidden"
       );
-    }
 
+      loading.classList.add(
+        "hidden"
+      );
 
-    /* =========================================
-       SECURITY HELPER
-       ========================================= */
+      errorBox.classList.remove(
+        "hidden"
+      );
 
-    function escapeHTML(text) {
+      errorDetail.textContent =
+        message;
 
-      const div =
-        document.createElement("div");
-
-      div.textContent =
-        text;
-
-      return div.innerHTML;
     }
 
   </script>
