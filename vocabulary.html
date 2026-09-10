@@ -15,12 +15,40 @@
       padding: 0;
     }
 
+    :root {
+      --bg: #fffdf8;
+      --surface: #ffffff;
+      --text: #183238;
+      --muted: #6d7d80;
+      --soft-muted: #8c9a9c;
+
+      --teal: #087f7b;
+      --teal-dark: #126168;
+      --mint: #e8f7f2;
+      --mint-border: #c7e9df;
+
+      --blue: #eaf4fb;
+      --blue-border: #cfe5f2;
+
+      --yellow: #fff8df;
+      --yellow-border: #f1e3ae;
+
+      --border: #e7eeee;
+
+      --shadow:
+        0 8px 25px rgba(27, 67, 72, 0.06);
+    }
+
     body {
       font-family: Arial, Helvetica, sans-serif;
-      background: #0b1519;
-      color: #f5f7f7;
+      background: var(--bg);
+      color: var(--text);
       min-height: 100vh;
     }
+
+    /* =========================
+       NAVIGATION
+    ========================= */
 
     nav {
       height: 76px;
@@ -28,91 +56,157 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      border-bottom: 1px solid rgba(255,255,255,0.08);
-      background: #0d191d;
+
+      background: rgba(255, 253, 248, 0.96);
+      border-bottom: 1px solid var(--border);
+
+      position: sticky;
+      top: 0;
+      z-index: 20;
     }
 
     .logo {
-      font-size: 22px;
+      font-size: 21px;
       font-weight: 800;
       letter-spacing: 1px;
-      color: #35d6a0;
+      color: var(--teal);
     }
 
     .back-link {
-      color: #9aabad;
+      color: var(--muted);
       text-decoration: none;
       font-size: 14px;
+      font-weight: 600;
+
+      padding: 9px 14px;
+      border-radius: 10px;
+
+      transition: 0.2s;
     }
 
     .back-link:hover {
-      color: #35d6a0;
+      background: var(--mint);
+      color: var(--teal);
     }
+
+
+    /* =========================
+       MAIN
+    ========================= */
 
     main {
       width: 86%;
-      max-width: 1100px;
+      max-width: 1120px;
       margin: 0 auto;
-      padding: 55px 0 80px;
+      padding: 58px 0 80px;
     }
 
+
+    /* =========================
+       HEADER
+    ========================= */
+
     .header {
-      margin-bottom: 45px;
+      margin-bottom: 48px;
     }
 
     .eyebrow {
-      color: #35d6a0;
-      font-size: 13px;
-      font-weight: 700;
-      letter-spacing: 2px;
-      margin-bottom: 14px;
-    }
+      display: inline-block;
 
-    h1 {
-      font-size: clamp(40px, 6vw, 64px);
-      line-height: 1;
-      letter-spacing: -2px;
+      color: var(--teal);
+      background: var(--mint);
+
+      border: 1px solid var(--mint-border);
+      border-radius: 30px;
+
+      padding: 7px 12px;
+
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 1.7px;
+
       margin-bottom: 18px;
     }
 
+    h1 {
+      font-size: clamp(42px, 6vw, 64px);
+      line-height: 0.98;
+      letter-spacing: -2.5px;
+
+      color: var(--text);
+
+      margin-bottom: 20px;
+    }
+
     .intro {
-      color: #9eadaf;
+      color: var(--muted);
       font-size: 16px;
       line-height: 1.7;
-      max-width: 680px;
+      max-width: 650px;
     }
+
+
+    /* =========================
+       OVERVIEW TAGS
+    ========================= */
 
     .overview {
       display: flex;
-      gap: 12px;
+      gap: 10px;
       flex-wrap: wrap;
-      margin-top: 22px;
+      margin-top: 24px;
     }
 
     .tag {
-      padding: 8px 13px;
+      padding: 9px 14px;
+
       border-radius: 30px;
-      background: #112a26;
-      border: 1px solid rgba(53,214,160,0.18);
-      color: #70e0ba;
+
+      background: var(--surface);
+      border: 1px solid var(--border);
+
+      color: #53686b;
+
       font-size: 12px;
+      font-weight: 600;
+
+      box-shadow: 0 3px 10px rgba(27, 67, 72, 0.025);
     }
+
+    .tag:first-child {
+      background: var(--mint);
+      border-color: var(--mint-border);
+      color: var(--teal-dark);
+    }
+
+
+    /* =========================
+       SECTION HEADING
+    ========================= */
 
     .section-heading {
       display: flex;
       justify-content: space-between;
-      align-items: end;
+      align-items: flex-end;
+
       margin-bottom: 22px;
     }
 
     .section-heading h2 {
       font-size: 24px;
+      color: var(--text);
+      letter-spacing: -0.5px;
     }
 
     .section-heading p {
-      color: #718185;
+      color: var(--soft-muted);
       font-size: 13px;
     }
+
+
+    /* =========================
+       LEVEL GRID
+    ========================= */
 
     .levels {
       display: grid;
@@ -120,14 +214,28 @@
       gap: 16px;
     }
 
+
+    /* =========================
+       LEVEL CARD
+    ========================= */
+
     .level-card {
-      background: #101d21;
-      border: 1px solid rgba(255,255,255,0.08);
-      border-radius: 20px;
-      padding: 25px;
-      min-height: 190px;
+      background: var(--surface);
+
+      border: 1px solid var(--border);
+      border-radius: 18px;
+
+      padding: 23px;
+      min-height: 185px;
+
       position: relative;
-      transition: 0.2s;
+
+      box-shadow: var(--shadow);
+
+      transition:
+        transform 0.2s ease,
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
     }
 
     .level-card.available {
@@ -136,91 +244,226 @@
 
     .level-card.available:hover {
       transform: translateY(-4px);
-      border-color: rgba(53,214,160,0.45);
+
+      border-color: var(--mint-border);
+
+      box-shadow:
+        0 12px 30px rgba(27, 67, 72, 0.09);
     }
+
+
+    /* Completed */
+
+    .level-card.completed {
+      background: #fbfffd;
+      border-color: var(--mint-border);
+    }
+
+
+    /* Available */
+
+    .level-card.available:not(.completed) {
+      background: #fbfdff;
+      border-color: var(--blue-border);
+    }
+
+
+    /* Locked */
 
     .level-card.locked {
-      opacity: 0.48;
+      background: #fafafa;
+      box-shadow: none;
+      opacity: 0.58;
     }
 
+
+    /* =========================
+       CARD CONTENT
+    ========================= */
+
     .level-number {
-      color: #35d6a0;
-      font-size: 12px;
-      font-weight: 700;
+      color: var(--teal);
+
+      font-size: 11px;
+      font-weight: 800;
       letter-spacing: 1.5px;
+
       margin-bottom: 18px;
     }
 
-    .level-icon {
-      font-size: 28px;
-      margin-bottom: 14px;
+    .level-card.locked .level-number {
+      color: #8c9899;
     }
 
     .level-card h3 {
       font-size: 20px;
+      line-height: 1.2;
+
+      color: var(--text);
+
       margin-bottom: 8px;
     }
 
     .level-card p {
-      color: #839296;
+      color: var(--muted);
+
       font-size: 13px;
       line-height: 1.5;
     }
 
+
+    /* =========================
+       STATUS
+    ========================= */
+
     .status {
       position: absolute;
-      top: 22px;
-      right: 22px;
-      font-size: 18px;
+      top: 20px;
+      right: 20px;
+
+      min-width: 30px;
+      height: 30px;
+
+      padding: 0 9px;
+
+      border-radius: 30px;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      font-size: 12px;
+      font-weight: 800;
     }
+
+    .status.completed-status {
+      background: var(--mint);
+      color: var(--teal);
+      border: 1px solid var(--mint-border);
+    }
+
+    .status.available-status {
+      background: var(--blue);
+      color: #35758c;
+      border: 1px solid var(--blue-border);
+    }
+
+    .status.locked-status {
+      background: #f0f1f1;
+      color: #899395;
+      border: 1px solid #e0e3e3;
+    }
+
+
+    /* =========================
+       SCORE
+    ========================= */
 
     .progress-info {
-      margin-top: 14px;
-      color: #35d6a0;
+      margin-top: 16px;
+
+      color: var(--teal);
+
       font-size: 12px;
-      font-weight: 600;
+      font-weight: 700;
     }
 
+    .score-label {
+      color: var(--soft-muted);
+      font-weight: 500;
+      margin-right: 4px;
+    }
+
+
+    /* =========================
+       INFO CARD
+    ========================= */
+
     .info-card {
-      margin-top: 35px;
-      padding: 24px;
+      margin-top: 32px;
+
+      padding: 23px 25px;
+
       border-radius: 18px;
-      border: 1px solid rgba(53,214,160,0.14);
-      background: #0f211e;
+
+      border: 1px solid var(--yellow-border);
+      background: var(--yellow);
+
+      box-shadow: none;
     }
 
     .info-card h3 {
-      font-size: 16px;
+      color: var(--text);
+
+      font-size: 15px;
+      font-weight: 700;
+
       margin-bottom: 8px;
     }
 
     .info-card p {
-      color: #91a1a3;
+      color: #687577;
+
       font-size: 13px;
-      line-height: 1.6;
+      line-height: 1.65;
+
+      max-width: 850px;
     }
+
+
+    /* =========================
+       FOOTER
+    ========================= */
 
     footer {
       text-align: center;
+
       padding: 30px;
-      border-top: 1px solid rgba(255,255,255,0.07);
-      color: #617174;
+
+      border-top: 1px solid var(--border);
+
+      color: #899496;
+
       font-size: 13px;
+
+      background: #fffefa;
     }
 
+
+    /* =========================
+       RESPONSIVE
+    ========================= */
+
     @media (max-width: 850px) {
+
       .levels {
         grid-template-columns: repeat(2, 1fr);
       }
+
     }
 
+
     @media (max-width: 560px) {
+
       nav {
         padding: 0 5%;
       }
 
+      .logo {
+        font-size: 18px;
+      }
+
+      .back-link {
+        font-size: 13px;
+      }
+
       main {
         width: 90%;
+        padding-top: 42px;
+      }
+
+      h1 {
+        font-size: 45px;
       }
 
       .levels {
@@ -234,22 +477,40 @@
       .section-heading p {
         margin-top: 7px;
       }
+
+      .level-card {
+        min-height: 175px;
+      }
+
     }
   </style>
 </head>
 
+
 <body>
 
+  <!-- =========================
+       NAVIGATION
+  ========================= -->
+
   <nav>
-    <div class="logo">AI LINGUA LAB</div>
+
+    <div class="logo">
+      AI LINGUA LAB
+    </div>
 
     <a
       href="student-dashboard.html"
       class="back-link">
       ← Dashboard
     </a>
+
   </nav>
 
+
+  <!-- =========================
+       MAIN CONTENT
+  ========================= -->
 
   <main>
 
@@ -270,21 +531,41 @@
         across diverse health and professional contexts.
       </p>
 
+
       <div class="overview">
-        <span class="tag">15 Levels</span>
-        <span class="tag">225 Questions</span>
-        <span class="tag">Mixed Health Contexts</span>
-        <span class="tag">15 Questions / Level</span>
+
+        <span class="tag">
+          15 Levels
+        </span>
+
+        <span class="tag">
+          225 Questions
+        </span>
+
+        <span class="tag">
+          Mixed Health Contexts
+        </span>
+
+        <span class="tag">
+          15 Questions / Level
+        </span>
+
       </div>
 
     </section>
 
 
+    <!-- =========================
+         LEVEL SECTION
+    ========================= -->
+
     <section>
 
       <div class="section-heading">
 
-        <h2>Choose your level</h2>
+        <h2>
+          Choose your level
+        </h2>
 
         <p>
           Complete each level to progress.
@@ -293,22 +574,26 @@
       </div>
 
 
-      <div class="levels" id="levelsContainer">
+      <div
+        class="levels"
+        id="levelsContainer">
+
         <!-- Levels generated by JavaScript -->
+
       </div>
 
 
       <div class="info-card">
 
         <h3>
-          🧪 How the Vocabulary Lab works
+          How the Vocabulary Lab works
         </h3>
 
         <p>
           Each level contains 15 questions.
           Your score is recorded after you complete
-          the experiment. Progression through the levels
-          is based on your actual learning results.
+          the experiment. A score of at least 80%
+          unlocks the next level.
         </p>
 
       </div>
@@ -323,11 +608,14 @@
   </footer>
 
 
+  <!-- =========================
+       SUPABASE + LEVEL LOGIC
+  ========================= -->
+
   <script>
 
     const SUPABASE_URL =
       "https://glwpjsnwdzufyiumxikk.supabase.co";
-
 
     const SUPABASE_PUBLISHABLE_KEY =
       "sb_publishable_Bbu_RSEmPsNUWjroJB7HUQ_Gonq02F8";
@@ -342,7 +630,10 @@
 
     async function loadLevels() {
 
-      // Check login
+      /* =========================
+         CHECK LOGIN
+      ========================= */
+
       const {
         data: {
           user
@@ -356,18 +647,27 @@
           "login.html";
 
         return;
+
       }
 
 
-      // Get completed vocabulary levels
+      /* =========================
+         GET COMPLETED LEVELS
+      ========================= */
+
       const {
         data: results,
         error
       } = await supabaseClient
         .from("learning_results")
-        .select("activity_type, score, total_questions")
+        .select(
+          "activity_type, score, total_questions"
+        )
         .eq("user_id", user.id)
-        .like("activity_type", "vocabulary_level_%");
+        .like(
+          "activity_type",
+          "vocabulary_level_%"
+        );
 
 
       if (error) {
@@ -395,7 +695,6 @@
             const level =
               Number(match[1]);
 
-
             completedLevels[level] =
               result;
 
@@ -405,6 +704,10 @@
 
       }
 
+
+      /* =========================
+         CREATE LEVEL CARDS
+      ========================= */
 
       const container =
         document.getElementById(
@@ -463,15 +766,31 @@
           document.createElement("div");
 
 
+        /* =========================
+           CARD STATE
+        ========================= */
+
+        let cardState = "locked";
+
+        if (previousResult) {
+
+          cardState = "completed";
+
+        } else if (available) {
+
+          cardState = "available";
+
+        }
+
+
         card.className =
           "level-card " +
-          (available
-            ? "available"
-            : "locked");
+          cardState;
 
 
-        let statusIcon;
-
+        /* =========================
+           COMPLETED LEVEL
+        ========================= */
 
         if (previousResult) {
 
@@ -484,19 +803,22 @@
             );
 
 
-          statusIcon =
+          const statusClass =
+            percentage >= 80
+              ? "completed-status"
+              : "available-status";
+
+
+          const statusText =
             percentage >= 80
               ? "✓"
               : "↻";
 
 
           card.innerHTML = `
+
             <div class="level-number">
               LEVEL ${level}
-            </div>
-
-            <div class="level-icon">
-              ${percentage >= 80 ? "🏆" : "🧪"}
             </div>
 
             <h3>
@@ -508,25 +830,34 @@
             </p>
 
             <div class="progress-info">
+
+              <span class="score-label">
+                Score
+              </span>
+
               ${previousResult.score}/
               ${previousResult.total_questions}
               · ${percentage}%
+
             </div>
 
-            <div class="status">
-              ${statusIcon}
+            <div class="status ${statusClass}">
+              ${statusText}
             </div>
+
           `;
 
-        } else {
+
+        } else if (available) {
+
+          /* =========================
+             AVAILABLE LEVEL
+          ========================= */
 
           card.innerHTML = `
+
             <div class="level-number">
               LEVEL ${level}
-            </div>
-
-            <div class="level-icon">
-              ${available ? "🧪" : "🔒"}
             </div>
 
             <h3>
@@ -537,13 +868,53 @@
               15 vocabulary questions
             </p>
 
-            <div class="status">
-              ${available ? "→" : "🔒"}
+            <div class="progress-info">
+              Ready to begin
             </div>
+
+            <div class="status available-status">
+              →
+            </div>
+
+          `;
+
+
+        } else {
+
+          /* =========================
+             LOCKED LEVEL
+          ========================= */
+
+          card.innerHTML = `
+
+            <div class="level-number">
+              LEVEL ${level}
+            </div>
+
+            <h3>
+              Level ${level}
+            </h3>
+
+            <p>
+              15 vocabulary questions
+            </p>
+
+            <div class="progress-info">
+              Complete the previous level
+            </div>
+
+            <div class="status locked-status">
+              LOCKED
+            </div>
+
           `;
 
         }
 
+
+        /* =========================
+           OPEN LEVEL
+        ========================= */
 
         if (available) {
 
