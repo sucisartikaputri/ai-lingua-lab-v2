@@ -198,6 +198,58 @@
       color: white;
     }
 
+    /* PASSWORD */
+
+    .password-wrapper {
+      position: relative;
+    }
+
+    .password-wrapper input {
+      padding-right: 52px;
+    }
+
+    .toggle-password {
+      position: absolute;
+      right: 9px;
+      top: 50%;
+      transform: translateY(-50%);
+
+      width: 38px;
+      height: 38px;
+
+      border: none;
+      background: transparent;
+
+      color: #66717d;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      cursor: pointer;
+      border-radius: 8px;
+
+      transition: 0.2s ease;
+    }
+
+    .toggle-password:hover {
+      background: rgba(53, 211, 153, 0.08);
+      color: #35d399;
+    }
+
+    .toggle-password svg {
+      display: block;
+    }
+
+    .password-hint {
+      margin-top: 7px;
+      color: #66717d;
+      font-size: 12px;
+      line-height: 1.4;
+    }
+
+    /* BUTTON */
+
     .signup-btn {
       width: 100%;
       border: none;
@@ -222,6 +274,8 @@
       cursor: not-allowed;
       transform: none;
     }
+
+    /* MESSAGE */
 
     .message {
       display: none;
@@ -383,6 +437,7 @@
 
         <div class="form-group">
           <label for="name">Full name</label>
+
           <input
             type="text"
             id="name"
@@ -390,6 +445,7 @@
             required
           >
         </div>
+
 
         <div class="form-group">
           <label for="role">I am a...</label>
@@ -400,6 +456,7 @@
             <option value="teacher">Teacher</option>
           </select>
         </div>
+
 
         <div class="form-group">
           <label for="email">Email address</label>
@@ -412,29 +469,114 @@
           >
         </div>
 
+
+        <!-- PASSWORD -->
         <div class="form-group">
+
           <label for="password">Password</label>
 
-          <input
-            type="password"
-            id="password"
-            placeholder="Create a password"
-            minlength="6"
-            required
-          >
+          <div class="password-wrapper">
+
+            <input
+              type="password"
+              id="password"
+              placeholder="Create a password"
+              minlength="6"
+              required
+            >
+
+            <button
+              type="button"
+              class="toggle-password"
+              onclick="togglePassword('password', this)"
+              aria-label="Show password"
+            >
+
+              <svg
+                viewBox="0 0 24 24"
+                width="18"
+                height="18"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path
+                  d="M2 12s3.5-6 10-6 10 6 10 6-3.5 6-10 6S2 12 2 12z"
+                />
+                <circle
+                  cx="12"
+                  cy="12"
+                  r="2.5"
+                />
+              </svg>
+
+            </button>
+
+          </div>
+
+          <p class="password-hint">
+            Minimum 6 characters.
+          </p>
+
         </div>
 
+
+        <!-- CONFIRM PASSWORD -->
         <div class="form-group">
-          <label for="confirmPassword">Confirm password</label>
 
-          <input
-            type="password"
-            id="confirmPassword"
-            placeholder="Re-enter your password"
-            minlength="6"
-            required
-          >
+          <label for="confirmPassword">
+            Confirm password
+          </label>
+
+          <div class="password-wrapper">
+
+            <input
+              type="password"
+              id="confirmPassword"
+              placeholder="Re-enter your password"
+              minlength="6"
+              required
+            >
+
+            <button
+              type="button"
+              class="toggle-password"
+              onclick="togglePassword('confirmPassword', this)"
+              aria-label="Show password"
+            >
+
+              <svg
+                viewBox="0 0 24 24"
+                width="18"
+                height="18"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path
+                  d="M2 12s3.5-6 10-6 10 6 10 6-3.5 6-10 6S2 12 2 12z"
+                />
+                <circle
+                  cx="12"
+                  cy="12"
+                  r="2.5"
+                />
+              </svg>
+
+            </button>
+
+          </div>
+
+          <p class="password-hint">
+            Minimum 6 characters.
+          </p>
+
         </div>
+
 
         <button
           type="submit"
@@ -446,15 +588,20 @@
 
       </form>
 
+
       <div id="message" class="message"></div>
+
 
       <div class="login">
         Already have an account?
         <a href="login.html">Sign in</a>
       </div>
 
+
       <div class="back">
-        <a href="index.html">← Back to AI Lingua Lab</a>
+        <a href="index.html">
+          ← Back to AI Lingua Lab
+        </a>
       </div>
 
     </section>
@@ -483,6 +630,101 @@
 
 
     // ==========================================
+    // PASSWORD SHOW / HIDE
+    // ==========================================
+
+    function togglePassword(inputId, button) {
+
+      const input =
+        document.getElementById(inputId);
+
+
+      if (input.type === "password") {
+
+        input.type = "text";
+
+        button.innerHTML = `
+          <svg
+            viewBox="0 0 24 24"
+            width="18"
+            height="18"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+
+            <path d="M3 3l18 18"/>
+
+            <path
+              d="M10.6 10.6a2 2 0 0 0 2.8 2.8"
+            />
+
+            <path
+              d="M9.9 5.1A10.8 10.8 0 0 1 12 5
+              c6.5 0 10 7 10 7
+              a17.2 17.2 0 0 1-3.1 3.9"
+            />
+
+            <path
+              d="M6.1 6.1
+              C3.6 8 2 12 2 12
+              s3.5 7 10 7
+              c1.2 0 2.3-.2 3.3-.6"
+            />
+
+          </svg>
+        `;
+
+        button.setAttribute(
+          "aria-label",
+          "Hide password"
+        );
+
+      } else {
+
+        input.type = "password";
+
+        button.innerHTML = `
+          <svg
+            viewBox="0 0 24 24"
+            width="18"
+            height="18"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+
+            <path
+              d="M2 12s3.5-6 10-6
+              10 6 10 6
+              -3.5 6-10 6
+              S2 12 2 12z"
+            />
+
+            <circle
+              cx="12"
+              cy="12"
+              r="2.5"
+            />
+
+          </svg>
+        `;
+
+        button.setAttribute(
+          "aria-label",
+          "Show password"
+        );
+
+      }
+
+    }
+
+
+    // ==========================================
     // SIGN UP
     // ==========================================
 
@@ -502,20 +744,37 @@
 
         event.preventDefault();
 
+
         const name =
-          document.getElementById("name").value.trim();
+          document
+            .getElementById("name")
+            .value
+            .trim();
+
 
         const role =
-          document.getElementById("role").value;
+          document
+            .getElementById("role")
+            .value;
+
 
         const email =
-          document.getElementById("email").value.trim();
+          document
+            .getElementById("email")
+            .value
+            .trim();
+
 
         const password =
-          document.getElementById("password").value;
+          document
+            .getElementById("password")
+            .value;
+
 
         const confirmPassword =
-          document.getElementById("confirmPassword").value;
+          document
+            .getElementById("confirmPassword")
+            .value;
 
 
         message.className = "message";
@@ -526,7 +785,9 @@
 
         if (password !== confirmPassword) {
 
-          message.className = "message error";
+          message.className =
+            "message error";
+
           message.textContent =
             "Passwords do not match.";
 
@@ -537,7 +798,9 @@
         // Disable button
 
         signupBtn.disabled = true;
-        signupBtn.textContent = "Creating account...";
+
+        signupBtn.textContent =
+          "Creating account...";
 
 
         // Create Supabase account
@@ -559,6 +822,7 @@
               emailRedirectTo:
                 window.location.origin +
                 "/ai-lingua-lab-v2/login.html"
+
             }
 
           });
@@ -575,6 +839,7 @@
             error.message;
 
           signupBtn.disabled = false;
+
           signupBtn.textContent =
             "Create Account";
 
@@ -590,8 +855,8 @@
         message.textContent =
           "Account created! Please check your email to confirm your account.";
 
-
         signupBtn.disabled = false;
+
         signupBtn.textContent =
           "Account Created";
 
