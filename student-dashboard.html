@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,6 +10,7 @@
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
   <style>
+
     * {
       box-sizing: border-box;
       margin: 0;
@@ -58,7 +60,6 @@
       border-radius: 10px;
       cursor: pointer;
       font-weight: 600;
-      transition: 0.2s;
     }
 
     .logout-btn:hover {
@@ -123,12 +124,13 @@
     }
 
     .lab-card {
+      display: block;
       background: #111f24;
       border: 1px solid rgba(255,255,255,0.08);
       border-radius: 18px;
       padding: 25px 20px;
       min-height: 175px;
-      transition: transform 0.2s, border 0.2s;
+      transition: 0.2s;
       cursor: pointer;
     }
 
@@ -214,12 +216,15 @@
         #102821,
         #101d21
       );
+
       border: 1px solid rgba(53,214,160,0.18);
       border-radius: 22px;
       padding: 32px;
+
       display: flex;
       justify-content: space-between;
       align-items: center;
+
       gap: 30px;
     }
 
@@ -247,6 +252,7 @@
     }
 
     .experiment-button {
+      display: inline-block;
       background: #35d6a0;
       color: #07120f;
       border: none;
@@ -255,6 +261,7 @@
       font-weight: 700;
       white-space: nowrap;
       cursor: pointer;
+      text-decoration: none;
     }
 
     .experiment-button:hover {
@@ -276,6 +283,7 @@
     }
 
     @media (max-width: 700px) {
+
       nav {
         padding: 0 5%;
       }
@@ -300,6 +308,7 @@
     }
 
     @media (max-width: 480px) {
+
       h1 {
         font-size: 38px;
       }
@@ -313,24 +322,39 @@
         padding: 24px;
       }
     }
+
   </style>
 </head>
+
 
 <body>
 
   <nav>
-    <div class="logo">AI LINGUA LAB</div>
+
+    <div class="logo">
+      AI LINGUA LAB
+    </div>
 
     <div class="nav-right">
-      <span class="student-label" id="studentEmail">
+
+      <span
+        class="student-label"
+        id="studentEmail"
+      >
         Student
       </span>
 
-      <button class="logout-btn" id="logoutBtn">
+      <button
+        class="logout-btn"
+        id="logoutBtn"
+      >
         Sign Out
       </button>
+
     </div>
+
   </nav>
+
 
   <main>
 
@@ -342,7 +366,9 @@
 
       <h1>
         Welcome back,<br>
-        <span id="studentName">Student</span>.
+        <span id="studentName">
+          Student
+        </span>.
       </h1>
 
       <p class="welcome-text">
@@ -357,53 +383,107 @@
     <section>
 
       <div class="section-title">
+
         <div>
-          <h2>Explore the Lab</h2>
+          <h2>
+            Explore the Lab
+          </h2>
         </div>
 
-        <p>Choose what you want to practise.</p>
+        <p>
+          Choose what you want to practise.
+        </p>
+
       </div>
+
 
       <div class="lab-grid">
 
-        <div class="lab-card">
-          <div class="lab-icon">Aa</div>
-          <h3>Vocabulary</h3>
+        <a
+          href="vocabulary.html"
+          class="lab-card"
+        >
+
+          <div class="lab-icon">
+            Aa
+          </div>
+
+          <h3>
+            Vocabulary
+          </h3>
+
           <p>
             Build and practise useful English vocabulary.
           </p>
-        </div>
+
+        </a>
+
 
         <div class="lab-card">
-          <div class="lab-icon">📖</div>
-          <h3>Reading</h3>
+
+          <div class="lab-icon">
+            📖
+          </div>
+
+          <h3>
+            Reading
+          </h3>
+
           <p>
             Explore texts and develop reading comprehension.
           </p>
+
         </div>
 
+
         <div class="lab-card">
-          <div class="lab-icon">🎧</div>
-          <h3>Listening</h3>
+
+          <div class="lab-icon">
+            🎧
+          </div>
+
+          <h3>
+            Listening
+          </h3>
+
           <p>
             Practise understanding spoken English.
           </p>
+
         </div>
 
+
         <div class="lab-card">
-          <div class="lab-icon">🎤</div>
-          <h3>Speaking</h3>
+
+          <div class="lab-icon">
+            🎤
+          </div>
+
+          <h3>
+            Speaking
+          </h3>
+
           <p>
             Practise speaking and receive AI feedback.
           </p>
+
         </div>
 
+
         <div class="lab-card">
-          <div class="lab-icon">✍️</div>
-          <h3>Writing</h3>
+
+          <div class="lab-icon">
+            ✍️
+          </div>
+
+          <h3>
+            Writing
+          </h3>
+
           <p>
             Write, revise, and improve your English.
           </p>
+
         </div>
 
       </div>
@@ -415,13 +495,16 @@
 
       <div class="progress-header">
 
-        <h2>Your Learning Progress</h2>
+        <h2>
+          Your Learning Progress
+        </h2>
 
         <span class="progress-status">
           Getting started
         </span>
 
       </div>
+
 
       <div class="empty-progress">
 
@@ -463,9 +546,13 @@
 
       </div>
 
-      <button class="experiment-button">
+
+      <a
+        href="vocabulary.html"
+        class="experiment-button"
+      >
         Start Experiment
-      </button>
+      </a>
 
     </section>
 
@@ -479,8 +566,13 @@
 
   <script>
 
+    /* =====================================
+       SUPABASE CONFIGURATION
+       ===================================== */
+
     const SUPABASE_URL =
       "https://glwpjsnwdzufyiumxikk.supabase.co";
+
 
     const SUPABASE_PUBLISHABLE_KEY =
       "sb_publishable_Bbu_RSEmPsNUWjroJB7HUQ_Gonq02F8";
@@ -493,114 +585,228 @@
       );
 
 
+    /* =====================================
+       LOAD STUDENT
+       ===================================== */
+
     async function loadStudentProfile() {
 
-      // Check current login session
-      const {
-        data: {
-          user
-        },
-        error: userError
-      } = await supabaseClient.auth.getUser();
-
-
-      if (userError || !user) {
-
-        window.location.href = "login.html";
-
-        return;
-      }
-
-
-      // Get profile from database
-      const {
-        data: profile,
-        error: profileError
-      } = await supabaseClient
-        .from("profiles")
-        .select("full_name, email, role")
-        .eq("id", user.id)
-        .single();
-
-
-      if (profileError) {
-
-        console.error(
-          "Profile error:",
-          profileError
-        );
-
-        alert(
-          "We could not load your profile."
-        );
-
-        return;
-      }
-
-
-      // Security check:
-      // This page is for students only.
-      if (profile.role !== "student") {
-
-        alert(
-          "This dashboard is for student accounts."
-        );
-
-        await supabaseClient.auth.signOut();
-
-        window.location.href = "login.html";
-
-        return;
-      }
-
-
-      // Display profile data
-      document.getElementById(
-        "studentName"
-      ).textContent =
-        profile.full_name || "Student";
-
-
-      document.getElementById(
-        "studentEmail"
-      ).textContent =
-        profile.email || user.email || "Student";
-
-    }
-
-
-    // Sign out
-    document.getElementById(
-      "logoutBtn"
-    ).addEventListener(
-      "click",
-      async function () {
+      try {
 
         const {
+          data,
           error
-        } = await supabaseClient.auth.signOut();
+        } =
+          await supabaseClient.auth.getSession();
 
 
         if (error) {
 
-          alert(
-            "Unable to sign out. Please try again."
+          console.error(
+            "Session error:",
+            error
           );
+
+          window.location.href =
+            "login.html";
 
           return;
         }
 
 
-        window.location.href =
-          "login.html";
+        const session =
+          data.session;
+
+
+        if (!session) {
+
+          window.location.href =
+            "login.html";
+
+          return;
+        }
+
+
+        const user =
+          session.user;
+
+
+        /* ===============================
+           LOAD PROFILE
+           =============================== */
+
+        const {
+          data: profile,
+          error: profileError
+        } =
+          await supabaseClient
+            .from("profiles")
+            .select(
+              "full_name, email, role"
+            )
+            .eq(
+              "id",
+              user.id
+            )
+            .maybeSingle();
+
+
+        if (profileError) {
+
+          console.error(
+            "Profile error:",
+            profileError
+          );
+
+          /*
+           Do NOT immediately send
+           the user back to login.
+           The authentication itself
+           is already valid.
+          */
+
+          document.getElementById(
+            "studentName"
+          ).textContent =
+            user.user_metadata?.full_name ||
+            "Student";
+
+
+          document.getElementById(
+            "studentEmail"
+          ).textContent =
+            user.email ||
+            "Student";
+
+          return;
+        }
+
+
+        if (profile) {
+
+          document.getElementById(
+            "studentName"
+          ).textContent =
+            profile.full_name ||
+            user.user_metadata?.full_name ||
+            "Student";
+
+
+          document.getElementById(
+            "studentEmail"
+          ).textContent =
+            profile.email ||
+            user.email ||
+            "Student";
+
+
+          /*
+           Only sign out if the profile
+           explicitly says the account
+           is not a student.
+          */
+
+          if (
+            profile.role &&
+            profile.role !== "student"
+          ) {
+
+            alert(
+              "This dashboard is for student accounts."
+            );
+
+            await supabaseClient.auth.signOut();
+
+            window.location.href =
+              "login.html";
+
+            return;
+          }
+
+        } else {
+
+          /*
+           Profile does not exist,
+           but the authenticated user
+           is still allowed to stay
+           on the dashboard.
+          */
+
+          document.getElementById(
+            "studentName"
+          ).textContent =
+            user.user_metadata?.full_name ||
+            "Student";
+
+
+          document.getElementById(
+            "studentEmail"
+          ).textContent =
+            user.email ||
+            "Student";
+
+        }
+
+
+      } catch (error) {
+
+        console.error(
+          "Dashboard error:",
+          error
+        );
+
+        /*
+         Do not create a login loop
+         because of a profile/database
+         problem.
+        */
 
       }
-    );
 
+    }
+
+
+    /* =====================================
+       SIGN OUT
+       ===================================== */
+
+    document
+      .getElementById("logoutBtn")
+      .addEventListener(
+        "click",
+        async function() {
+
+          const {
+            error
+          } =
+            await supabaseClient.auth.signOut();
+
+
+          if (error) {
+
+            alert(
+              "Unable to sign out. Please try again."
+            );
+
+            return;
+          }
+
+
+          window.location.href =
+            "login.html";
+
+        }
+      );
+
+
+    /* =====================================
+       START
+       ===================================== */
 
     loadStudentProfile();
 
   </script>
 
 </body>
+
 </html>
