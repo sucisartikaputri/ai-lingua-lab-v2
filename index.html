@@ -3,133 +3,475 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>AI Lingua Lab</title>
 
     <style>
         * {
-            box-sizing: border-box;
             margin: 0;
             padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --teal: #087f89;
+            --dark: #123c42;
+            --text: #385b60;
+            --light: #f4f9f8;
+            --border: #dcebea;
+            --white: #ffffff;
         }
 
         body {
-            font-family: Arial, sans-serif;
-            background: #f7faf9;
-            color: #173b3f;
+            font-family: Arial, Helvetica, sans-serif;
+            background: var(--light);
+            color: var(--dark);
+            line-height: 1.6;
         }
 
+        /* NAVIGATION */
+
         nav {
+            height: 82px;
+            background: rgba(255, 255, 255, 0.96);
+            border-bottom: 1px solid var(--border);
+
             display: flex;
-            justify-content: space-between;
             align-items: center;
-            padding: 22px 8%;
-            background: white;
-            border-bottom: 1px solid #e5eeee;
+            justify-content: space-between;
+
+            padding: 0 7%;
         }
 
         .logo {
-            font-size: 24px;
-            font-weight: bold;
+            font-size: 23px;
+            font-weight: 800;
             letter-spacing: 1px;
         }
 
         .logo span {
-            color: #056770;
+            color: var(--teal);
         }
 
-        .nav-button {
-            padding: 10px 20px;
-            border: 1px solid #056770;
-            border-radius: 8px;
-            color: #056770;
-            text-decoration: none;
-            font-weight: 600;
-        }
-
-        .hero {
-            min-height: 78vh;
+        .nav-links {
             display: flex;
             align-items: center;
-            justify-content: center;
-            text-align: center;
-            padding: 60px 20px;
+            gap: 30px;
         }
 
-        .hero-content {
-            max-width: 800px;
-        }
-
-        .lab-icon {
-            font-size: 64px;
-            margin-bottom: 20px;
-        }
-
-        h1 {
-            font-size: 58px;
-            line-height: 1.1;
-            margin-bottom: 20px;
-            color: #123b40;
-        }
-
-        h1 span {
-            color: #056770;
-        }
-
-        .tagline {
-            font-size: 22px;
+        .nav-links a {
+            color: var(--text);
+            text-decoration: none;
+            font-size: 15px;
             font-weight: 600;
-            margin-bottom: 18px;
         }
 
-        .description {
-            max-width: 620px;
-            margin: 0 auto 35px;
-            font-size: 17px;
-            line-height: 1.7;
-            color: #5b7072;
+        .login {
+            border: 1.5px solid var(--teal);
+            color: var(--teal) !important;
+            padding: 10px 21px;
+            border-radius: 9px;
+        }
+
+        /* HERO */
+
+        .hero {
+            max-width: 1180px;
+            margin: auto;
+
+            min-height: 650px;
+
+            display: grid;
+            grid-template-columns: 1.05fr 0.95fr;
+            align-items: center;
+            gap: 70px;
+
+            padding: 70px 30px;
+        }
+
+        .eyebrow {
+            display: inline-block;
+
+            background: #e3f2f0;
+            color: var(--teal);
+
+            padding: 7px 13px;
+            border-radius: 20px;
+
+            font-size: 13px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+
+            margin-bottom: 22px;
+        }
+
+        .hero h1 {
+            font-size: clamp(46px, 5vw, 70px);
+            line-height: 1.05;
+            letter-spacing: -2px;
+
+            margin-bottom: 25px;
+        }
+
+        .hero h1 span {
+            color: var(--teal);
+        }
+
+        .hero-text {
+            color: var(--text);
+            font-size: 18px;
+            max-width: 540px;
+
+            margin-bottom: 32px;
         }
 
         .start-button {
             display: inline-block;
-            padding: 15px 32px;
-            background: #056770;
+
+            background: var(--teal);
             color: white;
-            text-decoration: none;
+
+            padding: 15px 27px;
             border-radius: 10px;
-            font-size: 17px;
-            font-weight: bold;
+
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: 700;
+
+            box-shadow: 0 8px 22px rgba(8, 127, 137, 0.18);
+
+            transition: 0.2s ease;
         }
 
-        .features {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            flex-wrap: wrap;
-            margin-top: 55px;
+        .start-button:hover {
+            transform: translateY(-2px);
         }
 
-        .feature {
+        .mini-note {
+            margin-top: 18px;
+            color: #70898c;
+            font-size: 13px;
+        }
+
+        /* DASHBOARD PREVIEW */
+
+        .preview-wrapper {
+            position: relative;
+        }
+
+        .glow {
+            position: absolute;
+            width: 260px;
+            height: 260px;
+
+            background: #d7efeb;
+            border-radius: 50%;
+
+            top: -70px;
+            right: -40px;
+
+            filter: blur(2px);
+            z-index: 0;
+        }
+
+        .dashboard-card {
+            position: relative;
+            z-index: 1;
+
             background: white;
-            padding: 18px 25px;
-            border-radius: 12px;
-            border: 1px solid #e0ebeb;
-            min-width: 150px;
+            border: 1px solid var(--border);
+
+            border-radius: 22px;
+
+            padding: 28px;
+
+            box-shadow: 0 25px 60px rgba(25, 70, 73, 0.12);
         }
 
-        footer {
+        .card-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            margin-bottom: 25px;
+        }
+
+        .card-title {
+            font-weight: 800;
+            font-size: 17px;
+        }
+
+        .status {
+            background: #e4f4ed;
+            color: #27745a;
+
+            padding: 5px 10px;
+            border-radius: 20px;
+
+            font-size: 11px;
+            font-weight: 700;
+        }
+
+        .experiment {
+            background: var(--light);
+            border-radius: 15px;
+            padding: 20px;
+
+            margin-bottom: 22px;
+        }
+
+        .experiment-label {
+            font-size: 11px;
+            color: var(--teal);
+            font-weight: 800;
+
+            text-transform: uppercase;
+            letter-spacing: 1px;
+
+            margin-bottom: 7px;
+        }
+
+        .experiment h3 {
+            font-size: 20px;
+            margin-bottom: 5px;
+        }
+
+        .experiment p {
+            color: #70898c;
+            font-size: 13px;
+        }
+
+        .progress-title {
+            display: flex;
+            justify-content: space-between;
+
+            font-size: 13px;
+            font-weight: 700;
+
+            margin-bottom: 8px;
+        }
+
+        .progress-bar {
+            height: 9px;
+            background: #e6eeee;
+
+            border-radius: 20px;
+            overflow: hidden;
+
+            margin-bottom: 22px;
+        }
+
+        .progress-fill {
+            width: 78%;
+            height: 100%;
+            background: var(--teal);
+            border-radius: 20px;
+        }
+
+        .feedback {
+            border-top: 1px solid var(--border);
+            padding-top: 20px;
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .feedback-text {
+            font-size: 13px;
+            color: var(--text);
+        }
+
+        .check {
+            width: 34px;
+            height: 34px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 50%;
+            background: #e3f2ef;
+
+            color: var(--teal);
+            font-weight: 800;
+        }
+
+        /* LAB SECTION */
+
+        .labs {
+            background: white;
+            border-top: 1px solid var(--border);
+
+            padding: 85px 7%;
+        }
+
+        .section-heading {
             text-align: center;
-            padding: 25px;
-            color: #789092;
+            max-width: 650px;
+            margin: 0 auto 45px;
+        }
+
+        .section-heading small {
+            color: var(--teal);
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+        }
+
+        .section-heading h2 {
+            font-size: 38px;
+            margin: 10px 0 12px;
+        }
+
+        .section-heading p {
+            color: var(--text);
+        }
+
+        .lab-grid {
+            max-width: 1100px;
+            margin: auto;
+
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        .lab-card {
+            padding: 27px;
+
+            border: 1px solid var(--border);
+            border-radius: 17px;
+
+            background: #fbfdfd;
+
+            transition: 0.2s ease;
+        }
+
+        .lab-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 30px rgba(25, 70, 73, 0.08);
+        }
+
+        .lab-icon {
+            width: 52px;
+            height: 52px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            background: #e7f3f1;
+            border-radius: 13px;
+
+            font-size: 25px;
+
+            margin-bottom: 20px;
+        }
+
+        .lab-card h3 {
+            font-size: 19px;
+            margin-bottom: 8px;
+        }
+
+        .lab-card p {
+            color: var(--text);
             font-size: 14px;
         }
 
-        @media (max-width: 600px) {
-            h1 {
+        /* PHILOSOPHY */
+
+        .philosophy {
+            text-align: center;
+            padding: 90px 20px;
+            background: var(--light);
+        }
+
+        .philosophy h2 {
+            font-size: 38px;
+            margin-bottom: 14px;
+        }
+
+        .philosophy p {
+            color: var(--text);
+            max-width: 650px;
+            margin: auto;
+        }
+
+        /* FOOTER */
+
+        footer {
+            background: var(--dark);
+            color: #d9e8e8;
+
+            text-align: center;
+
+            padding: 28px;
+
+            font-size: 13px;
+        }
+
+        /* MOBILE */
+
+        @media (max-width: 850px) {
+
+            .nav-links a:not(.login) {
+                display: none;
+            }
+
+            .hero {
+                grid-template-columns: 1fr;
+                gap: 40px;
+
+                padding-top: 55px;
+                padding-bottom: 70px;
+            }
+
+            .hero h1 {
+                font-size: 48px;
+            }
+
+            .lab-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .preview-wrapper {
+                max-width: 600px;
+                margin: auto;
+                width: 100%;
+            }
+        }
+
+        @media (max-width: 500px) {
+
+            nav {
+                padding: 0 5%;
+            }
+
+            .logo {
+                font-size: 18px;
+            }
+
+            .hero {
+                padding-left: 20px;
+                padding-right: 20px;
+            }
+
+            .hero h1 {
                 font-size: 40px;
             }
 
-            .tagline {
-                font-size: 18px;
+            .hero-text {
+                font-size: 16px;
+            }
+
+            .dashboard-card {
+                padding: 20px;
+            }
+
+            .section-heading h2,
+            .philosophy h2 {
+                font-size: 30px;
             }
         }
     </style>
@@ -137,66 +479,225 @@
 
 <body>
 
+    <!-- NAVIGATION -->
+
     <nav>
+
         <div class="logo">
             AI <span>LINGUA LAB</span>
         </div>
 
-        <a href="#" class="nav-button">Login</a>
+        <div class="nav-links">
+            <a href="#labs">Explore Lab</a>
+            <a href="#about">About</a>
+            <a href="#" class="login">Login</a>
+        </div>
+
     </nav>
 
-    <section class="hero">
-        <div class="hero-content">
 
-            <div class="lab-icon">🧪</div>
+    <!-- HERO -->
+
+    <section class="hero">
+
+        <div>
+
+            <div class="eyebrow">
+                AI-POWERED ENGLISH LEARNING
+            </div>
 
             <h1>
-                Welcome to <span>AI Lingua Lab</span>
+                Your English.<br>
+                Your <span>Experiment.</span>
             </h1>
 
-            <p class="tagline">
-                Experiment. Practise. Improve.
-            </p>
-
-            <p class="description">
-                An AI-powered English learning laboratory designed
-                to help learners practise English, receive personalised
-                feedback, and track their learning progress.
+            <p class="hero-text">
+                Learn English through guided practice, personalised
+                AI feedback, and meaningful learning experiences.
             </p>
 
             <a href="#" class="start-button">
                 Start Learning →
             </a>
 
-            <div class="features">
+            <p class="mini-note">
+                Experiment. Practise. Improve.
+            </p>
 
-                <div class="feature">
-                    🧠<br>
-                    <strong>Vocabulary</strong>
+        </div>
+
+
+        <!-- DASHBOARD PREVIEW -->
+
+        <div class="preview-wrapper">
+
+            <div class="glow"></div>
+
+            <div class="dashboard-card">
+
+                <div class="card-top">
+
+                    <div class="card-title">
+                        🧪 Today's Experiment
+                    </div>
+
+                    <div class="status">
+                        READY
+                    </div>
+
                 </div>
 
-                <div class="feature">
-                    📖<br>
-                    <strong>Reading</strong>
+
+                <div class="experiment">
+
+                    <div class="experiment-label">
+                        Speaking Lab
+                    </div>
+
+                    <h3>
+                        Professional Introduction
+                    </h3>
+
+                    <p>
+                        Practise introducing your academic
+                        background and career goals.
+                    </p>
+
                 </div>
 
-                <div class="feature">
-                    🗣️<br>
-                    <strong>Speaking</strong>
+
+                <div class="progress-title">
+                    <span>Learning Progress</span>
+                    <span>78%</span>
                 </div>
 
-                <div class="feature">
-                    📊<br>
-                    <strong>Progress</strong>
+                <div class="progress-bar">
+                    <div class="progress-fill"></div>
+                </div>
+
+
+                <div class="feedback">
+
+                    <div class="feedback-text">
+                        ✓ AI feedback available
+                    </div>
+
+                    <div class="check">
+                        ✓
+                    </div>
+
                 </div>
 
             </div>
 
         </div>
+
     </section>
 
+
+    <!-- LABS -->
+
+    <section class="labs" id="labs">
+
+        <div class="section-heading">
+
+            <small>Explore the Lab</small>
+
+            <h2>
+                Learn through practice.
+            </h2>
+
+            <p>
+                Each laboratory gives you a different way
+                to practise and develop your English skills.
+            </p>
+
+        </div>
+
+
+        <div class="lab-grid">
+
+            <div class="lab-card">
+
+                <div class="lab-icon">
+                    🧠
+                </div>
+
+                <h3>
+                    Vocabulary Lab
+                </h3>
+
+                <p>
+                    Build useful vocabulary through
+                    contextual and interactive practice.
+                </p>
+
+            </div>
+
+
+            <div class="lab-card">
+
+                <div class="lab-icon">
+                    📖
+                </div>
+
+                <h3>
+                    Reading Lab
+                </h3>
+
+                <p>
+                    Explore texts, understand meaning,
+                    and develop reading strategies.
+                </p>
+
+            </div>
+
+
+            <div class="lab-card">
+
+                <div class="lab-icon">
+                    🗣️
+                </div>
+
+                <h3>
+                    Speaking Lab
+                </h3>
+
+                <p>
+                    Practise communicating with AI
+                    and receive personalised feedback.
+                </p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- PHILOSOPHY -->
+
+    <section class="philosophy" id="about">
+
+        <h2>
+            Learn. Practise. Improve.
+        </h2>
+
+        <p>
+            AI Lingua Lab combines structured English learning
+            activities, AI-supported practice, and learning
+            progress tracking in one learning environment.
+        </p>
+
+    </section>
+
+
+    <!-- FOOTER -->
+
     <footer>
+
         AI Lingua Lab · AI-powered English Learning
+
     </footer>
 
 </body>
