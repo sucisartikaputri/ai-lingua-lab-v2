@@ -510,12 +510,7 @@ footer {
 
 
   <div class="controls">
-
-    <button id="prevBtn" class="secondary">
-      ← Previous
-    </button>
-
-    <button id="nextBtn" class="primary">
+            <button id="nextBtn" class="primary">
       Next →
     </button>
 
@@ -1075,176 +1070,174 @@ const structureQuestions = [
    READING
 ========================================== */
 
+const readingPassages = {
+
+  passage1: {
+    title: "The Development of Community Gardens",
+    text: `Community gardens have become increasingly common in urban areas where access to private green space is limited. A community garden is a shared piece of land where individuals or groups can grow vegetables, herbs, flowers, or other plants. Although these gardens are often associated with food production, their benefits can extend beyond agriculture.
+
+One important function of community gardens is to provide residents with access to fresh produce. In neighborhoods where supermarkets are far away or where fresh food is relatively expensive, a garden may offer an additional source of vegetables and herbs. Gardeners can also learn about planting, soil management, and food preparation through practical experience.
+
+Community gardens may also influence social relationships. Because people work in the same space, they have opportunities to exchange knowledge and interact with neighbors whom they might not otherwise meet. Some gardens organize shared activities, such as planting days or educational programs. These activities can strengthen a sense of community and encourage cooperation.
+
+The environmental effects of gardens can be significant as well. Plants can provide shade, support insects and other organisms, and help reduce the amount of unused land in densely populated areas. However, maintaining a successful garden requires organization. Participants may need to establish rules concerning water use, planting areas, maintenance, and the distribution of produce. Thus, the success of a community garden depends not only on available land but also on continued cooperation among its participants.`
+  },
+
+  passage2: {
+    title: "How the Body Regulates Temperature",
+    text: `The human body must maintain a relatively stable internal temperature even when the surrounding environment changes. This process, known as thermoregulation, allows cells and organs to function effectively. The body continuously receives information about temperature and responds through several coordinated mechanisms.
+
+When the surrounding temperature is high, the body can increase the production of sweat. As sweat evaporates from the surface of the skin, it removes heat from the body. Blood vessels near the skin may also widen, allowing more blood to reach the surface. This can help transfer heat from the warmer interior of the body to the environment.
+
+Cold conditions require different responses. Blood vessels near the skin can narrow, reducing blood flow to the surface and limiting heat loss. The body may also produce heat through involuntary muscle contractions, commonly experienced as shivering. In addition, people often respond behaviorally by putting on additional clothing or moving to a warmer location.
+
+These responses do not operate independently. The nervous system helps detect changes in temperature and coordinate appropriate reactions. However, thermoregulation has limits. Very high or very low environmental temperatures can place considerable stress on the body, particularly when a person is dehydrated, physically exhausted, or unable to change the surrounding conditions. For this reason, maintaining adequate hydration and avoiding prolonged exposure to extreme temperatures are important parts of preventing heat- or cold-related problems.`
+  },
+
+  passage3: {
+    title: "The Role of Sleep in Learning",
+    text: `Sleep is often described as a period of rest, but researchers have found that the sleeping brain remains active. During sleep, the brain performs processes that are related to memory and learning. These processes may help organize information acquired during the day and strengthen some newly formed memories.
+
+Learning does not end when a student closes a book. Information first enters the brain through activities such as reading, listening, or practicing a skill. Later, during sleep, some of this information may be processed and integrated with knowledge that was already stored. As a result, adequate sleep can support the ability to remember information and perform certain tasks the following day.
+
+The relationship between sleep and learning does not mean that sleeping can replace studying. A student still needs to pay attention, practice, and review material. Sleep is better understood as one part of the learning process. Without sufficient preparation during waking hours, there is less new information for the brain to process during sleep.
+
+Sleep can also affect attention. A person who does not sleep enough may have difficulty concentrating or maintaining alertness. These effects can make learning more difficult even before memory processes are considered. Consequently, healthy learning habits generally include both effective study strategies and sufficient sleep. The amount of sleep needed can vary among individuals, but regularly obtaining adequate sleep is widely considered an important component of maintaining cognitive performance.`
+  }
+
+};
+
+
 const readingQuestions = [
 
   {
-    passage:
-      "Regular physical activity can support several aspects of health. Moderate exercise may improve cardiovascular fitness, help maintain body weight, and contribute to psychological well-being. Health professionals often recommend choosing activities that can be performed consistently over time.",
-
+    passage: readingPassages.passage1,
     question:
       "What is the main idea of the passage?",
-
     options: [
-      "Exercise should always be intense.",
-      "Regular physical activity can provide several health benefits.",
-      "Only athletes need physical activity.",
-      "Psychological health is unrelated to exercise."
+      "Community gardens are mainly designed to replace supermarkets.",
+      "Community gardens can provide food, social, and environmental benefits but require cooperation.",
+      "Community gardens are difficult to maintain because plants cannot grow in cities.",
+      "The primary purpose of community gardens is to organize educational programs."
     ],
-
     answer: 1
   },
 
   {
-    passage:
-      "Iron is an essential mineral because it is involved in the production of hemoglobin. Hemoglobin carries oxygen from the lungs to tissues throughout the body. A lack of iron can therefore affect the body's ability to transport oxygen effectively.",
-
+    passage: readingPassages.passage1,
     question:
-      "Why is iron important according to the passage?",
-
+      "According to the passage, why can community gardens be useful in some neighborhoods?",
     options: [
-      "It produces energy directly.",
-      "It helps produce hemoglobin.",
-      "It prevents all diseases.",
-      "It increases body temperature."
+      "They provide residents with an additional source of fresh produce.",
+      "They allow residents to avoid interacting with their neighbors.",
+      "They make supermarkets unnecessary in every urban area.",
+      "They provide private land for every resident."
     ],
+    answer: 0
+  },
 
+  {
+    passage: readingPassages.passage1,
+    question:
+      "The word \"strengthen\" in paragraph 3 is closest in meaning to",
+    options: [
+      "reduce",
+      "develop",
+      "delay",
+      "measure"
+    ],
     answer: 1
   },
 
   {
-    passage:
-      "Hand hygiene is one of the basic practices used to reduce the spread of microorganisms. In healthcare settings, appropriate hand hygiene is especially important before and after contact with patients.",
-
+    passage: readingPassages.passage1,
     question:
-      "What is the purpose of hand hygiene mentioned in the passage?",
-
+      "What can be inferred about a community garden from the passage?",
     options: [
-      "To increase patient contact.",
-      "To reduce the spread of microorganisms.",
-      "To replace medical treatment.",
-      "To improve hospital design."
+      "Its success depends partly on how well participants cooperate.",
+      "It can operate successfully without any rules.",
+      "It is useful only when a neighborhood has no supermarket.",
+      "Its environmental effects are more important than its social effects."
     ],
+    answer: 0
+  },
 
+  {
+    passage: readingPassages.passage2,
+    question:
+      "What is the primary purpose of thermoregulation?",
+    options: [
+      "To increase the body's temperature whenever possible.",
+      "To maintain a relatively stable internal body temperature.",
+      "To prevent blood from reaching the skin.",
+      "To make the body adapt permanently to extreme environments."
+    ],
     answer: 1
   },
 
   {
-    passage:
-      "A balanced diet includes a variety of foods that provide carbohydrates, proteins, fats, vitamins, minerals, and other nutrients. The appropriate amount of each nutrient can vary depending on a person's age, activity level, and health condition.",
-
+    passage: readingPassages.passage2,
     question:
-      "What can influence a person's nutrient needs?",
-
+      "According to the passage, what happens when blood vessels near the skin widen?",
     options: [
-      "Only body weight.",
-      "Only food preferences.",
-      "Age, activity level, and health condition.",
-      "The color of food."
+      "Less blood reaches the surface of the skin.",
+      "The body immediately begins to shiver.",
+      "More blood reaches the surface, helping transfer heat to the environment.",
+      "The body stops producing sweat."
     ],
-
     answer: 2
   },
 
   {
-    passage:
-      "Sleep plays an important role in maintaining normal physical and cognitive functions. Insufficient sleep may interfere with concentration and daily performance. For this reason, adequate sleep is commonly considered part of a healthy lifestyle.",
-
+    passage: readingPassages.passage2,
     question:
-      "What may happen when a person does not get enough sleep?",
-
+      "The word \"coordinated\" in paragraph 1 is closest in meaning to",
     options: [
-      "Concentration may be affected.",
-      "The person always becomes healthier.",
-      "Daily performance always improves.",
-      "Nutrient absorption stops completely."
+      "organized",
+      "unexpected",
+      "temporary",
+      "unnecessary"
     ],
-
     answer: 0
   },
 
   {
-    passage:
-      "Public health programs may focus on preventing disease before it occurs. Examples include vaccination, health education, and programs that encourage healthy behaviors. Prevention can reduce the risk of illness at the population level.",
-
+    passage: readingPassages.passage3,
     question:
-      "What is one purpose of public health prevention programs?",
-
+      "What is the main purpose of the passage?",
     options: [
-      "To increase disease risk.",
-      "To reduce the risk of illness.",
-      "To replace all clinical services.",
-      "To diagnose every patient."
+      "To explain how sleep can support memory, learning, and attention.",
+      "To show that studying is unnecessary when a person sleeps enough.",
+      "To compare different methods of studying before bedtime.",
+      "To explain why all people need exactly the same amount of sleep."
     ],
-
-    answer: 1
-  },
-
-  {
-    passage:
-      "Dietary fiber is found in foods such as vegetables, fruits, legumes, and whole grains. It contributes to normal digestive function and can be part of a healthy eating pattern.",
-
-    question:
-      "Where can dietary fiber be found?",
-
-    options: [
-      "Only in meat.",
-      "In vegetables, fruits, legumes, and whole grains.",
-      "Only in dairy products.",
-      "Only in beverages."
-    ],
-
-    answer: 1
-  },
-
-  {
-    passage:
-      "Vaccination prepares the immune system to respond to particular infectious agents. Vaccines are an important tool in preventing certain infectious diseases and protecting communities.",
-
-    question:
-      "What does vaccination help the immune system do?",
-
-    options: [
-      "Respond to particular infectious agents.",
-      "Stop all illnesses permanently.",
-      "Replace nutrition.",
-      "Increase exposure to infection."
-    ],
-
     answer: 0
   },
 
   {
-    passage:
-      "Nutrition assessment can involve collecting information about dietary intake, body measurements, clinical signs, and laboratory data. Health professionals can use these sources of information to understand a person's nutritional status.",
-
+    passage: readingPassages.passage3,
     question:
-      "What is the purpose of collecting different types of nutrition information?",
-
+      "According to the passage, what may happen to information acquired during the day?",
     options: [
-      "To understand nutritional status.",
-      "To avoid laboratory testing.",
-      "To determine a person's occupation.",
-      "To replace dietary information."
+      "It is completely removed from the brain during sleep.",
+      "It may be processed and integrated with previously stored knowledge.",
+      "It is transferred directly to the muscles during sleep.",
+      "It becomes unnecessary after a person wakes up."
     ],
-
-    answer: 0
+    answer: 1
   },
 
   {
-    passage:
-      "Clean water is important for human health. Contaminated water can contain microorganisms or chemicals that may cause illness. Improving water quality is therefore an important part of environmental health.",
-
+    passage: readingPassages.passage3,
     question:
-      "Why is water quality important?",
-
+      "What can be inferred about sleep and studying?",
     options: [
-      "It determines food color.",
-      "Contaminated water may cause illness.",
-      "It removes the need for sanitation.",
-      "It prevents every type of disease."
+      "Sleep can replace attention and practice.",
+      "Studying is useful only after a long period of sleep.",
+      "Sleep supports learning but does not replace active study.",
+      "Students should study only when they are tired."
     ],
-
-    answer: 1
+    answer: 2
   }
 
 ];
@@ -1324,9 +1317,6 @@ const progressBar =
 
 const timerEl =
   document.getElementById("timer");
-
-const prevBtn =
-  document.getElementById("prevBtn");
 
 const nextBtn =
   document.getElementById("nextBtn");
@@ -1496,16 +1486,7 @@ function renderQuestion() {
     renderStandard(q);
 
   }
-
-  prevBtn.disabled =
-    current === 0;
-
-  prevBtn.style.opacity =
-    current === 0
-      ? ".5"
-      : "1";
-
-  nextBtn.textContent =
+nextBtn.textContent =
     current ===
     questions.length - 1
       ? "Finish Test"
@@ -1701,13 +1682,38 @@ function renderStandard(q) {
               background:#f7faf9;
               border:1px solid #e7ecea;
               border-radius:16px;
-              padding:20px;
-              line-height:1.8;
+              padding:22px;
+              line-height:1.85;
               margin-bottom:22px;
               color:#53636a;
+              max-height:430px;
+              overflow-y:auto;
             "
           >
-            ${q.passage}
+            ${
+              q.type === "reading"
+                ? `
+                  <div
+                    style="
+                      font-size:14px;
+                      font-weight:700;
+                      color:#087f7b;
+                      margin-bottom:12px;
+                    "
+                  >
+                    ${q.passage.title}
+                  </div>
+                `
+                : ""
+            }
+
+            <div>
+              ${
+                typeof q.passage === "object"
+                  ? q.passage.text
+                  : q.passage
+              }
+            </div>
           </div>
         `
         : ""
@@ -2198,35 +2204,16 @@ function stopSpeech() {
    NAVIGATION
 ========================================== */
 
-prevBtn.addEventListener(
-  "click",
-  () => {
-
-    if (finished) return;
-
-    saveCurrentAnswer();
-
-
-    if (current > 0) {
-
-      current--;
-
-      renderQuestion();
-
-    }
-
-  }
-);
-
-
 nextBtn.addEventListener(
   "click",
   () => {
 
     if (finished) return;
 
-    saveCurrentAnswer();
+    // Stop any listening audio immediately.
+    stopSpeech();
 
+    saveCurrentAnswer();
 
     if (
       current ===
