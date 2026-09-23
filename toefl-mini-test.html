@@ -1,1663 +1,2696 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-  <title>TOEFL Mini Test | AI Lingua Lab</title>
-
-  <style>
-    :root {
-      --bg: #fffdf8;
-      --white: #ffffff;
-      --text: #172333;
-      --muted: #62758a;
-      --teal: #087f7b;
-      --teal-soft: #eaf8f5;
-      --teal-border: #cfece7;
-      --lavender: #f3eefc;
-      --lavender-border: #ded2f4;
-      --blue-soft: #eef6fc;
-      --blue-border: #d7e9f6;
-      --yellow-soft: #fff8df;
-      --border: #e7e4df;
-      --shadow: 0 12px 35px rgba(35, 48, 62, 0.07);
-      --radius: 20px;
-    }
-
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    body {
-      font-family:
-        Inter,
-        -apple-system,
-        BlinkMacSystemFont,
-        "Segoe UI",
-        sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      line-height: 1.6;
-    }
-
-    nav {
-      height: 62px;
-      border-bottom: 1px solid var(--border);
-      background: rgba(255, 253, 248, 0.96);
-      display: flex;
-      align-items: center;
-    }
-
-    .nav-inner {
-      width: min(1100px, 92%);
-      margin: auto;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .logo {
-      font-weight: 800;
-      color: var(--teal);
-      font-size: 20px;
-      letter-spacing: 0.4px;
-    }
-
-    .back-link {
-      text-decoration: none;
-      color: var(--muted);
-      font-size: 14px;
-      font-weight: 600;
-    }
-
-    .back-link:hover {
-      color: var(--teal);
-    }
-
-    .page {
-      width: min(900px, 92%);
-      margin: 0 auto;
-      padding: 55px 0 80px;
-    }
-
-    .hero {
-      text-align: center;
-      margin-bottom: 35px;
-    }
-
-    .eyebrow {
-      color: var(--teal);
-      font-size: 13px;
-      font-weight: 800;
-      letter-spacing: 1.3px;
-      text-transform: uppercase;
-      margin-bottom: 10px;
-    }
-
-    h1 {
-      font-size: clamp(34px, 5vw, 54px);
-      line-height: 1.05;
-      margin-bottom: 16px;
-      letter-spacing: -1.5px;
-    }
-
-    h1 span {
-      color: var(--teal);
-    }
-
-    .hero p {
-      color: var(--muted);
-      max-width: 650px;
-      margin: auto;
-      font-size: 16px;
-    }
-
-    .intro-card,
-    .test-card,
-    .result-card {
-      background: var(--white);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-    }
-
-    .intro-card {
-      padding: 28px;
-      margin-bottom: 24px;
-    }
-
-    .intro-card h2 {
-      font-size: 21px;
-      margin-bottom: 12px;
-    }
-
-    .intro-card p {
-      color: var(--muted);
-      font-size: 14px;
-      margin-bottom: 18px;
-    }
-
-    .info-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 12px;
-    }
-
-    .info-item {
-      padding: 16px;
-      border-radius: 14px;
-    }
-
-    .info-item:nth-child(1) {
-      background: var(--teal-soft);
-    }
-
-    .info-item:nth-child(2) {
-      background: var(--lavender);
-    }
-
-    .info-item:nth-child(3) {
-      background: var(--blue-soft);
-    }
-
-    .info-item strong {
-      display: block;
-      font-size: 15px;
-      margin-bottom: 3px;
-    }
-
-    .info-item span {
-      color: var(--muted);
-      font-size: 13px;
-    }
-
-    .start-area {
-      text-align: center;
-      margin-top: 25px;
-    }
-
-    button {
-      font-family: inherit;
-    }
-
-    .primary-btn {
-      border: none;
-      background: var(--teal);
-      color: white;
-      padding: 14px 25px;
-      border-radius: 12px;
-      font-size: 15px;
-      font-weight: 750;
-      cursor: pointer;
-      transition: 0.2s ease;
-    }
-
-    .primary-btn:hover {
-      transform: translateY(-1px);
-      opacity: 0.94;
-    }
-
-    .test-card {
-      padding: 28px;
-    }
-
-    .test-top {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 20px;
-      margin-bottom: 25px;
-      padding-bottom: 20px;
-      border-bottom: 1px solid var(--border);
-    }
-
-    .section-label {
-      font-size: 13px;
-      color: var(--teal);
-      font-weight: 800;
-      text-transform: uppercase;
-      letter-spacing: 0.7px;
-    }
-
-    .section-title {
-      font-size: 24px;
-      margin-top: 3px;
-    }
-
-    .timer {
-      background: var(--yellow-soft);
-      border: 1px solid #f0e3ae;
-      padding: 8px 14px;
-      border-radius: 10px;
-      font-weight: 800;
-      color: #7b641e;
-      white-space: nowrap;
-    }
-
-    .progress-wrap {
-      margin-bottom: 25px;
-    }
-
-    .progress-text {
-      display: flex;
-      justify-content: space-between;
-      font-size: 13px;
-      color: var(--muted);
-      margin-bottom: 7px;
-    }
-
-    .progress-bar {
-      height: 7px;
-      background: #edf0f1;
-      border-radius: 10px;
-      overflow: hidden;
-    }
-
-    .progress-fill {
-      height: 100%;
-      background: var(--teal);
-      width: 0%;
-      transition: width 0.2s ease;
-    }
-
-    .question-number {
-      color: var(--teal);
-      font-weight: 800;
-      font-size: 14px;
-      margin-bottom: 8px;
-    }
-
-    .question {
-      font-size: 18px;
-      font-weight: 650;
-      line-height: 1.55;
-      margin-bottom: 20px;
-    }
-
-    .audio-box {
-      background: var(--teal-soft);
-      border: 1px solid var(--teal-border);
-      border-radius: 14px;
-      padding: 17px;
-      margin-bottom: 20px;
-    }
-
-    .audio-box p {
-      color: var(--muted);
-      font-size: 13px;
-      margin-bottom: 11px;
-    }
-
-    .audio-btn {
-      border: none;
-      background: white;
-      color: var(--teal);
-      border: 1px solid var(--teal-border);
-      padding: 10px 15px;
-      border-radius: 10px;
-      font-weight: 750;
-      cursor: pointer;
-    }
-
-    .audio-btn:hover {
-      background: #f8fffd;
-    }
-
-    .options {
-      display: grid;
-      gap: 10px;
-    }
-
-    .option {
-      display: flex;
-      align-items: flex-start;
-      gap: 12px;
-      border: 1px solid var(--border);
-      border-radius: 13px;
-      padding: 14px 15px;
-      cursor: pointer;
-      transition: 0.15s ease;
-    }
-
-    .option:hover {
-      border-color: var(--teal-border);
-      background: #fbfffe;
-    }
-
-    .option.selected {
-      border-color: var(--teal);
-      background: var(--teal-soft);
-    }
-
-    .option input {
-      margin-top: 4px;
-      accent-color: var(--teal);
-    }
-
-    .option span {
-      font-size: 14px;
-      color: #34465a;
-    }
-
-    .passage {
-      background: #fafafa8f;
-      border: 1px solid var(--border);
-      border-radius: 15px;
-      padding: 20px;
-      margin-bottom: 22px;
-      color: #3c4d5e;
-      font-size: 14px;
-      line-height: 1.8;
-    }
-
-    .passage-title {
-      color: var(--text);
-      font-weight: 800;
-      margin-bottom: 9px;
-    }
-
-    .nav-buttons {
-      display: flex;
-      justify-content: space-between;
-      gap: 12px;
-      margin-top: 30px;
-      padding-top: 20px;
-      border-top: 1px solid var(--border);
-    }
-
-    .secondary-btn {
-      border: 1px solid var(--border);
-      background: white;
-      color: var(--text);
-      padding: 12px 20px;
-      border-radius: 11px;
-      font-weight: 700;
-      cursor: pointer;
-    }
-
-    .secondary-btn:hover {
-      background: #fafafa;
-    }
-
-    .secondary-btn:disabled {
-      opacity: 0.45;
-      cursor: not-allowed;
-    }
-
-    .hidden {
-      display: none !important;
-    }
-
-    .result-card {
-      padding: 34px;
-      text-align: center;
-    }
-
-    .result-label {
-      color: var(--teal);
-      text-transform: uppercase;
-      font-size: 12px;
-      font-weight: 800;
-      letter-spacing: 1px;
-      margin-bottom: 8px;
-    }
-
-    .result-title {
-      font-size: 32px;
-      margin-bottom: 8px;
-    }
-
-    .result-subtitle {
-      color: var(--muted);
-      font-size: 14px;
-      margin-bottom: 28px;
-    }
-
-    .score-big {
-      font-size: 58px;
-      font-weight: 850;
-      color: var(--teal);
-      line-height: 1;
-      margin-bottom: 5px;
-    }
-
-    .score-label {
-      color: var(--muted);
-      font-size: 13px;
-      margin-bottom: 30px;
-    }
-
-    .section-results {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 12px;
-      margin-bottom: 25px;
-    }
-
-    .section-result {
-      border-radius: 14px;
-      padding: 18px;
-    }
-
-    .section-result:nth-child(1) {
-      background: var(--teal-soft);
-    }
-
-    .section-result:nth-child(2) {
-      background: var(--lavender);
-    }
-
-    .section-result:nth-child(3) {
-      background: var(--blue-soft);
-    }
-
-    .section-result strong {
-      display: block;
-      font-size: 16px;
-      margin-bottom: 5px;
-    }
-
-    .section-result span {
-      color: var(--muted);
-      font-size: 14px;
-    }
-
-    .result-note {
-      background: #faf9f6;
-      border: 1px solid var(--border);
-      border-radius: 13px;
-      padding: 15px;
-      color: var(--muted);
-      font-size: 13px;
-      margin-bottom: 25px;
-    }
-
-    .result-actions {
-      display: flex;
-      justify-content: center;
-      gap: 10px;
-      flex-wrap: wrap;
-    }
-
-    .loading {
-      text-align: center;
-      padding: 60px 20px;
-      color: var(--muted);
-    }
-
-    @media (max-width: 700px) {
-      .page {
-        padding-top: 35px;
-      }
-
-      .info-grid,
-      .section-results {
-        grid-template-columns: 1fr;
-      }
-
-      .test-top {
-        align-items: flex-start;
-        flex-direction: column;
-      }
-
-      .timer {
-        width: 100%;
-        text-align: center;
-      }
-
-      .test-card,
-      .intro-card,
-      .result-card {
-        padding: 20px;
-      }
-
-      .question {
-        font-size: 16px;
-      }
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>TOEFL Mini Test | AI Lingua Lab</title>
+
+<style>
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: Inter, Segoe UI, Arial, sans-serif;
+  background: #fffdf8;
+  color: #263238;
+}
+
+nav {
+  height: 72px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 7%;
+  border-bottom: 1px solid #e9ecef;
+  background: rgba(255, 253, 248, 0.96);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.logo {
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  color: #087f7b;
+}
+
+.back {
+  text-decoration: none;
+  color: #53636b;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.wrap {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 52px 22px 80px;
+}
+
+.hero {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.eyebrow {
+  display: inline-block;
+  padding: 7px 12px;
+  border-radius: 999px;
+  background: #e4f5f1;
+  color: #087f7b;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+}
+
+h1 {
+  font-size: 42px;
+  margin: 16px 0 10px;
+  letter-spacing: -0.03em;
+}
+
+.hero p {
+  max-width: 650px;
+  margin: auto;
+  color: #68777e;
+  line-height: 1.7;
+}
+
+.panel {
+  background: white;
+  border: 1px solid #e7ebe9;
+  border-radius: 22px;
+  padding: 28px;
+  box-shadow: 0 10px 30px rgba(39, 70, 67, 0.06);
+}
+
+.start-panel {
+  text-align: center;
+}
+
+.structure {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin: 22px 0;
+}
+
+.stat {
+  padding: 16px;
+  border-radius: 15px;
+  border: 1px solid #e8eceb;
+}
+
+.stat strong {
+  display: block;
+  font-size: 21px;
+  color: #087f7b;
+}
+
+.stat span {
+  font-size: 12px;
+  color: #748087;
+}
+
+button {
+  border: 0;
+  border-radius: 12px;
+  padding: 13px 20px;
+  font-weight: 750;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.primary {
+  background: #087f7b;
+  color: white;
+}
+
+.primary:hover {
+  background: #076d69;
+}
+
+.secondary {
+  background: #eef7f5;
+  color: #087f7b;
+}
+
+.test-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 18px;
+}
+
+.section-label {
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  color: #087f7b;
+  text-transform: uppercase;
+}
+
+.timer {
+  padding: 9px 13px;
+  background: #fff5d8;
+  border-radius: 10px;
+  font-weight: 800;
+  color: #80631d;
+}
+
+.timer.urgent {
+  background: #fff0ed;
+  color: #b55342;
+}
+
+.progress {
+  height: 7px;
+  background: #edf0ef;
+  border-radius: 99px;
+  overflow: hidden;
+  margin-bottom: 25px;
+}
+
+.progress-bar {
+  height: 100%;
+  width: 0;
+  background: #75cfc1;
+  transition: 0.25s;
+}
+
+.question-card {
+  min-height: 420px;
+  display: flex;
+  flex-direction: column;
+}
+
+.q-number {
+  font-size: 13px;
+  color: #7a878d;
+  margin-bottom: 12px;
+}
+
+.q-title {
+  font-size: 20px;
+  font-weight: 750;
+  margin-bottom: 20px;
+}
+
+.listening-box {
+  background: #edf8f6;
+  border: 1px solid #d6eee9;
+  border-radius: 18px;
+  padding: 28px 22px;
+  text-align: center;
+  margin-bottom: 25px;
+}
+
+.audio-symbol {
+  width: 54px;
+  height: 54px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 12px;
+  background: #d8f0ec;
+  color: #087f7b;
+  font-size: 23px;
+}
+
+.audio-title {
+  font-weight: 800;
+  color: #145c59;
+}
+
+.audio-status {
+  font-size: 13px;
+  color: #68817f;
+  margin-top: 7px;
+  min-height: 20px;
+}
+
+.audio-note {
+  font-size: 11px;
+  color: #7b8e8b;
+  margin-top: 9px;
+}
+
+.options {
+  display: grid;
+  gap: 11px;
+}
+
+.option {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  border: 1px solid #e1e7e5;
+  border-radius: 13px;
+  padding: 15px;
+  cursor: pointer;
+  transition: 0.18s;
+}
+
+.option:hover {
+  background: #f8fbfa;
+  border-color: #abdcd5;
+}
+
+.option input {
+  accent-color: #087f7b;
+}
+
+.option-letter {
+  font-weight: 800;
+  color: #087f7b;
+  min-width: 22px;
+}
+
+.controls {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 28px;
+}
+
+.result {
+  text-align: center;
+}
+
+.score-circle {
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  background: #e5f6f2;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 20px auto;
+}
+
+.score-circle strong {
+  font-size: 35px;
+  color: #087f7b;
+}
+
+.score-circle span {
+  font-size: 12px;
+  color: #65777b;
+}
+
+.results-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin: 25px 0;
+}
+
+.result-item {
+  padding: 18px;
+  border: 1px solid #e6ebe9;
+  border-radius: 15px;
+}
+
+.result-item strong {
+  display: block;
+  font-size: 23px;
+  color: #087f7b;
+}
+
+.result-item span {
+  font-size: 12px;
+  color: #738087;
+}
+
+.summary {
+  background: #f8faf9;
+  border: 1px solid #e6ebe9;
+  border-radius: 15px;
+  padding: 15px;
+  margin: 18px 0;
+  color: #68777e;
+  line-height: 1.6;
+}
+
+.hidden {
+  display: none !important;
+}
+
+.loading {
+  color: #6e7c82;
+}
+
+footer {
+  text-align: center;
+  color: #9aa4a8;
+  font-size: 12px;
+  margin-top: 45px;
+}
+
+@media (max-width: 650px) {
+
+  nav {
+    padding: 0 5%;
+  }
+
+  h1 {
+    font-size: 34px;
+  }
+
+  .structure,
+  .results-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .panel {
+    padding: 20px;
+  }
+
+  .controls {
+    flex-direction: column;
+  }
+
+  .controls button {
+    width: 100%;
+  }
+}
+</style>
 </head>
 
 <body>
 
-  <nav>
-    <div class="nav-inner">
-      <div class="logo">AI LINGUA LAB</div>
-      <a href="toefl.html" class="back-link">← Back to TOEFL Lab</a>
+<nav>
+
+  <div class="logo">
+    AI LINGUA LAB
+  </div>
+
+  <a href="toefl.html" class="back">
+    ← Back to TOEFL Lab
+  </a>
+
+</nav>
+
+
+<main class="wrap">
+
+
+<section class="hero">
+
+  <span class="eyebrow">
+    TOEFL LAB
+  </span>
+
+  <h1>
+    TOEFL Mini Test
+  </h1>
+
+  <p>
+    A short diagnostic test covering Listening, Structure,
+    and Reading. The Listening section follows a
+    TOEFL-style short-conversation format.
+  </p>
+
+</section>
+
+
+
+<section id="startScreen" class="panel start-panel">
+
+  <h2>
+    Before You Begin
+  </h2>
+
+  <p class="loading">
+    This mini test contains 30 original questions.
+    Listening audio is played as a short conversation
+    followed by a spoken question.
+  </p>
+
+
+  <div class="structure">
+
+    <div class="stat">
+      <strong>10</strong>
+      <span>Listening</span>
     </div>
-  </nav>
 
-  <main class="page">
+    <div class="stat">
+      <strong>10</strong>
+      <span>Structure</span>
+    </div>
 
-    <!-- HERO -->
-    <section class="hero">
-      <div class="eyebrow">TOEFL Lab</div>
-      <h1>TOEFL <span>Mini Test</span></h1>
-      <p>
-        A short diagnostic test to explore your current performance
-        across the main TOEFL-style sections.
-      </p>
-    </section>
+    <div class="stat">
+      <strong>10</strong>
+      <span>Reading</span>
+    </div>
 
-    <!-- INTRO -->
-    <section id="introScreen" class="intro-card">
+  </div>
 
-      <h2>Before you begin</h2>
 
-      <p>
-        This mini test contains 30 original questions covering
-        Listening Comprehension, Structure &amp; Written Expression,
-        and Reading Comprehension.
-      </p>
+  <p style="font-size:13px;color:#7a878d">
 
-      <div class="info-grid">
+    You have 30 minutes.
+    When time runs out, the test is submitted automatically.
+    Only answered questions are included in the score.
 
-        <div class="info-item">
-          <strong>Listening</strong>
-          <span>10 questions</span>
-        </div>
+  </p>
 
-        <div class="info-item">
-          <strong>Structure</strong>
-          <span>10 questions</span>
-        </div>
 
-        <div class="info-item">
-          <strong>Reading</strong>
-          <span>10 questions</span>
-        </div>
+  <button class="primary" id="startBtn">
+    Start Mini Test
+  </button>
 
+</section>
+
+
+
+<section id="testScreen" class="panel hidden">
+
+  <div class="test-top">
+
+    <div>
+
+      <div id="sectionLabel" class="section-label">
+        Listening
       </div>
 
-      <div class="start-area">
-        <button class="primary-btn" onclick="startTest()">
-          Start Mini Test →
-        </button>
+      <div id="questionCounter" class="q-number">
+        Question 1 of 30
       </div>
 
-    </section>
-
-    <!-- TEST -->
-    <section id="testScreen" class="test-card hidden">
-
-      <div class="test-top">
-
-        <div>
-          <div id="sectionLabel" class="section-label">
-            Listening Comprehension
-          </div>
-
-          <div id="sectionTitle" class="section-title">
-            Listening
-          </div>
-        </div>
-
-        <div id="timer" class="timer">
-          30:00
-        </div>
-
-      </div>
-
-      <div class="progress-wrap">
-
-        <div class="progress-text">
-          <span id="progressText">Question 1 of 30</span>
-          <span id="sectionProgress">Listening</span>
-        </div>
-
-        <div class="progress-bar">
-          <div id="progressFill" class="progress-fill"></div>
-        </div>
-
-      </div>
-
-      <div id="questionContainer"></div>
-
-      <div class="nav-buttons">
-
-        <button
-          id="prevBtn"
-          class="secondary-btn"
-          onclick="previousQuestion()"
-        >
-          ← Previous
-        </button>
-
-        <button
-          id="nextBtn"
-          class="primary-btn"
-          onclick="nextQuestion()"
-        >
-          Next →
-        </button>
-
-      </div>
-
-    </section>
-
-    <!-- RESULT -->
-    <section id="resultScreen" class="result-card hidden">
-
-      <div class="result-label">Mini Test Complete</div>
-
-      <h2 class="result-title">
-        Your Diagnostic Result
-      </h2>
-
-      <p class="result-subtitle">
-        This result shows your performance on this short diagnostic test.
-      </p>
-
-      <div id="totalScore" class="score-big">
-        0/30
-      </div>
-
-      <div class="score-label">
-        Total correct answers
-      </div>
-
-      <div class="section-results">
-
-        <div class="section-result">
-          <strong>Listening</strong>
-          <span id="listeningResult">0/10</span>
-        </div>
-
-        <div class="section-result">
-          <strong>Structure</strong>
-          <span id="structureResult">0/10</span>
-        </div>
-
-        <div class="section-result">
-          <strong>Reading</strong>
-          <span id="readingResult">0/10</span>
-        </div>
-
-      </div>
-
-      <div class="result-note">
-        This is a diagnostic TOEFL-style mini test.
-        It is <strong>not an official TOEFL score</strong>.
-        Your TOEFL Prediction will use a longer assessment
-        and a separate score-estimation process.
-      </div>
-
-      <div class="result-actions">
-
-        <button
-          class="secondary-btn"
-          onclick="location.reload()"
-        >
-          Retake Mini Test
-        </button>
-
-        <button
-          class="primary-btn"
-          onclick="window.location.href='toefl.html'"
-        >
-          Back to TOEFL Lab →
-        </button>
-
-      </div>
-
-    </section>
-
-  </main>
+    </div>
 
 
-  <!-- SUPABASE -->
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <div id="timer" class="timer">
+      30:00
+    </div>
 
-  <script>
-
-    const SUPABASE_URL =
-      "https://glwpjsnwdzufyiumxikk.supabase.co";
-
-    const SUPABASE_PUBLISHABLE_KEY =
-      "sb_publishable_Bbu_RSEmPsNUWjroJB7HUQ_Gonq02F8";
-
-    const { createClient } = supabase;
-
-    const supabaseClient = createClient(
-      SUPABASE_URL,
-      SUPABASE_PUBLISHABLE_KEY
-    );
+  </div>
 
 
-    /* =========================
-       QUESTIONS
-    ========================= */
+  <div class="progress">
 
-    const questions = [
+    <div id="progressBar" class="progress-bar"></div>
 
-      /* LISTENING 1-10 */
+  </div>
+
+
+  <div class="question-card">
+
+    <div id="questionContent"></div>
+
+  </div>
+
+
+  <div class="controls">
+
+    <button id="prevBtn" class="secondary">
+      ← Previous
+    </button>
+
+    <button id="nextBtn" class="primary">
+      Next →
+    </button>
+
+  </div>
+
+</section>
+
+
+
+<section id="resultScreen" class="panel result hidden">
+
+  <div class="eyebrow">
+    TEST COMPLETE
+  </div>
+
+
+  <h1>
+    Your Mini Test Result
+  </h1>
+
+
+  <div class="score-circle">
+
+    <strong id="totalScore">
+      0
+    </strong>
+
+    <span>
+      correct
+    </span>
+
+  </div>
+
+
+  <div class="summary" id="scoreSummary"></div>
+
+
+  <div class="results-grid">
+
+    <div class="result-item">
+
+      <strong id="listeningScore">
+        0
+      </strong>
+
+      <span>
+        Listening correct
+      </span>
+
+    </div>
+
+
+    <div class="result-item">
+
+      <strong id="structureScore">
+        0
+      </strong>
+
+      <span>
+        Structure correct
+      </span>
+
+    </div>
+
+
+    <div class="result-item">
+
+      <strong id="readingScore">
+        0
+      </strong>
+
+      <span>
+        Reading correct
+      </span>
+
+    </div>
+
+  </div>
+
+
+  <p style="color:#68777e;line-height:1.7">
+
+    This result is a diagnostic result from
+    AI Lingua Lab and is
+    <strong>not an official TOEFL score</strong>.
+
+  </p>
+
+
+  <button
+    class="primary"
+    onclick="window.location.href='toefl.html'"
+  >
+    Back to TOEFL Lab
+  </button>
+
+</section>
+
+
+
+<footer>
+  AI Lingua Lab · TOEFL Mini Test
+</footer>
+
+</main>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+
+<script>
+
+const SUPABASE_URL =
+  "https://glwpjsnwdzufyiumxikk.supabase.co";
+
+const SUPABASE_PUBLISHABLE_KEY =
+  "sb_publishable_Bbu_RSEmPsNUWjroJB7HUQ_Gonq02F8";
+
+const { createClient } = supabase;
+
+const supabaseClient =
+  createClient(
+    SUPABASE_URL,
+    SUPABASE_PUBLISHABLE_KEY
+  );
+
+
+
+/* ==========================================
+   LISTENING QUESTIONS
+   TOEFL-STYLE PART A
+========================================== */
+
+const listeningQuestions = [
+
+  {
+    conversation: [
 
       {
-        section: "Listening",
-        type: "listening",
-        audio:
-          "Woman: Did you finish the nutrition assignment? Man: Not yet. I still need to read the last article. Woman: You should probably start soon. The professor wants it tomorrow morning.",
-        question:
-          "What does the man still need to do?",
-        options: [
-          "Write an email to the professor.",
-          "Read the last article.",
-          "Attend a nutrition class.",
-          "Submit the assignment."
-        ],
-        answer: 1
+        speaker: "male",
+        text: "Did you finish the report for Dr. Miller?"
       },
 
       {
-        section: "Listening",
-        type: "listening",
-        audio:
-          "Man: Are you going to the laboratory this afternoon? Woman: I planned to, but the laboratory is closed today. Man: Really? Then I will go tomorrow instead.",
-        question:
-          "Why will the man go to the laboratory tomorrow?",
-        options: [
-          "He has another class today.",
-          "The laboratory is closed today.",
-          "He needs to meet his professor.",
-          "He forgot his laboratory equipment."
-        ],
-        answer: 1
-      },
-
-      {
-        section: "Listening",
-        type: "listening",
-        audio:
-          "Woman: How was your presentation? Man: It went better than I expected. I was nervous at first, but the audience asked some interesting questions. Woman: That sounds like a successful presentation.",
-        question:
-          "How did the man feel about his presentation?",
-        options: [
-          "He thought it was unsuccessful.",
-          "He thought it was difficult to prepare.",
-          "He was more satisfied than he expected.",
-          "He did not understand the questions."
-        ],
-        answer: 2
-      },
-
-      {
-        section: "Listening",
-        type: "listening",
-        audio:
-          "Professor: Today we will discuss iron deficiency. Iron is important because it helps the body produce hemoglobin. When a person does not receive enough iron, fatigue may occur.",
-        question:
-          "What is the main topic of the professor's talk?",
-        options: [
-          "The causes of exercise.",
-          "The importance of iron.",
-          "The production of food.",
-          "The treatment of fatigue."
-        ],
-        answer: 1
-      },
-
-      {
-        section: "Listening",
-        type: "listening",
-        audio:
-          "Man: Did you bring the research article? Woman: Yes, but I only printed the first five pages. Man: That's okay. We can read the remaining pages on the computer.",
-        question:
-          "What problem does the woman have?",
-        options: [
-          "She forgot the research topic.",
-          "She lost her computer.",
-          "She did not print the entire article.",
-          "She cannot read the article."
-        ],
-        answer: 2
-      },
-
-      {
-        section: "Listening",
-        type: "listening",
-        audio:
-          "Woman: Why are you leaving the seminar early? Man: I have to meet my academic advisor at three o'clock. Woman: Oh, I see. I hope the meeting goes well.",
-        question:
-          "Why is the man leaving the seminar early?",
-        options: [
-          "He is feeling sick.",
-          "He has an appointment with his advisor.",
-          "He has to prepare a seminar.",
-          "He needs to go to the laboratory."
-        ],
-        answer: 1
-      },
-
-      {
-        section: "Listening",
-        type: "listening",
-        audio:
-          "Professor: Dietary fiber is found in foods such as vegetables, fruits, and whole grains. It can help support normal digestion and is an important part of a balanced diet.",
-        question:
-          "According to the professor, where can dietary fiber be found?",
-        options: [
-          "Only in meat.",
-          "Only in dairy products.",
-          "In vegetables, fruits, and whole grains.",
-          "Only in processed foods."
-        ],
-        answer: 2
-      },
-
-      {
-        section: "Listening",
-        type: "listening",
-        audio:
-          "Man: Have you decided which elective course to take? Woman: Yes. I was considering public health, but I finally chose food safety because it is more closely related to my interests.",
-        question:
-          "Why did the woman choose food safety?",
-        options: [
-          "It is the easiest course.",
-          "It is related to her interests.",
-          "Her professor recommended it.",
-          "Public health was cancelled."
-        ],
-        answer: 1
-      },
-
-      {
-        section: "Listening",
-        type: "listening",
-        audio:
-          "Professor: Before collecting the samples, make sure that every container is properly labeled. Incorrect labeling can make it difficult to identify the samples later.",
-        question:
-          "What does the professor advise the students to do?",
-        options: [
-          "Collect fewer samples.",
-          "Use larger containers.",
-          "Label every container correctly.",
-          "Store the samples outside."
-        ],
-        answer: 2
-      },
-
-      {
-        section: "Listening",
-        type: "listening",
-        audio:
-          "Woman: Did you understand the instructions for the group project? Man: Mostly. We need to prepare a short report and present our findings next Monday. Woman: Right. Let's divide the work today.",
-        question:
-          "What do the students need to do for the project?",
-        options: [
-          "Write an examination.",
-          "Prepare a report and presentation.",
-          "Attend a laboratory tomorrow.",
-          "Read a new textbook."
-        ],
-        answer: 1
-      },
-
-
-      /* STRUCTURE 11-20 */
-
-      {
-        section: "Structure",
-        type: "structure",
-        question:
-          "The students _____ their research proposal before the deadline.",
-        options: [
-          "submit",
-          "submitted",
-          "submitting",
-          "submission"
-        ],
-        answer: 1
-      },
-
-      {
-        section: "Structure",
-        type: "structure",
-        question:
-          "The lecturer explained the procedure carefully _____ the students could understand it.",
-        options: [
-          "because",
-          "so that",
-          "although",
-          "unless"
-        ],
-        answer: 1
-      },
-
-      {
-        section: "Structure",
-        type: "structure",
-        question:
-          "_____ the results were unexpected, the researchers repeated the experiment.",
-        options: [
-          "Because",
-          "Despite",
-          "Although",
-          "During"
-        ],
-        answer: 2
-      },
-
-      {
-        section: "Structure",
-        type: "structure",
-        question:
-          "The report _____ by the students last week.",
-        options: [
-          "completed",
-          "was completed",
-          "completing",
-          "has completing"
-        ],
-        answer: 1
-      },
-
-      {
-        section: "Structure",
-        type: "structure",
-        question:
-          "Nutrition students need English _____ they can access international research articles.",
-        options: [
-          "so that",
-          "because of",
-          "despite",
-          "while"
-        ],
-        answer: 0
-      },
-
-      {
-        section: "Structure",
-        type: "structure",
-        question:
-          "The researcher collected the data carefully, _____?",
-        options: [
-          "didn't she",
-          "wasn't she",
-          "doesn't she",
-          "hasn't she"
-        ],
-        answer: 0
-      },
-
-      {
-        section: "Structure",
-        type: "structure",
-        question:
-          "The samples must _____ at a low temperature.",
-        options: [
-          "store",
-          "stored",
-          "be stored",
-          "storing"
-        ],
-        answer: 2
-      },
-
-      {
-        section: "Structure",
-        type: "structure",
-        question:
-          "The article provides useful information about _____ nutrition education.",
-        options: [
-          "community",
-          "community's",
-          "communities",
-          "communally"
-        ],
-        answer: 0
-      },
-
-      {
-        section: "Structure",
-        type: "structure",
-        question:
-          "The students were reviewing the material when the lecturer _____.",
-        options: [
-          "arrives",
-          "arrived",
-          "arriving",
-          "has arrived"
-        ],
-        answer: 1
-      },
-
-      {
-        section: "Structure",
-        type: "structure",
-        question:
-          "The researcher was interested in _____ how dietary habits affect health.",
-        options: [
-          "understand",
-          "understood",
-          "understanding",
-          "understands"
-        ],
-        answer: 2
-      },
-
-
-      /* READING 21-30 */
-
-      {
-        section: "Reading",
-        type: "reading",
-        passageTitle: "Passage 1",
-        passage:
-          "Water is an essential component of the human body. It helps regulate body temperature, transport nutrients, and remove waste products. The amount of water a person needs can vary depending on factors such as physical activity, climate, age, and overall health. During exercise, for example, the body loses water through sweat. If the lost fluid is not replaced, dehydration may occur.",
-        question:
-          "What is the passage mainly about?",
-        options: [
-          "The causes of exercise.",
-          "The importance and functions of water in the body.",
-          "The treatment of serious diseases.",
-          "The effects of climate on exercise."
-        ],
-        answer: 1
-      },
-
-      {
-        section: "Reading",
-        type: "reading",
-        passageTitle: "Passage 1",
-        passage:
-          "Water is an essential component of the human body. It helps regulate body temperature, transport nutrients, and remove waste products. The amount of water a person needs can vary depending on factors such as physical activity, climate, age, and overall health. During exercise, for example, the body loses water through sweat. If the lost fluid is not replaced, dehydration may occur.",
-        question:
-          "According to the passage, what can cause the body to lose water?",
-        options: [
-          "Reading.",
-          "Sleeping.",
-          "Exercise.",
-          "Studying."
-        ],
-        answer: 2
-      },
-
-      {
-        section: "Reading",
-        type: "reading",
-        passageTitle: "Passage 1",
-        passage:
-          "Water is an essential component of the human body. It helps regulate body temperature, transport nutrients, and remove waste products. The amount of water a person needs can vary depending on factors such as physical activity, climate, age, and overall health. During exercise, for example, the body loses water through sweat. If the lost fluid is not replaced, dehydration may occur.",
-        question:
-          "The word 'dehydration' is closest in meaning to:",
-        options: [
-          "lack of water",
-          "increase in temperature",
-          "loss of nutrients",
-          "difficulty in breathing"
-        ],
-        answer: 0
-      },
-
-      {
-        section: "Reading",
-        type: "reading",
-        passageTitle: "Passage 1",
-        passage:
-          "Water is an essential component of the human body. It helps regulate body temperature, transport nutrients, and remove waste products. The amount of water a person needs can vary depending on factors such as physical activity, climate, age, and overall health. During exercise, for example, the body loses water through sweat. If the lost fluid is not replaced, dehydration may occur.",
-        question:
-          "Which factor is NOT mentioned as affecting water needs?",
-        options: [
-          "Age.",
-          "Climate.",
-          "Physical activity.",
-          "Blood type."
-        ],
-        answer: 3
-      },
-
-      {
-        section: "Reading",
-        type: "reading",
-        passageTitle: "Passage 1",
-        passage:
-          "Water is an essential component of the human body. It helps regulate body temperature, transport nutrients, and remove waste products. The amount of water a person needs can vary depending on factors such as physical activity, climate, age, and overall health. During exercise, for example, the body loses water through sweat. If the lost fluid is not replaced, dehydration may occur.",
-        question:
-          "Why is water important during exercise?",
-        options: [
-          "It increases body weight.",
-          "It replaces fluid lost through sweating.",
-          "It prevents all illnesses.",
-          "It reduces the need for food."
-        ],
-        answer: 1
-      },
-
-      {
-        section: "Reading",
-        type: "reading",
-        passageTitle: "Passage 2",
-        passage:
-          "Fermentation is a process used to produce or preserve certain foods. During fermentation, microorganisms such as bacteria or yeast transform substances in food. This process can change the flavor, texture, and chemical properties of a product. Yogurt, bread, and some traditional fermented foods are examples of products made using microorganisms.",
-        question:
-          "What is the main idea of the passage?",
-        options: [
-          "How microorganisms cause disease.",
-          "How fermentation changes and produces certain foods.",
-          "Why bread should be avoided.",
-          "Why bacteria are harmful to humans."
-        ],
-        answer: 1
-      },
-
-      {
-        section: "Reading",
-        type: "reading",
-        passageTitle: "Passage 2",
-        passage:
-          "Fermentation is a process used to produce or preserve certain foods. During fermentation, microorganisms such as bacteria or yeast transform substances in food. This process can change the flavor, texture, and chemical properties of a product. Yogurt, bread, and some traditional fermented foods are examples of products made using microorganisms.",
-        question:
-          "According to the passage, what can fermentation change?",
-        options: [
-          "Only the color of food.",
-          "Only the temperature of food.",
-          "The flavor, texture, and chemical properties.",
-          "The nutritional needs of people."
-        ],
-        answer: 2
-      },
-
-      {
-        section: "Reading",
-        type: "reading",
-        passageTitle: "Passage 2",
-        passage:
-          "Fermentation is a process used to produce or preserve certain foods. During fermentation, microorganisms such as bacteria or yeast transform substances in food. This process can change the flavor, texture, and chemical properties of a product. Yogurt, bread, and some traditional fermented foods are examples of products made using microorganisms.",
-        question:
-          "The word 'transform' is closest in meaning to:",
-        options: [
-          "change",
-          "measure",
-          "remove",
-          "protect"
-        ],
-        answer: 0
-      },
-
-      {
-        section: "Reading",
-        type: "reading",
-        passageTitle: "Passage 2",
-        passage:
-          "Fermentation is a process used to produce or preserve certain foods. During fermentation, microorganisms such as bacteria or yeast transform substances in food. This process can change the flavor, texture, and chemical properties of a product. Yogurt, bread, and some traditional fermented foods are examples of products made using microorganisms.",
-        question:
-          "Which of the following is mentioned as a fermented product?",
-        options: [
-          "Rice water.",
-          "Yogurt.",
-          "Fresh vegetables.",
-          "Mineral water."
-        ],
-        answer: 1
-      },
-
-      {
-        section: "Reading",
-        type: "reading",
-        passageTitle: "Passage 2",
-        passage:
-          "Fermentation is a process used to produce or preserve certain foods. During fermentation, microorganisms such as bacteria or yeast transform substances in food. This process can change the flavor, texture, and chemical properties of a product. Yogurt, bread, and some traditional fermented foods are examples of products made using microorganisms.",
-        question:
-          "What can be inferred about microorganisms from the passage?",
-        options: [
-          "They are always harmful.",
-          "They have no effect on food.",
-          "They can be used in food production.",
-          "They only live in water."
-        ],
-        answer: 2
+        speaker: "female",
+        text: "Not quite. I still need to check the last section."
       }
 
-    ];
+    ],
+
+    question:
+      "What does the woman still need to do?",
+
+    options: [
+
+      "Print the report.",
+      "Check the last section.",
+      "Meet Dr. Miller.",
+      "Write the introduction."
+
+    ],
+
+    answer: 1
+  },
 
 
-    /* =========================
-       STATE
-    ========================= */
+  {
+    conversation: [
 
-    let currentQuestion = 0;
-    let answers = new Array(questions.length).fill(null);
-    let timerSeconds = 30 * 60;
-    let timerInterval = null;
-    let testStarted = false;
+      {
+        speaker: "female",
+        text: "Are you going to the library after class?"
+      },
 
-
-    /* =========================
-       START TEST
-    ========================= */
-
-    async function startTest() {
-
-      const {
-        data: { user },
-        error
-      } = await supabaseClient.auth.getUser();
-
-      if (error || !user) {
-        alert("Please login first to take the TOEFL Mini Test.");
-        window.location.href = "login.html";
-        return;
+      {
+        speaker: "male",
+        text: "I was planning to, but I have to meet my advisor first."
       }
 
-      testStarted = true;
+    ],
 
-      document
-        .getElementById("introScreen")
-        .classList.add("hidden");
+    question:
+      "What will the man probably do before going to the library?",
 
-      document
-        .getElementById("testScreen")
-        .classList.remove("hidden");
+    options: [
 
-      startTimer();
-      renderQuestion();
-    }
+      "Attend another class.",
+      "Meet his advisor.",
+      "Return a book.",
+      "Study at home."
+
+    ],
+
+    answer: 1
+  },
 
 
-    /* =========================
-       TIMER
-    ========================= */
+  {
+    conversation: [
 
-    function startTimer() {
+      {
+        speaker: "male",
+        text: "Did you reserve a room for the study group?"
+      },
+
+      {
+        speaker: "female",
+        text: "Yes, but the small room was already taken, so I reserved the larger one."
+      }
+
+    ],
+
+    question:
+      "Why did the woman reserve a larger room?",
+
+    options: [
+
+      "It was less expensive.",
+      "The small room was unavailable.",
+      "The group became smaller.",
+      "Her professor requested it."
+
+    ],
+
+    answer: 1
+  },
+
+
+  {
+    conversation: [
+
+      {
+        speaker: "female",
+        text: "Have you seen the new schedule for the laboratory?"
+      },
+
+      {
+        speaker: "male",
+        text: "Yes. Our Wednesday session has been moved to Thursday morning."
+      }
+
+    ],
+
+    question:
+      "When will the laboratory session take place?",
+
+    options: [
+
+      "Wednesday morning.",
+      "Wednesday afternoon.",
+      "Thursday morning.",
+      "Thursday afternoon."
+
+    ],
+
+    answer: 2
+  },
+
+
+  {
+    conversation: [
+
+      {
+        speaker: "male",
+        text: "Would you like to join us for lunch?"
+      },
+
+      {
+        speaker: "female",
+        text: "I'd like to, but I have a presentation in an hour."
+      }
+
+    ],
+
+    question:
+      "Why can't the woman have lunch with the others?",
+
+    options: [
+
+      "She has another appointment.",
+      "She has to go home.",
+      "She does not feel well.",
+      "She has already eaten."
+
+    ],
+
+    answer: 0
+  },
+
+
+  {
+    conversation: [
+
+      {
+        speaker: "female",
+        text: "Did Professor Lee give you the assignment instructions?"
+      },
+
+      {
+        speaker: "male",
+        text: "Yes, but I'm going to ask him about one part that I don't understand."
+      }
+
+    ],
+
+    question:
+      "What does the man plan to do?",
+
+    options: [
+
+      "Submit the assignment early.",
+      "Ask the professor a question.",
+      "Rewrite the assignment.",
+      "Meet with his classmates."
+
+    ],
+
+    answer: 1
+  },
+
+
+  {
+    conversation: [
+
+      {
+        speaker: "male",
+        text: "How was the seminar yesterday?"
+      },
+
+      {
+        speaker: "female",
+        text: "Very useful. The speaker gave us several practical examples."
+      }
+
+    ],
+
+    question:
+      "What did the woman like about the seminar?",
+
+    options: [
+
+      "The length of the seminar.",
+      "The number of participants.",
+      "The practical examples.",
+      "The location of the seminar."
+
+    ],
+
+    answer: 2
+  },
+
+
+  {
+    conversation: [
+
+      {
+        speaker: "female",
+        text: "Are you taking the bus to campus today?"
+      },
+
+      {
+        speaker: "male",
+        text: "No. I heard the buses are delayed because of construction."
+      }
+
+    ],
+
+    question:
+      "Why is the man not taking the bus?",
+
+    options: [
+
+      "The bus is too expensive.",
+      "The buses are delayed.",
+      "He missed the bus.",
+      "The weather is bad."
+
+    ],
+
+    answer: 1
+  },
+
+
+  {
+    conversation: [
+
+      {
+        speaker: "male",
+        text: "Did you buy the textbook for the course?"
+      },
+
+      {
+        speaker: "female",
+        text: "Not yet. I'm going to borrow a copy from the department first."
+      }
+
+    ],
+
+    question:
+      "What will the woman probably do first?",
+
+    options: [
+
+      "Buy a new textbook.",
+      "Borrow a copy.",
+      "Drop the course.",
+      "Visit the bookstore."
+
+    ],
+
+    answer: 1
+  },
+
+
+  {
+    conversation: [
+
+      {
+        speaker: "female",
+        text: "Do you want to work on the presentation tonight?"
+      },
+
+      {
+        speaker: "male",
+        text: "I can't tonight, but I'm free tomorrow afternoon."
+      }
+
+    ],
+
+    question:
+      "When can the man work on the presentation?",
+
+    options: [
+
+      "Tonight.",
+      "Tomorrow morning.",
+      "Tomorrow afternoon.",
+      "Tomorrow evening."
+
+    ],
+
+    answer: 2
+  }
+
+];
+
+
+
+/* ==========================================
+   STRUCTURE QUESTIONS
+========================================== */
+
+const structureQuestions = [
+
+  {
+    question:
+      "The students ____ in the laboratory every Friday.",
+
+    options: [
+      "works",
+      "work",
+      "working",
+      "worked"
+    ],
+
+    answer: 1
+  },
+
+
+  {
+    question:
+      "The article ____ by the professor last week.",
+
+    options: [
+      "was reviewed",
+      "reviewed",
+      "is reviewing",
+      "review"
+    ],
+
+    answer: 0
+  },
+
+
+  {
+    question:
+      "____ the students arrived, the lecture had already begun.",
+
+    options: [
+      "Because",
+      "When",
+      "Although",
+      "Unless"
+    ],
+
+    answer: 1
+  },
+
+
+  {
+    question:
+      "The researcher needs ____ the results carefully.",
+
+    options: [
+      "analyze",
+      "analyzing",
+      "to analyze",
+      "analyzed"
+    ],
+
+    answer: 2
+  },
+
+
+  {
+    question:
+      "The equipment ____ in the laboratory is very expensive.",
+
+    options: [
+      "use",
+      "used",
+      "using",
+      "uses"
+    ],
+
+    answer: 1
+  },
+
+
+  {
+    question:
+      "If the patient ____ enough water, dehydration may occur.",
+
+    options: [
+      "does not drink",
+      "did not drank",
+      "not drinking",
+      "has not drink"
+    ],
+
+    answer: 0
+  },
+
+
+  {
+    question:
+      "The students were asked ____ their assignments before Friday.",
+
+    options: [
+      "submit",
+      "submitted",
+      "to submit",
+      "submitting"
+    ],
+
+    answer: 2
+  },
+
+
+  {
+    question:
+      "The new study provides information ____ may help health professionals.",
+
+    options: [
+      "who",
+      "where",
+      "what",
+      "that"
+    ],
+
+    answer: 3
+  },
+
+
+  {
+    question:
+      "Neither the lecturer nor the students ____ available yesterday.",
+
+    options: [
+      "was",
+      "were",
+      "be",
+      "being"
+    ],
+
+    answer: 1
+  },
+
+
+  {
+    question:
+      "The clinic has been closed ____ Monday.",
+
+    options: [
+      "for",
+      "since",
+      "during",
+      "while"
+    ],
+
+    answer: 1
+  }
+
+];
+
+
+
+/* ==========================================
+   READING QUESTIONS
+========================================== */
+
+const readingQuestions = [
+
+  {
+    passage:
+      "Regular physical activity can support several aspects of health. Moderate exercise may improve cardiovascular fitness, help maintain body weight, and contribute to psychological well-being. Health professionals often recommend choosing activities that can be performed consistently over time.",
+
+    question:
+      "What is the main idea of the passage?",
+
+    options: [
+
+      "Exercise should always be intense.",
+
+      "Regular physical activity can provide several health benefits.",
+
+      "Only athletes need physical activity.",
+
+      "Psychological health is unrelated to exercise."
+
+    ],
+
+    answer: 1
+  },
+
+
+  {
+    passage:
+      "Iron is an essential mineral because it is involved in the production of hemoglobin. Hemoglobin carries oxygen from the lungs to tissues throughout the body. A lack of iron can therefore affect the body's ability to transport oxygen effectively.",
+
+    question:
+      "Why is iron important according to the passage?",
+
+    options: [
+
+      "It produces energy directly.",
+
+      "It helps produce hemoglobin.",
+
+      "It prevents all diseases.",
+
+      "It increases body temperature."
+
+    ],
+
+    answer: 1
+  },
+
+
+  {
+    passage:
+      "Hand hygiene is one of the basic practices used to reduce the spread of microorganisms. In healthcare settings, appropriate hand hygiene is especially important before and after contact with patients.",
+
+    question:
+      "What is the purpose of hand hygiene mentioned in the passage?",
+
+    options: [
+
+      "To increase patient contact.",
+
+      "To reduce the spread of microorganisms.",
+
+      "To replace medical treatment.",
+
+      "To improve hospital design."
+
+    ],
+
+    answer: 1
+  },
+
+
+  {
+    passage:
+      "A balanced diet includes a variety of foods that provide carbohydrates, proteins, fats, vitamins, minerals, and other nutrients. The appropriate amount of each nutrient can vary depending on a person's age, activity level, and health condition.",
+
+    question:
+      "What can influence a person's nutrient needs?",
+
+    options: [
+
+      "Only body weight.",
+
+      "Only food preferences.",
+
+      "Age, activity level, and health condition.",
+
+      "The color of food."
+
+    ],
+
+    answer: 2
+  },
+
+
+  {
+    passage:
+      "Sleep plays an important role in maintaining normal physical and cognitive functions. Insufficient sleep may interfere with concentration and daily performance. For this reason, adequate sleep is commonly considered part of a healthy lifestyle.",
+
+    question:
+      "What may happen when a person does not get enough sleep?",
+
+    options: [
+
+      "Concentration may be affected.",
+
+      "The person always becomes healthier.",
+
+      "Daily performance always improves.",
+
+      "Nutrient absorption stops completely."
+
+    ],
+
+    answer: 0
+  },
+
+
+  {
+    passage:
+      "Public health programs may focus on preventing disease before it occurs. Examples include vaccination, health education, and programs that encourage healthy behaviors. Prevention can reduce the risk of illness at the population level.",
+
+    question:
+      "What is one purpose of public health prevention programs?",
+
+    options: [
+
+      "To increase disease risk.",
+
+      "To reduce the risk of illness.",
+
+      "To replace all clinical services.",
+
+      "To diagnose every patient."
+
+    ],
+
+    answer: 1
+  },
+
+
+  {
+    passage:
+      "Dietary fiber is found in foods such as vegetables, fruits, legumes, and whole grains. It contributes to normal digestive function and can be part of a healthy eating pattern.",
+
+    question:
+      "Where can dietary fiber be found?",
+
+    options: [
+
+      "Only in meat.",
+
+      "In vegetables, fruits, legumes, and whole grains.",
+
+      "Only in dairy products.",
+
+      "Only in beverages."
+
+    ],
+
+    answer: 1
+  },
+
+
+  {
+    passage:
+      "Vaccination prepares the immune system to respond to particular infectious agents. Vaccines are an important tool in preventing certain infectious diseases and protecting communities.",
+
+    question:
+      "What does vaccination help the immune system do?",
+
+    options: [
+
+      "Respond to particular infectious agents.",
+
+      "Stop all illnesses permanently.",
+
+      "Replace nutrition.",
+
+      "Increase exposure to infection."
+
+    ],
+
+    answer: 0
+  },
+
+
+  {
+    passage:
+      "Nutrition assessment can involve collecting information about dietary intake, body measurements, clinical signs, and laboratory data. Health professionals can use these sources of information to understand a person's nutritional status.",
+
+    question:
+      "What is the purpose of collecting different types of nutrition information?",
+
+    options: [
+
+      "To understand nutritional status.",
+
+      "To avoid laboratory testing.",
+
+      "To determine a person's occupation.",
+
+      "To replace dietary information."
+
+    ],
+
+    answer: 0
+  },
+
+
+  {
+    passage:
+      "Clean water is important for human health. Contaminated water can contain microorganisms or chemicals that may cause illness. Improving water quality is therefore an important part of environmental health.",
+
+    question:
+      "Why is water quality important?",
+
+    options: [
+
+      "It determines food color.",
+
+      "Contaminated water may cause illness.",
+
+      "It removes the need for sanitation.",
+
+      "It prevents every type of disease."
+
+    ],
+
+    answer: 1
+  }
+
+];
+
+
+
+/* ==========================================
+   COMBINE QUESTIONS
+========================================== */
+
+const questions = [
+
+  ...listeningQuestions.map(q => ({
+    ...q,
+    type: "listening"
+  })),
+
+  ...structureQuestions.map(q => ({
+    ...q,
+    type: "structure"
+  })),
+
+  ...readingQuestions.map(q => ({
+    ...q,
+    type: "reading"
+  }))
+
+];
+
+
+
+/* ==========================================
+   TEST STATE
+========================================== */
+
+let current = 0;
+
+let answers =
+  Array(questions.length).fill(null);
+
+let timerSeconds = 30 * 60;
+
+let timerInterval = null;
+
+let started = false;
+
+let finished = false;
+
+let speechToken = 0;
+
+let audioPlayedForQuestion =
+  new Set();
+
+
+
+/* ==========================================
+   ELEMENTS
+========================================== */
+
+const startScreen =
+  document.getElementById("startScreen");
+
+const testScreen =
+  document.getElementById("testScreen");
+
+const resultScreen =
+  document.getElementById("resultScreen");
+
+const questionContent =
+  document.getElementById("questionContent");
+
+const sectionLabel =
+  document.getElementById("sectionLabel");
+
+const questionCounter =
+  document.getElementById("questionCounter");
+
+const progressBar =
+  document.getElementById("progressBar");
+
+const timerEl =
+  document.getElementById("timer");
+
+const prevBtn =
+  document.getElementById("prevBtn");
+
+const nextBtn =
+  document.getElementById("nextBtn");
+
+
+
+/* ==========================================
+   AUTH
+========================================== */
+
+async function checkAuth() {
+
+  const {
+    data: { user },
+    error
+  } =
+    await supabaseClient.auth.getUser();
+
+
+  if (error || !user) {
+
+    alert("Please login first.");
+
+    window.location.href =
+      "login.html";
+
+    return false;
+  }
+
+
+  return true;
+}
+
+
+
+/* ==========================================
+   START TEST
+========================================== */
+
+document
+  .getElementById("startBtn")
+  .addEventListener("click", async () => {
+
+    const ok = await checkAuth();
+
+    if (!ok) return;
+
+
+    started = true;
+
+    startScreen
+      .classList
+      .add("hidden");
+
+    testScreen
+      .classList
+      .remove("hidden");
+
+
+    startTimer();
+
+    renderQuestion();
+
+  });
+
+
+
+/* ==========================================
+   TIMER
+========================================== */
+
+function startTimer() {
+
+  updateTimer();
+
+
+  timerInterval =
+    setInterval(() => {
+
+      if (finished) return;
+
+
+      timerSeconds--;
 
       updateTimer();
 
-      timerInterval = setInterval(() => {
 
-        timerSeconds--;
+      if (timerSeconds <= 0) {
+
+        timerSeconds = 0;
 
         updateTimer();
 
-        if (timerSeconds <= 0) {
-          clearInterval(timerInterval);
-          finishTest();
-        }
+        finishTest(true);
 
-      }, 1000);
-    }
-
-
-    function updateTimer() {
-
-      const minutes =
-        Math.floor(timerSeconds / 60)
-          .toString()
-          .padStart(2, "0");
-
-      const seconds =
-        (timerSeconds % 60)
-          .toString()
-          .padStart(2, "0");
-
-      document.getElementById("timer").textContent =
-        `${minutes}:${seconds}`;
-    }
-
-
-    /* =========================
-       RENDER QUESTION
-    ========================= */
-
-    function renderQuestion() {
-
-      const q = questions[currentQuestion];
-
-      const sectionStart =
-        currentQuestion < 10
-          ? 0
-          : currentQuestion < 20
-          ? 10
-          : 20;
-
-      const sectionName =
-        currentQuestion < 10
-          ? "Listening Comprehension"
-          : currentQuestion < 20
-          ? "Structure & Written Expression"
-          : "Reading Comprehension";
-
-      document.getElementById("sectionLabel").textContent =
-        sectionName;
-
-      document.getElementById("sectionTitle").textContent =
-        q.section;
-
-      document.getElementById("progressText").textContent =
-        `Question ${currentQuestion + 1} of ${questions.length}`;
-
-      document.getElementById("sectionProgress").textContent =
-        `${q.section} • ${currentQuestion - sectionStart + 1}/10`;
-
-      document.getElementById("progressFill").style.width =
-        `${((currentQuestion + 1) / questions.length) * 100}%`;
-
-      let html = "";
-
-      html += `
-        <div class="question-number">
-          Question ${currentQuestion + 1}
-        </div>
-      `;
-
-      if (q.passage) {
-        html += `
-          <div class="passage">
-            <div class="passage-title">
-              ${q.passageTitle}
-            </div>
-            ${q.passage}
-          </div>
-        `;
       }
 
-      if (q.type === "listening") {
+    }, 1000);
 
-        html += `
-          <div class="audio-box">
-            <p>
-              Listen to the short conversation or talk before
-              answering the question.
-            </p>
-
-            <button
-              class="audio-btn"
-              onclick="playAudio()"
-            >
-              ▶ Play Audio
-            </button>
-          </div>
-        `;
-      }
-
-      html += `
-        <div class="question">
-          ${q.question}
-        </div>
-
-        <div class="options">
-      `;
-
-      q.options.forEach((option, index) => {
-
-        const checked =
-          answers[currentQuestion] === index;
-
-        html += `
-          <label class="option ${checked ? "selected" : ""}">
-            <input
-              type="radio"
-              name="answer"
-              value="${index}"
-              ${checked ? "checked" : ""}
-              onchange="selectAnswer(${index})"
-            />
-
-            <span>
-              <strong>${String.fromCharCode(65 + index)}.</strong>
-              ${option}
-            </span>
-          </label>
-        `;
-      });
-
-      html += `</div>`;
-
-      document.getElementById("questionContainer").innerHTML =
-        html;
-
-      document.getElementById("prevBtn").disabled =
-        currentQuestion === 0;
-
-      document.getElementById("nextBtn").textContent =
-        currentQuestion === questions.length - 1
-          ? "Finish Test"
-          : "Next →";
-    }
+}
 
 
-    /* =========================
-       ANSWERS
-    ========================= */
 
-    function selectAnswer(index) {
+function updateTimer() {
 
-      answers[currentQuestion] = index;
-
-      document
-        .querySelectorAll(".option")
-        .forEach((option, i) => {
-
-          option.classList.toggle(
-            "selected",
-            i === index
-          );
-
-        });
-    }
+  const minutes =
+    Math.floor(timerSeconds / 60)
+      .toString()
+      .padStart(2, "0");
 
 
-    /* =========================
-       AUDIO
-    ========================= */
-
-    function playAudio() {
-
-      const q = questions[currentQuestion];
-
-      if (!("speechSynthesis" in window)) {
-        alert(
-          "Your browser does not support audio playback."
-        );
-        return;
-      }
-
-      window.speechSynthesis.cancel();
-
-      const speech =
-        new SpeechSynthesisUtterance(q.audio);
-
-      speech.lang = "en-US";
-      speech.rate = 0.88;
-      speech.pitch = 1;
-
-      window.speechSynthesis.speak(speech);
-    }
+  const seconds =
+    (timerSeconds % 60)
+      .toString()
+      .padStart(2, "0");
 
 
-    /* =========================
-       NAVIGATION
-    ========================= */
-
-    function nextQuestion() {
-
-      if (answers[currentQuestion] === null) {
-
-        alert(
-          "Please choose an answer before continuing."
-        );
-
-        return;
-      }
-
-      if (
-        currentQuestion ===
-        questions.length - 1
-      ) {
-
-        finishTest();
-
-        return;
-      }
-
-      currentQuestion++;
-
-      window.speechSynthesis?.cancel();
-
-      renderQuestion();
-
-      window.scrollTo({
-        top: 0,
-        behavior: "smooth"
-      });
-    }
+  timerEl.textContent =
+    `${minutes}:${seconds}`;
 
 
-    function previousQuestion() {
+  timerEl.classList.toggle(
+    "urgent",
+    timerSeconds <= 60
+  );
 
-      if (currentQuestion === 0) {
-        return;
-      }
-
-      currentQuestion--;
-
-      window.speechSynthesis?.cancel();
-
-      renderQuestion();
-
-      window.scrollTo({
-        top: 0,
-        behavior: "smooth"
-      });
-    }
+}
 
 
-    /* =========================
-       FINISH
-    ========================= */
 
-    async function finishTest() {
+/* ==========================================
+   RENDER QUESTION
+========================================== */
 
-      if (!testStarted) {
-        return;
-      }
+function renderQuestion() {
 
-      clearInterval(timerInterval);
+  if (finished) return;
 
-      window.speechSynthesis?.cancel();
 
-      let listeningScore = 0;
-      let structureScore = 0;
-      let readingScore = 0;
+  stopSpeech();
 
-      questions.forEach((q, index) => {
 
-        if (answers[index] === q.answer) {
+  const q =
+    questions[current];
 
-          if (q.section === "Listening") {
-            listeningScore++;
-          }
 
-          if (q.section === "Structure") {
-            structureScore++;
-          }
+  sectionLabel.textContent =
+    q.type === "listening"
+      ? "Listening"
+      : q.type === "structure"
+      ? "Structure"
+      : "Reading";
 
-          if (q.section === "Reading") {
-            readingScore++;
-          }
+
+  questionCounter.textContent =
+    `Question ${current + 1} of ${questions.length}`;
+
+
+  progressBar.style.width =
+    `${((current + 1) / questions.length) * 100}%`;
+
+
+  if (q.type === "listening") {
+
+    renderListening(q);
+
+  } else {
+
+    renderStandard(q);
+
+  }
+
+
+  prevBtn.disabled =
+    current === 0;
+
+
+  prevBtn.style.opacity =
+    current === 0 ? ".5" : "1";
+
+
+  nextBtn.textContent =
+    current === questions.length - 1
+      ? "Finish Test"
+      : "Next →";
+
+}
+
+
+
+/* ==========================================
+   LISTENING UI
+========================================== */
+
+function renderListening(q) {
+
+  const selected =
+    answers[current];
+
+
+  questionContent.innerHTML = `
+
+    <div class="q-number">
+      Listening Part A
+    </div>
+
+
+    <div class="q-title">
+      Listen carefully and choose the best answer.
+    </div>
+
+
+    <div class="listening-box">
+
+      <div class="audio-symbol">
+        ◖
+      </div>
+
+
+      <div class="audio-title">
+        Listening Audio
+      </div>
+
+
+      <div id="audioStatus"
+           class="audio-status">
+
+        Preparing audio...
+
+      </div>
+
+
+      <div class="audio-note">
+
+        The conversation and question are
+        not displayed. Audio plays once.
+
+      </div>
+
+
+      <div style="margin-top:15px">
+
+        <button
+          id="playAudioBtn"
+          class="secondary">
+
+          Play Listening
+
+        </button>
+
+      </div>
+
+    </div>
+
+
+    <div class="options">
+
+      ${q.options.map((opt, i) => `
+
+        <label class="option">
+
+          <input
+            type="radio"
+            name="answer"
+            value="${i}"
+            ${selected === i ? "checked" : ""}
+          >
+
+          <span class="option-letter">
+            ${String.fromCharCode(65 + i)}
+          </span>
+
+          <span>
+            ${opt}
+          </span>
+
+        </label>
+
+      `).join("")}
+
+    </div>
+
+  `;
+
+
+
+  document
+    .querySelectorAll('input[name="answer"]')
+    .forEach(input => {
+
+      input.addEventListener(
+        "change",
+        () => {
+
+          answers[current] =
+            Number(input.value);
 
         }
-
-      });
-
-      const totalScore =
-        listeningScore +
-        structureScore +
-        readingScore;
-
-
-      document.getElementById("testScreen")
-        .classList.add("hidden");
-
-      document.getElementById("resultScreen")
-        .classList.remove("hidden");
-
-
-      document.getElementById("totalScore")
-        .textContent =
-        `${totalScore}/30`;
-
-      document.getElementById("listeningResult")
-        .textContent =
-        `${listeningScore}/10`;
-
-      document.getElementById("structureResult")
-        .textContent =
-        `${structureScore}/10`;
-
-      document.getElementById("readingResult")
-        .textContent =
-        `${readingScore}/10`;
-
-
-      await saveResult(
-        totalScore,
-        listeningScore,
-        structureScore,
-        readingScore
       );
 
-      window.scrollTo({
-        top: 0,
-        behavior: "smooth"
-      });
+    });
+
+
+
+  const playBtn =
+    document.getElementById(
+      "playAudioBtn"
+    );
+
+
+  if (
+    audioPlayedForQuestion
+      .has(current)
+  ) {
+
+    playBtn.disabled = true;
+
+    playBtn.textContent =
+      "Audio Played";
+
+    playBtn.style.opacity =
+      ".55";
+
+
+    document
+      .getElementById("audioStatus")
+      .textContent =
+      "Audio has already been played.";
+
+  } else {
+
+    playBtn.addEventListener(
+      "click",
+      () => playListening(q)
+    );
+
+
+    setTimeout(
+      () => playListening(q),
+      250
+    );
+
+  }
+
+}
+
+
+
+/* ==========================================
+   STANDARD QUESTION UI
+========================================== */
+
+function renderStandard(q) {
+
+  questionContent.innerHTML = `
+
+    <div class="q-number">
+
+      ${
+        q.type === "reading"
+          ? "Reading passage"
+          : "Structure question"
+      }
+
+    </div>
+
+
+    ${
+      q.passage
+        ? `
+
+          <div
+            style="
+              background:#f7faf9;
+              border:1px solid #e7ecea;
+              border-radius:16px;
+              padding:20px;
+              line-height:1.8;
+              margin-bottom:22px;
+              color:#53636a;
+            "
+          >
+
+            ${q.passage}
+
+          </div>
+
+        `
+        : ""
     }
 
 
-    /* =========================
-       SAVE RESULT
-    ========================= */
+    <div class="q-title">
 
-    async function saveResult(
-      totalScore,
-      listeningScore,
-      structureScore,
-      readingScore
+      ${q.question}
+
+    </div>
+
+
+    <div class="options">
+
+      ${q.options.map((opt, i) => `
+
+        <label class="option">
+
+          <input
+            type="radio"
+            name="answer"
+            value="${i}"
+            ${
+              answers[current] === i
+                ? "checked"
+                : ""
+            }
+          >
+
+          <span class="option-letter">
+
+            ${String.fromCharCode(65 + i)}
+
+          </span>
+
+          <span>
+            ${opt}
+          </span>
+
+        </label>
+
+      `).join("")}
+
+    </div>
+
+  `;
+
+
+
+  document
+    .querySelectorAll('input[name="answer"]')
+    .forEach(input => {
+
+      input.addEventListener(
+        "change",
+        () => {
+
+          answers[current] =
+            Number(input.value);
+
+        }
+      );
+
+    });
+
+}
+
+
+
+/* ==========================================
+   VOICE SELECTION
+========================================== */
+
+function getEnglishVoice(prefer) {
+
+  const voices =
+    speechSynthesis.getVoices();
+
+
+  const english =
+    voices.filter(v =>
+      /^en(-|_)/i.test(v.lang)
+    );
+
+
+  if (prefer === "female") {
+
+    return (
+
+      english.find(v =>
+        /female|samantha|victoria|karen|moira|zira|ava|susan|allison|siri/i
+          .test(v.name)
+      )
+
+      ||
+
+      english.find(v =>
+        /en-US/i.test(v.lang)
+      )
+
+      ||
+
+      english[0]
+
+    );
+
+  }
+
+
+  if (prefer === "male") {
+
+    return (
+
+      english.find(v =>
+        /male|daniel|alex|david|fred|george|mark|tom|guy/i
+          .test(v.name)
+      )
+
+      ||
+
+      english.find(v =>
+        /en-US/i.test(v.lang)
+      )
+
+      ||
+
+      english[0]
+
+    );
+
+  }
+
+
+  return (
+
+    english.find(v =>
+      /en-US/i.test(v.lang)
+    )
+
+    ||
+
+    english[0]
+
+  );
+
+}
+
+
+
+/* ==========================================
+   SPEAK
+========================================== */
+
+function speak(
+  text,
+  voiceType,
+  rate = 0.92,
+  pitch = 1
+) {
+
+  return new Promise(resolve => {
+
+    if (
+      !("speechSynthesis" in window)
     ) {
 
-      const {
-        data: { user }
-      } = await supabaseClient.auth.getUser();
+      resolve();
 
-      if (!user) {
-        return;
-      }
+      return;
 
-      const { error } =
-        await supabaseClient
-          .from("learning_results")
-          .insert({
-            user_id: user.id,
-            activity_type: "toefl_mini_test",
-            score: totalScore,
-            total_questions: 30,
-            answers: {
-              listening: listeningScore,
-              structure: structureScore,
-              reading: readingScore,
-              total: totalScore
-            }
-          });
-
-      if (error) {
-
-        console.error(
-          "Could not save TOEFL Mini Test result:",
-          error
-        );
-
-      } else {
-
-        console.log(
-          "TOEFL Mini Test result saved successfully."
-        );
-
-      }
     }
 
-  </script>
+
+    const utter =
+      new SpeechSynthesisUtterance(
+        text
+      );
+
+
+    utter.lang =
+      "en-US";
+
+
+    utter.rate =
+      rate;
+
+
+    utter.pitch =
+      pitch;
+
+
+    const voice =
+      getEnglishVoice(
+        voiceType
+      );
+
+
+    if (voice) {
+
+      utter.voice =
+        voice;
+
+    }
+
+
+    utter.onend =
+      () => resolve();
+
+
+    utter.onerror =
+      () => resolve();
+
+
+    speechSynthesis.speak(
+      utter
+    );
+
+  });
+
+}
+
+
+
+/* ==========================================
+   PLAY LISTENING
+========================================== */
+
+async function playListening(q) {
+
+  if (
+    finished ||
+    audioPlayedForQuestion.has(
+      current
+    )
+  ) {
+
+    return;
+
+  }
+
+
+  audioPlayedForQuestion.add(
+    current
+  );
+
+
+  speechToken++;
+
+
+  const token =
+    speechToken;
+
+
+  const btn =
+    document.getElementById(
+      "playAudioBtn"
+    );
+
+
+  const status =
+    document.getElementById(
+      "audioStatus"
+    );
+
+
+  if (btn) {
+
+    btn.disabled = true;
+
+    btn.textContent =
+      "Playing...";
+
+    btn.style.opacity =
+      ".55";
+
+  }
+
+
+  if (status) {
+
+    status.textContent =
+      "Listening...";
+
+  }
+
+
+
+  for (
+    const line of q.conversation
+  ) {
+
+    if (
+      token !== speechToken ||
+      finished
+    ) {
+
+      return;
+
+    }
+
+
+    await speak(
+
+      line.text,
+
+      line.speaker === "male"
+        ? "male"
+        : "female",
+
+      0.9,
+
+      line.speaker === "male"
+        ? 0.92
+        : 1.06
+
+    );
+
+
+    await new Promise(
+      resolve =>
+        setTimeout(
+          resolve,
+          350
+        )
+    );
+
+  }
+
+
+
+  if (
+    token !== speechToken ||
+    finished
+  ) {
+
+    return;
+
+  }
+
+
+  await new Promise(
+    resolve =>
+      setTimeout(
+        resolve,
+        450
+      )
+  );
+
+
+  if (status) {
+
+    status.textContent =
+      "Question...";
+
+  }
+
+
+  await speak(
+
+    q.question,
+
+    "narrator",
+
+    0.88,
+
+    0.98
+
+  );
+
+
+  if (status) {
+
+    status.textContent =
+      "Audio complete. Choose the best answer.";
+
+  }
+
+
+  if (btn) {
+
+    btn.textContent =
+      "Audio Played";
+
+  }
+
+}
+
+
+
+/* ==========================================
+   STOP SPEECH
+========================================== */
+
+function stopSpeech() {
+
+  speechToken++;
+
+
+  if (
+    "speechSynthesis" in window
+  ) {
+
+    speechSynthesis.cancel();
+
+  }
+
+}
+
+
+
+/* ==========================================
+   NAVIGATION
+========================================== */
+
+prevBtn.addEventListener(
+  "click",
+  () => {
+
+    if (finished) return;
+
+
+    saveCurrentAnswer();
+
+
+    if (current > 0) {
+
+      current--;
+
+      renderQuestion();
+
+    }
+
+  }
+);
+
+
+
+nextBtn.addEventListener(
+  "click",
+  () => {
+
+    if (finished) return;
+
+
+    saveCurrentAnswer();
+
+
+    if (
+      current ===
+      questions.length - 1
+    ) {
+
+      finishTest(false);
+
+    } else {
+
+      current++;
+
+      renderQuestion();
+
+    }
+
+  }
+);
+
+
+
+/* ==========================================
+   SAVE CURRENT ANSWER
+========================================== */
+
+function saveCurrentAnswer() {
+
+  if (finished) return;
+
+
+  const checked =
+    document.querySelector(
+      'input[name="answer"]:checked'
+    );
+
+
+  if (checked) {
+
+    answers[current] =
+      Number(checked.value);
+
+  }
+
+}
+
+
+
+/* ==========================================
+   FINISH TEST
+========================================== */
+
+async function finishTest(
+  timeExpired = false
+) {
+
+  if (
+    finished ||
+    !started
+  ) {
+
+    return;
+
+  }
+
+
+  saveCurrentAnswer();
+
+
+  finished = true;
+
+
+  stopSpeech();
+
+
+  if (timerInterval) {
+
+    clearInterval(
+      timerInterval
+    );
+
+    timerInterval = null;
+
+  }
+
+
+
+  /*
+    Lock the entire test.
+    No further answers can be submitted.
+  */
+
+  document
+    .querySelectorAll(
+      "button, input"
+    )
+    .forEach(
+      element =>
+        element.disabled = true
+    );
+
+
+
+  let listeningScore = 0;
+
+  let structureScore = 0;
+
+  let readingScore = 0;
+
+  let answered = 0;
+
+  let unanswered = 0;
+
+
+
+  questions.forEach(
+    (q, i) => {
+
+      /*
+        NULL means the participant
+        never submitted an answer.
+      */
+
+      if (
+        answers[i] === null ||
+        answers[i] === undefined
+      ) {
+
+        unanswered++;
+
+        return;
+
+      }
+
+
+      answered++;
+
+
+
+      if (
+        answers[i] ===
+        q.answer
+      ) {
+
+        if (
+          q.type ===
+          "listening"
+        ) {
+
+          listeningScore++;
+
+        }
+
+        else if (
+          q.type ===
+          "structure"
+        ) {
+
+          structureScore++;
+
+        }
+
+        else {
+
+          readingScore++;
+
+        }
+
+      }
+
+    }
+  );
+
+
+
+  const totalScore =
+    listeningScore +
+    structureScore +
+    readingScore;
+
+
+
+  document
+    .getElementById(
+      "totalScore"
+    )
+    .textContent =
+    totalScore;
+
+
+  document
+    .getElementById(
+      "listeningScore"
+    )
+    .textContent =
+    listeningScore;
+
+
+  document
+    .getElementById(
+      "structureScore"
+    )
+    .textContent =
+    structureScore;
+
+
+  document
+    .getElementById(
+      "readingScore"
+    )
+    .textContent =
+    readingScore;
+
+
+
+  /*
+    Different message depending
+    on how the test ended.
+  */
+
+  if (timeExpired) {
+
+    document
+      .getElementById(
+        "scoreSummary"
+      )
+      .innerHTML = `
+
+        Time is up.
+        Your test was submitted automatically.
+
+        <br><br>
+
+        <strong>
+          ${answered}
+        </strong>
+        of
+        <strong>
+          ${questions.length}
+        </strong>
+        questions were answered.
+
+        <br>
+
+        <strong>
+          ${unanswered}
+        </strong>
+        questions were unanswered.
+
+        <br><br>
+
+        Only answered questions were included
+        in your score.
+
+      `;
+
+  }
+
+  else {
+
+    document
+      .getElementById(
+        "scoreSummary"
+      )
+      .innerHTML = `
+
+        You answered
+
+        <strong>
+          ${answered}
+        </strong>
+
+        of
+
+        <strong>
+          ${questions.length}
+        </strong>
+
+        questions.
+
+        <br>
+
+        <strong>
+          ${unanswered}
+        </strong>
+
+        questions were unanswered.
+
+        <br><br>
+
+        Only answered questions were included
+        in your score.
+
+      `;
+
+  }
+
+
+
+  /*
+    Hide test and show result.
+  */
+
+  testScreen
+    .classList
+    .add("hidden");
+
+
+  resultScreen
+    .classList
+    .remove("hidden");
+
+
+
+  /*
+    Save result to Supabase.
+  */
+
+  const {
+    data: { user }
+  } =
+    await supabaseClient.auth.getUser();
+
+
+  if (user) {
+
+    const {
+      error
+    } =
+      await supabaseClient
+        .from("learning_results")
+        .insert({
+
+          user_id:
+            user.id,
+
+          activity_type:
+            "toefl_mini_test",
+
+          score:
+            totalScore,
+
+          /*
+            total_questions now means
+            the number actually answered.
+          */
+
+          total_questions:
+            answered,
+
+          answers: {
+
+            listening:
+              listeningScore,
+
+            structure:
+              structureScore,
+
+            reading:
+              readingScore,
+
+            total:
+              totalScore,
+
+            answered_questions:
+              answered,
+
+            unanswered_questions:
+              unanswered,
+
+            original_total_questions:
+              30,
+
+            time_expired:
+              timeExpired
+
+          }
+
+        });
+
+
+    if (error) {
+
+      console.error(
+        "Result save error:",
+        error
+      );
+
+    }
+
+  }
+
+}
+
+
+
+/* ==========================================
+   LOAD BROWSER VOICES
+========================================== */
+
+if (
+  "speechSynthesis" in window
+) {
+
+  speechSynthesis.getVoices();
+
+
+  speechSynthesis.onvoiceschanged =
+    () => {
+
+      speechSynthesis.getVoices();
+
+    };
+
+}
+
+</script>
 
 </body>
 </html>
