@@ -1,0 +1,724 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>TOEFL Lab | AI Lingua Lab</title>
+
+  <style>
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family:
+        Inter,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        sans-serif;
+
+      background: #fffdf8;
+      color: #25313b;
+      line-height: 1.6;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    /* =========================
+       NAVBAR
+    ========================= */
+
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+
+      height: 72px;
+
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      padding: 0 6%;
+
+      background: rgba(255, 253, 248, 0.96);
+      border-bottom: 1px solid #ece8df;
+      backdrop-filter: blur(10px);
+    }
+
+    .logo {
+      font-size: 18px;
+      font-weight: 800;
+      letter-spacing: 0.04em;
+      color: #087f7b;
+    }
+
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+    }
+
+    .back-link {
+      color: #68747e;
+      font-size: 14px;
+      font-weight: 600;
+      transition: 0.2s ease;
+    }
+
+    .back-link:hover {
+      color: #087f7b;
+    }
+
+    /* =========================
+       HERO
+    ========================= */
+
+    .hero {
+      max-width: 1080px;
+      margin: 0 auto;
+
+      padding: 78px 6% 50px;
+
+      text-align: center;
+    }
+
+    .eyebrow {
+      display: inline-block;
+
+      padding: 7px 13px;
+
+      border-radius: 999px;
+
+      background: #f3eefc;
+      color: #7459b8;
+
+      font-size: 12px;
+      font-weight: 800;
+
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+
+      margin-bottom: 18px;
+    }
+
+    .hero h1 {
+      font-size: clamp(40px, 6vw, 64px);
+      line-height: 1.05;
+
+      letter-spacing: -0.04em;
+
+      color: #25313b;
+
+      margin-bottom: 20px;
+    }
+
+    .hero h1 span {
+      color: #087f7b;
+    }
+
+    .hero p {
+      max-width: 650px;
+      margin: 0 auto;
+
+      color: #68747e;
+
+      font-size: 17px;
+      line-height: 1.7;
+    }
+
+    /* =========================
+       TOEFL OVERVIEW
+    ========================= */
+
+    .overview {
+      max-width: 1080px;
+      margin: 0 auto;
+
+      padding: 0 6% 55px;
+    }
+
+    .overview-card {
+      background: #ffffff;
+
+      border: 1px solid #ebe7df;
+      border-radius: 20px;
+
+      padding: 25px 28px;
+
+      box-shadow:
+        0 10px 30px rgba(37, 49, 59, 0.04);
+    }
+
+    .overview-title {
+      font-size: 14px;
+      font-weight: 800;
+
+      color: #25313b;
+
+      margin-bottom: 16px;
+    }
+
+    .structure-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .structure-item {
+      padding: 9px 13px;
+
+      border-radius: 10px;
+
+      background: #f7f8f7;
+
+      color: #59656e;
+
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    /* =========================
+       OPTIONS
+    ========================= */
+
+    .options {
+      max-width: 1080px;
+      margin: 0 auto;
+
+      padding: 0 6% 85px;
+    }
+
+    .section-heading {
+      margin-bottom: 22px;
+    }
+
+    .section-heading h2 {
+      font-size: 25px;
+      color: #25313b;
+      margin-bottom: 6px;
+    }
+
+    .section-heading p {
+      color: #7a858d;
+      font-size: 14px;
+    }
+
+    .option-grid {
+      display: grid;
+
+      grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+
+      gap: 20px;
+    }
+
+    .option-card {
+      position: relative;
+
+      display: flex;
+      flex-direction: column;
+
+      min-height: 310px;
+
+      padding: 30px;
+
+      border-radius: 22px;
+
+      border: 1px solid #e7e4dc;
+
+      background: #ffffff;
+
+      box-shadow:
+        0 12px 32px rgba(37, 49, 59, 0.05);
+
+      transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease,
+        border-color 0.2s ease;
+    }
+
+    .option-card:hover {
+      transform: translateY(-4px);
+
+      box-shadow:
+        0 18px 40px rgba(37, 49, 59, 0.08);
+    }
+
+    .mini-card {
+      background: #eef9f6;
+      border-color: #d6eee7;
+    }
+
+    .prediction-card {
+      background: #f5f0fc;
+      border-color: #e4daf6;
+    }
+
+    .option-number {
+      width: 42px;
+      height: 42px;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      border-radius: 12px;
+
+      font-size: 13px;
+      font-weight: 800;
+
+      margin-bottom: 22px;
+    }
+
+    .mini-card .option-number {
+      background: #d9f1eb;
+      color: #087f7b;
+    }
+
+    .prediction-card .option-number {
+      background: #e7dcf7;
+      color: #7459b8;
+    }
+
+    .option-card h3 {
+      font-size: 23px;
+      line-height: 1.2;
+
+      margin-bottom: 12px;
+
+      color: #25313b;
+    }
+
+    .option-card p {
+      color: #66727b;
+
+      font-size: 14px;
+      line-height: 1.7;
+
+      max-width: 430px;
+    }
+
+    .option-details {
+      display: flex;
+      flex-wrap: wrap;
+
+      gap: 8px;
+
+      margin-top: 22px;
+    }
+
+    .detail-tag {
+      padding: 6px 9px;
+
+      border-radius: 8px;
+
+      background: rgba(255, 255, 255, 0.7);
+
+      color: #65717a;
+
+      font-size: 11px;
+      font-weight: 700;
+    }
+
+    .option-button {
+      margin-top: auto;
+      padding-top: 25px;
+    }
+
+    .start-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+
+      font-size: 14px;
+      font-weight: 800;
+
+      transition: gap 0.2s ease;
+    }
+
+    .mini-card .start-link {
+      color: #087f7b;
+    }
+
+    .prediction-card .start-link {
+      color: #7459b8;
+    }
+
+    .option-card:hover .start-link {
+      gap: 12px;
+    }
+
+    /* =========================
+       NOTE
+    ========================= */
+
+    .note {
+      max-width: 1080px;
+      margin: 0 auto;
+
+      padding: 0 6% 70px;
+    }
+
+    .note-box {
+      padding: 20px 22px;
+
+      border-radius: 16px;
+
+      background: #fff8e8;
+      border: 1px solid #f2e5bf;
+    }
+
+    .note-box strong {
+      display: block;
+
+      color: #765d27;
+
+      font-size: 13px;
+
+      margin-bottom: 5px;
+    }
+
+    .note-box p {
+      color: #756b58;
+
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    /* =========================
+       FOOTER
+    ========================= */
+
+    footer {
+      padding: 30px 6%;
+
+      border-top: 1px solid #ece8df;
+
+      text-align: center;
+
+      color: #89929a;
+
+      font-size: 12px;
+    }
+
+    /* =========================
+       RESPONSIVE
+    ========================= */
+
+    @media (max-width: 800px) {
+
+      .option-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .hero {
+        padding-top: 60px;
+      }
+
+      .hero h1 {
+        font-size: 44px;
+      }
+
+    }
+
+    @media (max-width: 500px) {
+
+      nav {
+        padding: 0 5%;
+      }
+
+      .back-link {
+        font-size: 13px;
+      }
+
+      .hero {
+        padding: 55px 5% 40px;
+      }
+
+      .hero h1 {
+        font-size: 38px;
+      }
+
+      .hero p {
+        font-size: 15px;
+      }
+
+      .overview,
+      .options,
+      .note {
+        padding-left: 5%;
+        padding-right: 5%;
+      }
+
+      .option-card {
+        padding: 24px;
+      }
+
+    }
+
+  </style>
+</head>
+
+<body>
+
+  <!-- =========================
+       NAVBAR
+  ========================= -->
+
+  <nav>
+
+    <a
+      href="student-dashboard.html"
+      class="logo"
+    >
+      AI LINGUA LAB
+    </a>
+
+    <div class="nav-right">
+
+      <a
+        href="student-dashboard.html"
+        class="back-link"
+      >
+        ← Dashboard
+      </a>
+
+    </div>
+
+  </nav>
+
+
+  <!-- =========================
+       HERO
+  ========================= -->
+
+  <section class="hero">
+
+    <div class="eyebrow">
+      Assessment Lab
+    </div>
+
+    <h1>
+      TOEFL <span>Lab</span>
+    </h1>
+
+    <p>
+      Measure your English readiness through
+      TOEFL-style practice and discover an
+      estimated level of performance.
+    </p>
+
+  </section>
+
+
+  <!-- =========================
+       TOEFL STRUCTURE
+  ========================= -->
+
+  <section class="overview">
+
+    <div class="overview-card">
+
+      <div class="overview-title">
+        TOEFL Assessment Structure
+      </div>
+
+      <div class="structure-list">
+
+        <div class="structure-item">
+          Listening Comprehension
+        </div>
+
+        <div class="structure-item">
+          Structure &amp; Written Expression
+        </div>
+
+        <div class="structure-item">
+          Reading Comprehension
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- =========================
+       MAIN OPTIONS
+  ========================= -->
+
+  <section class="options">
+
+    <div class="section-heading">
+
+      <h2>
+        Choose your assessment
+      </h2>
+
+      <p>
+        Start with a short test or continue
+        to a full TOEFL-style prediction.
+      </p>
+
+    </div>
+
+
+    <div class="option-grid">
+
+
+      <!-- MINI TEST -->
+
+      <a
+        href="#"
+        class="option-card mini-card"
+      >
+
+        <div class="option-number">
+          01
+        </div>
+
+        <h3>
+          Mini Test
+        </h3>
+
+        <p>
+          Take a short diagnostic test to
+          check your current performance
+          across the main TOEFL sections.
+        </p>
+
+        <div class="option-details">
+
+          <span class="detail-tag">
+            Short Test
+          </span>
+
+          <span class="detail-tag">
+            Diagnostic
+          </span>
+
+          <span class="detail-tag">
+            TOEFL-style
+          </span>
+
+        </div>
+
+        <div class="option-button">
+
+          <span class="start-link">
+            Start Mini Test →
+          </span>
+
+        </div>
+
+      </a>
+
+
+      <!-- TOEFL PREDICTION -->
+
+      <a
+        href="#"
+        class="option-card prediction-card"
+      >
+
+        <div class="option-number">
+          02
+        </div>
+
+        <h3>
+          TOEFL Prediction
+        </h3>
+
+        <p>
+          Complete a longer TOEFL-style
+          assessment and receive an estimated
+          TOEFL score based on your performance.
+        </p>
+
+        <div class="option-details">
+
+          <span class="detail-tag">
+            Listening
+          </span>
+
+          <span class="detail-tag">
+            Structure
+          </span>
+
+          <span class="detail-tag">
+            Reading
+          </span>
+
+          <span class="detail-tag">
+            Score Estimate
+          </span>
+
+        </div>
+
+        <div class="option-button">
+
+          <span class="start-link">
+            Start Prediction →
+          </span>
+
+        </div>
+
+      </a>
+
+
+    </div>
+
+  </section>
+
+
+  <!-- =========================
+       NOTE
+  ========================= -->
+
+  <section class="note">
+
+    <div class="note-box">
+
+      <strong>
+        About TOEFL Prediction
+      </strong>
+
+      <p>
+        The prediction feature is designed as
+        an AI Lingua Lab learning assessment.
+        It provides an estimated score and is
+        not an official TOEFL score.
+      </p>
+
+    </div>
+
+  </section>
+
+
+  <!-- =========================
+       FOOTER
+  ========================= -->
+
+  <footer>
+
+    AI Lingua Lab · TOEFL Lab
+
+  </footer>
+
+
+</body>
+</html>
