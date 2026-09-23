@@ -1,0 +1,2328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TOEFL Prediction | AI Lingua Lab</title>
+
+<style>
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: Inter, Segoe UI, Arial, sans-serif;
+  background: #fffdf8;
+  color: #263238;
+}
+
+nav {
+  height: 72px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 7%;
+  border-bottom: 1px solid #e9ecef;
+  background: rgba(255,253,248,.96);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.logo {
+  font-weight: 800;
+  letter-spacing: .08em;
+  color: #087f7b;
+}
+
+.back {
+  text-decoration: none;
+  color: #53636b;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.wrap {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 52px 22px 80px;
+}
+
+.hero {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.eyebrow {
+  display: inline-block;
+  padding: 7px 12px;
+  border-radius: 999px;
+  background: #e4f5f1;
+  color: #087f7b;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: .08em;
+}
+
+h1 {
+  font-size: 42px;
+  margin: 16px 0 10px;
+  letter-spacing: -.03em;
+}
+
+.hero p {
+  max-width: 680px;
+  margin: auto;
+  color: #68777e;
+  line-height: 1.7;
+}
+
+.panel {
+  background: #fff;
+  border: 1px solid #e7ebe9;
+  border-radius: 22px;
+  padding: 28px;
+  box-shadow: 0 10px 30px rgba(39,70,67,.06);
+}
+
+.hidden {
+  display: none !important;
+}
+
+.structure {
+  display: grid;
+  grid-template-columns: repeat(3,1fr);
+  gap: 12px;
+  margin: 22px 0;
+}
+
+.stat {
+  padding: 18px;
+  border-radius: 15px;
+  border: 1px solid #e8eceb;
+  text-align: center;
+}
+
+.stat strong {
+  display: block;
+  font-size: 22px;
+  color: #087f7b;
+}
+
+.stat span {
+  font-size: 12px;
+  color: #748087;
+}
+
+.notice {
+  background: #fffaf0;
+  border: 1px solid #f0e4c5;
+  border-radius: 15px;
+  padding: 18px;
+  line-height: 1.7;
+  color: #6d6246;
+}
+
+.notice strong {
+  color: #80631d;
+}
+
+button {
+  border: 0;
+  border-radius: 12px;
+  padding: 13px 20px;
+  font-weight: 750;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.primary {
+  background: #087f7b;
+  color: #fff;
+}
+
+.primary:hover {
+  background: #076d69;
+}
+
+.secondary {
+  background: #eef7f5;
+  color: #087f7b;
+}
+
+.start-panel {
+  text-align: center;
+}
+
+/* TEST */
+
+.test-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 18px;
+}
+
+.section-label {
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: .08em;
+  color: #087f7b;
+  text-transform: uppercase;
+}
+
+.q-number {
+  font-size: 13px;
+  color: #7a878d;
+  margin-bottom: 12px;
+}
+
+.timer {
+  padding: 9px 13px;
+  background: #fff5d8;
+  border-radius: 10px;
+  font-weight: 800;
+  color: #80631d;
+  min-width: 76px;
+  text-align: center;
+}
+
+.timer.urgent {
+  background: #fff0ed;
+  color: #b55342;
+}
+
+.progress {
+  height: 7px;
+  background: #edf0ef;
+  border-radius: 99px;
+  overflow: hidden;
+  margin-bottom: 25px;
+}
+
+.progress-bar {
+  height: 100%;
+  width: 0;
+  background: #75cfc1;
+  transition: .25s;
+}
+
+.question-card {
+  min-height: 430px;
+}
+
+.q-title {
+  font-size: 20px;
+  font-weight: 750;
+  margin-bottom: 20px;
+  line-height: 1.55;
+}
+
+.options {
+  display: grid;
+  gap: 11px;
+}
+
+.option {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  border: 1px solid #e1e7e5;
+  border-radius: 13px;
+  padding: 15px;
+  cursor: pointer;
+  transition: .18s;
+}
+
+.option:hover {
+  background: #f8fbfa;
+  border-color: #abdcd5;
+}
+
+.option input {
+  accent-color: #087f7b;
+}
+
+.option-letter {
+  font-weight: 800;
+  color: #087f7b;
+  min-width: 22px;
+}
+
+/* LISTENING */
+
+.listening-box {
+  background: #edf8f6;
+  border: 1px solid #d6eee9;
+  border-radius: 18px;
+  padding: 25px 22px;
+  text-align: center;
+  margin-bottom: 25px;
+}
+
+.audio-symbol {
+  width: 54px;
+  height: 54px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 12px;
+  background: #d8f0ec;
+  color: #087f7b;
+  font-size: 23px;
+}
+
+.audio-title {
+  font-weight: 800;
+  color: #145c59;
+}
+
+.audio-status {
+  font-size: 13px;
+  color: #68817f;
+  margin-top: 7px;
+  min-height: 20px;
+}
+
+/* READING */
+
+.reading-passage {
+  background: #f7faf9;
+  border: 1px solid #e7ecea;
+  border-radius: 16px;
+  padding: 22px;
+  line-height: 1.85;
+  margin-bottom: 22px;
+  color: #53636a;
+  max-height: 390px;
+  overflow-y: auto;
+}
+
+.reading-passage .title {
+  font-weight: 800;
+  color: #087f7b;
+  margin-bottom: 12px;
+}
+
+/* WRITTEN EXPRESSION */
+
+.error-sentence {
+  font-size: 19px;
+  line-height: 1.8;
+  background: #f8faf9;
+  border: 1px solid #e7ecea;
+  border-radius: 16px;
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+.controls {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 28px;
+}
+
+/* RESULT */
+
+.result {
+  text-align: center;
+}
+
+.score-circle {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  background: #e5f6f2;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 20px auto;
+}
+
+.score-circle strong {
+  font-size: 35px;
+  color: #087f7b;
+}
+
+.score-circle span {
+  font-size: 12px;
+  color: #65777b;
+}
+
+.results-grid {
+  display: grid;
+  grid-template-columns: repeat(3,1fr);
+  gap: 12px;
+  margin: 25px 0;
+}
+
+.result-item {
+  padding: 18px;
+  border: 1px solid #e6ebe9;
+  border-radius: 15px;
+}
+
+.result-item strong {
+  display: block;
+  font-size: 23px;
+  color: #087f7b;
+}
+
+.result-item span {
+  font-size: 12px;
+  color: #738087;
+}
+
+.summary {
+  background: #f8faf9;
+  border: 1px solid #e6ebe9;
+  border-radius: 15px;
+  padding: 18px;
+  margin: 18px 0;
+  color: #68777e;
+  line-height: 1.7;
+}
+
+/* MODAL */
+
+.modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(24,40,39,.42);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  z-index: 100;
+}
+
+.modal-card {
+  max-width: 470px;
+  background: white;
+  border-radius: 22px;
+  padding: 28px;
+  box-shadow: 0 20px 60px rgba(0,0,0,.16);
+}
+
+.modal-card h2 {
+  margin-top: 0;
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 22px;
+}
+
+footer {
+  text-align: center;
+  color: #9aa4a8;
+  font-size: 12px;
+  margin-top: 45px;
+}
+
+@media(max-width:650px) {
+  nav {
+    padding: 0 5%;
+  }
+
+  h1 {
+    font-size: 34px;
+  }
+
+  .structure,
+  .results-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .panel {
+    padding: 20px;
+  }
+
+  .test-top {
+    align-items: flex-start;
+  }
+
+  .controls button {
+    width: 100%;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<nav>
+  <div class="logo">AI LINGUA LAB</div>
+  <a href="toefl.html" class="back">← Back to TOEFL Lab</a>
+</nav>
+
+<main class="wrap">
+
+<!-- ================= LANDING PAGE ================= -->
+
+<section class="hero">
+
+  <span class="eyebrow">TOEFL LAB</span>
+
+  <h1>TOEFL Prediction Test</h1>
+
+  <p>
+    Take a full-length TOEFL ITP-style assessment covering
+    Listening Comprehension, Structure and Written Expression,
+    and Reading Comprehension.
+  </p>
+
+</section>
+
+<section id="startScreen" class="panel start-panel">
+
+  <h2>Before You Begin</h2>
+
+  <p style="color:#68777e;line-height:1.7">
+    This prediction test contains
+    <strong>140 questions</strong>
+    and uses separate time limits for each section.
+  </p>
+
+  <div class="structure">
+
+    <div class="stat">
+      <strong>50</strong>
+      <span>Listening · 35 min</span>
+    </div>
+
+    <div class="stat">
+      <strong>40</strong>
+      <span>Structure · 25 min</span>
+    </div>
+
+    <div class="stat">
+      <strong>50</strong>
+      <span>Reading · 55 min</span>
+    </div>
+
+  </div>
+
+  <div class="notice" style="text-align:left">
+
+    <strong>Important</strong><br>
+
+    • Each section has its own timer.<br>
+
+    • You can move forward only; there is no Previous button.<br>
+
+    • A section is submitted automatically when its timer reaches 00:00.<br>
+
+    • The timer cannot be paused.<br>
+
+    • Listening audio stops immediately when you move to the next question.<br>
+
+    • Estimated result only — this is not an official TOEFL ITP score.
+
+  </div>
+
+  <p style="font-size:13px;color:#7a878d;margin:22px 0">
+    Total test time:
+    <strong>1 hour 55 minutes</strong>
+  </p>
+
+  <button class="primary" id="startBtn">
+    Start Prediction Test
+  </button>
+
+</section>
+
+
+<!-- ================= TEST SCREEN ================= -->
+
+<section id="testScreen" class="panel hidden">
+
+  <div class="test-top">
+
+    <div>
+
+      <div id="sectionLabel" class="section-label">
+        Listening Comprehension
+      </div>
+
+      <div id="questionCounter" class="q-number">
+        Question 1 of 50
+      </div>
+
+    </div>
+
+    <div id="timer" class="timer">
+      35:00
+    </div>
+
+  </div>
+
+  <div class="progress">
+    <div id="progressBar" class="progress-bar"></div>
+  </div>
+
+  <div class="question-card">
+
+    <div id="questionContent"></div>
+
+  </div>
+
+  <div class="controls">
+
+    <button id="nextBtn" class="primary">
+      Next →
+    </button>
+
+  </div>
+
+</section>
+
+
+<!-- ================= RESULT ================= -->
+
+<section id="resultScreen" class="panel result hidden">
+
+  <div class="eyebrow">
+    TEST COMPLETE
+  </div>
+
+  <h1>Your Prediction Result</h1>
+
+  <div class="score-circle">
+
+    <strong id="estimatedScore">
+      310
+    </strong>
+
+    <span>
+      estimated TOEFL score
+    </span>
+
+  </div>
+
+  <div class="summary" id="scoreSummary"></div>
+
+  <div class="results-grid">
+
+    <div class="result-item">
+
+      <strong id="listeningScore">
+        0/50
+      </strong>
+
+      <span>
+        Listening
+      </span>
+
+    </div>
+
+    <div class="result-item">
+
+      <strong id="structureScore">
+        0/40
+      </strong>
+
+      <span>
+        Structure & Written Expression
+      </span>
+
+    </div>
+
+    <div class="result-item">
+
+      <strong id="readingScore">
+        0/50
+      </strong>
+
+      <span>
+        Reading
+      </span>
+
+    </div>
+
+  </div>
+
+  <p style="color:#68777e;line-height:1.7">
+
+    This estimated score is for learning and diagnostic purposes only.
+
+    It is
+    <strong>not an official TOEFL ITP score</strong>.
+
+  </p>
+
+  <button
+    class="primary"
+    onclick="window.location.href='toefl.html'"
+  >
+    Back to TOEFL Lab
+  </button>
+
+</section>
+
+<footer>
+  AI Lingua Lab · TOEFL Prediction
+</footer>
+
+</main>
+
+
+<!-- ================= CONFIRMATION MODAL ================= -->
+
+<div id="confirmModal" class="modal hidden">
+
+  <div class="modal-card">
+
+    <h2>
+      Start TOEFL Prediction?
+    </h2>
+
+    <p style="color:#68777e;line-height:1.7">
+
+      Once you start, the timer will begin.
+
+      You cannot pause the test or return to a previous section.
+
+    </p>
+
+    <div class="modal-actions">
+
+      <button
+        class="secondary"
+        id="cancelStart"
+      >
+        Cancel
+      </button>
+
+      <button
+        class="primary"
+        id="confirmStart"
+      >
+        Start Test
+      </button>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+<!-- ================= SUPABASE ================= -->
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script>
+
+const SUPABASE_URL =
+  "https://glwpjsnwdzufyiumxikk.supabase.co";
+
+const SUPABASE_PUBLISHABLE_KEY =
+  "sb_publishable_Bbu_RSEmPsNUWjroJB7HUQ_Gonq02F8";
+
+const {
+  createClient
+} = supabase;
+
+const supabaseClient =
+  createClient(
+    SUPABASE_URL,
+    SUPABASE_PUBLISHABLE_KEY
+  );
+
+
+/* =========================================================
+   LISTENING QUESTION BANK
+   TEMPORARY SAMPLE
+========================================================= */
+
+const listeningQuestions = [
+
+  {
+    part:"A",
+
+    conversation:[
+      {
+        speaker:"male",
+        text:"Did you finish the report for Dr. Miller?"
+      },
+      {
+        speaker:"female",
+        text:"Not quite. I still need to check the last section."
+      }
+    ],
+
+    question:
+      "What does the woman still need to do?",
+
+    options:[
+      "Print the report.",
+      "Check the last section.",
+      "Meet Dr. Miller.",
+      "Write the introduction."
+    ],
+
+    answer:1
+  },
+
+
+  {
+    part:"A",
+
+    conversation:[
+      {
+        speaker:"female",
+        text:"Are you going to the library after class?"
+      },
+      {
+        speaker:"male",
+        text:"I was planning to, but I have to meet my advisor first."
+      }
+    ],
+
+    question:
+      "What will the man probably do before going to the library?",
+
+    options:[
+      "Attend another class.",
+      "Meet his advisor.",
+      "Return a book.",
+      "Study at home."
+    ],
+
+    answer:1
+  },
+
+
+  {
+    part:"A",
+
+    conversation:[
+      {
+        speaker:"male",
+        text:"Did you reserve a room for the study group?"
+      },
+      {
+        speaker:"female",
+        text:"Yes, but the small room was already taken, so I reserved the larger one."
+      }
+    ],
+
+    question:
+      "Why did the woman reserve a larger room?",
+
+    options:[
+      "It was less expensive.",
+      "The small room was unavailable.",
+      "The group became smaller.",
+      "Her professor requested it."
+    ],
+
+    answer:1
+  },
+
+
+  {
+    part:"A",
+
+    conversation:[
+      {
+        speaker:"female",
+        text:"Have you seen the new schedule for the laboratory?"
+      },
+      {
+        speaker:"male",
+        text:"Yes. Our Wednesday session has been moved to Thursday morning."
+      }
+    ],
+
+    question:
+      "When will the laboratory session take place?",
+
+    options:[
+      "Wednesday morning.",
+      "Wednesday afternoon.",
+      "Thursday morning.",
+      "Thursday afternoon."
+    ],
+
+    answer:2
+  }
+
+];
+
+
+/* =========================================================
+   STRUCTURE QUESTION BANK
+========================================================= */
+
+const structureQuestions = [
+
+  {
+    part:"A",
+
+    question:
+      "The students ______ their assignment before the class started.",
+
+    options:[
+      "finish",
+      "finishing",
+      "had finished",
+      "completion"
+    ],
+
+    answer:2
+  },
+
+
+  {
+    part:"A",
+
+    question:
+      "The new laboratory equipment ______ by the technician yesterday.",
+
+    options:[
+      "was installed",
+      "installing",
+      "has install",
+      "install"
+    ],
+
+    answer:0
+  },
+
+
+  {
+    part:"A",
+
+    question:
+      "The researcher needs ______ the results carefully before publishing them.",
+
+    options:[
+      "analyze",
+      "analyzing",
+      "to analyze",
+      "analyzed"
+    ],
+
+    answer:2
+  },
+
+
+  {
+    part:"A",
+
+    question:
+      "Neither the lecturer nor the students ______ available yesterday.",
+
+    options:[
+      "was",
+      "were",
+      "be",
+      "being"
+    ],
+
+    answer:1
+  },
+
+
+  {
+    part:"B",
+
+    sentence:
+      "Various chemical element have more than one isotope.",
+
+    question:
+      "Which underlined part must be changed?",
+
+    options:[
+      "A. Various",
+      "B. chemical element",
+      "C. more than one",
+      "D. isotope"
+    ],
+
+    answer:1
+  }
+
+];
+
+
+/* =========================================================
+   READING QUESTION BANK
+========================================================= */
+
+const readingQuestions = [
+
+  {
+    passage:{
+      title:
+        "The Role of Sleep in Learning",
+
+      text:
+        "Sleep is often described as a period of rest, but the sleeping brain remains active. During sleep, the brain performs processes related to memory and learning. Information acquired during the day may be organized and integrated with knowledge that was already stored. Sleep therefore supports learning, although it does not replace attention, practice, or review during waking hours."
+    },
+
+    question:
+      "What is the main idea of the passage?",
+
+    options:[
+      "Sleep can support learning and memory but cannot replace active study.",
+      "Students should study only before sleeping.",
+      "The brain stops processing information during sleep.",
+      "Sleep has no relationship with learning."
+    ],
+
+    answer:0
+  },
+
+
+  {
+    passage:{
+      title:
+        "Community Gardens",
+
+      text:
+        "Community gardens are shared spaces where residents can grow vegetables, herbs, flowers, or other plants. Besides providing access to fresh produce, these gardens can create opportunities for neighbors to exchange knowledge and cooperate. Plants can also provide shade and make use of otherwise unused urban land. However, successful gardens require organization and continued cooperation among participants."
+    },
+
+    question:
+      "What can be inferred about successful community gardens?",
+
+    options:[
+      "They require cooperation among participants.",
+      "They eliminate the need for supermarkets.",
+      "They can operate without rules.",
+      "They are useful only in rural areas."
+    ],
+
+    answer:0
+  },
+
+
+  {
+    passage:{
+      title:
+        "Thermoregulation",
+
+      text:
+        "The human body maintains a relatively stable internal temperature through thermoregulation. In hot conditions, sweating and increased blood flow near the skin can help transfer heat to the environment. In cold conditions, blood vessels near the skin may narrow and muscles may contract involuntarily, producing shivering. These mechanisms have limits when environmental conditions become extreme."
+    },
+
+    question:
+      "What is the primary purpose of thermoregulation?",
+
+    options:[
+      "To maintain a relatively stable internal temperature.",
+      "To make the body permanently adapt to extreme heat.",
+      "To prevent blood from reaching the skin.",
+      "To increase body temperature in every situation."
+    ],
+
+    answer:0
+  }
+
+];
+
+
+/* =========================================================
+   SECTIONS
+========================================================= */
+
+const sections = [
+
+  {
+    key:"listening",
+    label:"Listening Comprehension",
+    duration:35 * 60,
+    questions:listeningQuestions
+  },
+
+  {
+    key:"structure",
+    label:"Structure and Written Expression",
+    duration:25 * 60,
+    questions:structureQuestions
+  },
+
+  {
+    key:"reading",
+    label:"Reading Comprehension",
+    duration:55 * 60,
+    questions:readingQuestions
+  }
+
+];
+
+
+/* =========================================================
+   STATE
+========================================================= */
+
+let sectionIndex = 0;
+
+let current = 0;
+
+let answers = [];
+
+let timerSeconds = 0;
+
+let timerInterval = null;
+
+let started = false;
+
+let finished = false;
+
+let speechToken = 0;
+
+let sectionStarts = [];
+
+
+/* =========================================================
+   QUESTION FLATTEN
+========================================================= */
+
+function flatten(){
+
+  const all = [];
+
+  sections.forEach(
+    (section, sectionIndex) => {
+
+      section.questions.forEach(
+        question => {
+
+          all.push({
+            ...question,
+            type:section.key,
+            sectionIndex
+          });
+
+        }
+      );
+
+    }
+  );
+
+  return all;
+}
+
+
+const questions = flatten();
+
+answers =
+  Array(
+    questions.length
+  ).fill(null);
+
+
+sectionStarts =
+  sections.map(
+    (section, index) =>
+
+      sections
+        .slice(0,index)
+        .reduce(
+          (number, currentSection) =>
+            number + currentSection.questions.length,
+          0
+        )
+  );
+
+
+/* =========================================================
+   DOM
+========================================================= */
+
+const startScreen =
+  document.getElementById(
+    "startScreen"
+  );
+
+const testScreen =
+  document.getElementById(
+    "testScreen"
+  );
+
+const resultScreen =
+  document.getElementById(
+    "resultScreen"
+  );
+
+const questionContent =
+  document.getElementById(
+    "questionContent"
+  );
+
+const sectionLabel =
+  document.getElementById(
+    "sectionLabel"
+  );
+
+const questionCounter =
+  document.getElementById(
+    "questionCounter"
+  );
+
+const progressBar =
+  document.getElementById(
+    "progressBar"
+  );
+
+const timerEl =
+  document.getElementById(
+    "timer"
+  );
+
+const nextBtn =
+  document.getElementById(
+    "nextBtn"
+  );
+
+
+/* =========================================================
+   AUTH
+========================================================= */
+
+async function checkAuth(){
+
+  const {
+    data:{user},
+    error
+  } =
+    await supabaseClient
+      .auth
+      .getUser();
+
+  if(error || !user){
+
+    alert(
+      "Please login first."
+    );
+
+    window.location.href =
+      "login.html";
+
+    return false;
+  }
+
+  return true;
+}
+
+
+/* =========================================================
+   START
+========================================================= */
+
+document
+  .getElementById("startBtn")
+  .onclick = () => {
+
+    document
+      .getElementById("confirmModal")
+      .classList
+      .remove("hidden");
+
+  };
+
+
+document
+  .getElementById("cancelStart")
+  .onclick = () => {
+
+    document
+      .getElementById("confirmModal")
+      .classList
+      .add("hidden");
+
+  };
+
+
+document
+  .getElementById("confirmStart")
+  .onclick = async () => {
+
+    document
+      .getElementById("confirmModal")
+      .classList
+      .add("hidden");
+
+    const ok =
+      await checkAuth();
+
+    if(!ok) return;
+
+    started = true;
+
+    startScreen
+      .classList
+      .add("hidden");
+
+    testScreen
+      .classList
+      .remove("hidden");
+
+    startSection(0);
+
+  };
+
+
+/* =========================================================
+   START SECTION
+========================================================= */
+
+function startSection(section){
+
+  stopSpeech();
+
+  sectionIndex =
+    section;
+
+  current = 0;
+
+  timerSeconds =
+    sections[section].duration;
+
+  renderQuestion();
+
+  startTimer();
+
+}
+
+
+/* =========================================================
+   TIMER
+========================================================= */
+
+function startTimer(){
+
+  clearInterval(
+    timerInterval
+  );
+
+  updateTimer();
+
+  timerInterval =
+    setInterval(
+      () => {
+
+        if(finished)
+          return;
+
+        timerSeconds--;
+
+        updateTimer();
+
+        if(timerSeconds <= 0){
+
+          timerSeconds = 0;
+
+          updateTimer();
+
+          finishSection(true);
+
+        }
+
+      },
+      1000
+    );
+
+}
+
+
+function updateTimer(){
+
+  const minutes =
+    Math
+      .floor(timerSeconds / 60)
+      .toString()
+      .padStart(2,"0");
+
+  const seconds =
+    (timerSeconds % 60)
+      .toString()
+      .padStart(2,"0");
+
+  timerEl.textContent =
+    `${minutes}:${seconds}`;
+
+  timerEl.classList.toggle(
+    "urgent",
+    timerSeconds <= 60
+  );
+
+}
+
+
+/* =========================================================
+   GLOBAL INDEX
+========================================================= */
+
+function globalIndex(){
+
+  return (
+    sectionStarts[sectionIndex]
+    +
+    current
+  );
+
+}
+
+
+/* =========================================================
+   RENDER QUESTION
+========================================================= */
+
+function renderQuestion(){
+
+  if(finished)
+    return;
+
+  stopSpeech();
+
+  const q =
+    sections[
+      sectionIndex
+    ].questions[
+      current
+    ];
+
+  const total =
+    sections[
+      sectionIndex
+    ].questions.length;
+
+  sectionLabel.textContent =
+    sections[
+      sectionIndex
+    ].label;
+
+  questionCounter.textContent =
+    `Question ${current + 1} of ${total}`;
+
+  progressBar.style.width =
+    `${((current + 1) / total) * 100}%`;
+
+
+  if(q.type === "reading"){
+
+    renderReading(q);
+
+  }
+
+  else if(q.part === "B"){
+
+    renderError(q);
+
+  }
+
+  else if(q.conversation){
+
+    renderListening(q);
+
+  }
+
+  else{
+
+    renderStandard(q);
+
+  }
+
+
+  nextBtn.textContent =
+    current === total - 1
+
+      ? (
+          sectionIndex === sections.length - 1
+            ? "Finish Test"
+            : "Continue →"
+        )
+
+      : "Next →";
+
+}
+
+
+/* =========================================================
+   LISTENING
+========================================================= */
+
+function renderListening(q){
+
+  questionContent.innerHTML = `
+
+    <div class="q-number">
+      Listening Part ${q.part}
+    </div>
+
+    <div class="q-title">
+      Listen carefully and choose the best answer.
+    </div>
+
+    <div class="listening-box">
+
+      <div class="audio-symbol">
+        ◖
+      </div>
+
+      <div class="audio-title">
+        Listening Audio
+      </div>
+
+      <div id="audioStatus" class="audio-status">
+        Preparing audio...
+      </div>
+
+      <div style="
+        font-size:11px;
+        color:#7b8e8b;
+        margin-top:9px
+      ">
+        The conversation and question are not displayed.
+        Audio plays once.
+      </div>
+
+    </div>
+
+    ${renderOptions(q)}
+
+  `;
+
+  attachAnswer();
+
+  setTimeout(
+    () => playListening(q),
+    300
+  );
+
+}
+
+
+/* =========================================================
+   STRUCTURE
+========================================================= */
+
+function renderStandard(q){
+
+  questionContent.innerHTML = `
+
+    <div class="q-number">
+      Structure
+    </div>
+
+    <div class="q-title">
+      ${q.question}
+    </div>
+
+    ${renderOptions(q)}
+
+  `;
+
+  attachAnswer();
+
+}
+
+
+/* =========================================================
+   WRITTEN EXPRESSION
+========================================================= */
+
+function renderError(q){
+
+  questionContent.innerHTML = `
+
+    <div class="q-number">
+      Written Expression
+    </div>
+
+    <div class="q-title">
+      Choose the underlined word or phrase
+      that must be changed.
+    </div>
+
+    <div class="error-sentence">
+      ${q.sentence}
+    </div>
+
+    ${renderOptions(q)}
+
+  `;
+
+  attachAnswer();
+
+}
+
+
+/* =========================================================
+   READING
+========================================================= */
+
+function renderReading(q){
+
+  questionContent.innerHTML = `
+
+    <div class="q-number">
+      Reading Comprehension
+    </div>
+
+    <div class="reading-passage">
+
+      <div class="title">
+        ${q.passage.title}
+      </div>
+
+      <div>
+        ${q.passage.text}
+      </div>
+
+    </div>
+
+    <div class="q-title">
+      ${q.question}
+    </div>
+
+    ${renderOptions(q)}
+
+  `;
+
+  attachAnswer();
+
+}
+
+
+/* =========================================================
+   OPTIONS
+========================================================= */
+
+function renderOptions(q){
+
+  const selected =
+    answers[
+      globalIndex()
+    ];
+
+  return `
+
+    <div class="options">
+
+      ${q.options.map(
+        (option,index) => `
+
+          <label class="option">
+
+            <input
+              type="radio"
+              name="answer"
+              value="${index}"
+              ${selected === index ? "checked" : ""}
+            >
+
+            <span class="option-letter">
+              ${String.fromCharCode(65 + index)}
+            </span>
+
+            <span>
+              ${option}
+            </span>
+
+          </label>
+
+        `
+      ).join("")}
+
+    </div>
+
+  `;
+
+}
+
+
+/* =========================================================
+   SAVE ANSWER
+========================================================= */
+
+function attachAnswer(){
+
+  document
+    .querySelectorAll(
+      'input[name="answer"]'
+    )
+    .forEach(
+      input => {
+
+        input.addEventListener(
+          "change",
+          () => {
+
+            answers[
+              globalIndex()
+            ] =
+              Number(
+                input.value
+              );
+
+          }
+        );
+
+      }
+    );
+
+}
+
+
+function saveCurrentAnswer(){
+
+  const checked =
+    document.querySelector(
+      'input[name="answer"]:checked'
+    );
+
+  if(checked){
+
+    answers[
+      globalIndex()
+    ] =
+      Number(
+        checked.value
+      );
+
+  }
+
+}
+
+
+/* =========================================================
+   NEXT
+========================================================= */
+
+nextBtn.onclick = () => {
+
+  if(finished)
+    return;
+
+  stopSpeech();
+
+  saveCurrentAnswer();
+
+  const total =
+    sections[
+      sectionIndex
+    ].questions.length;
+
+
+  if(current < total - 1){
+
+    current++;
+
+    renderQuestion();
+
+    return;
+
+  }
+
+
+  finishSection(false);
+
+};
+
+
+/* =========================================================
+   FINISH SECTION
+========================================================= */
+
+function finishSection(timeExpired){
+
+  if(finished)
+    return;
+
+  saveCurrentAnswer();
+
+  clearInterval(
+    timerInterval
+  );
+
+  timerInterval = null;
+
+  stopSpeech();
+
+
+  if(sectionIndex < sections.length - 1){
+
+    startSection(
+      sectionIndex + 1
+    );
+
+    return;
+
+  }
+
+
+  finishTest(
+    timeExpired
+  );
+
+}
+
+
+/* =========================================================
+   SCORE
+========================================================= */
+
+function scoreResults(){
+
+  const output = {
+
+    listening:0,
+
+    structure:0,
+
+    reading:0
+
+  };
+
+
+  questions.forEach(
+    (question,index) => {
+
+      if(
+        answers[index] ===
+        question.answer
+      ){
+
+        output[
+          question.type
+        ]++;
+
+      }
+
+    }
+  );
+
+
+  return output;
+
+}
+
+
+/* =========================================================
+   TEMPORARY SCORE ESTIMATE
+========================================================= */
+
+function estimateScore(scores){
+
+  const total =
+    scores.listening +
+    scores.structure +
+    scores.reading;
+
+  const percentage =
+    total /
+    questions.length;
+
+  return Math.round(
+    310 +
+    (677 - 310) *
+    percentage
+  );
+
+}
+
+
+/* =========================================================
+   FINISH TEST
+========================================================= */
+
+async function finishTest(
+  timeExpired = false
+){
+
+  if(finished)
+    return;
+
+  saveCurrentAnswer();
+
+  finished = true;
+
+  stopSpeech();
+
+  clearInterval(
+    timerInterval
+  );
+
+
+  const scores =
+    scoreResults();
+
+  const answered =
+    answers.filter(
+      x => x !== null
+    ).length;
+
+  const estimated =
+    estimateScore(
+      scores
+    );
+
+
+  document
+    .getElementById(
+      "estimatedScore"
+    )
+    .textContent =
+      estimated;
+
+
+  document
+    .getElementById(
+      "listeningScore"
+    )
+    .textContent =
+      `${scores.listening}/50`;
+
+
+  document
+    .getElementById(
+      "structureScore"
+    )
+    .textContent =
+      `${scores.structure}/40`;
+
+
+  document
+    .getElementById(
+      "readingScore"
+    )
+    .textContent =
+      `${scores.reading}/50`;
+
+
+  document
+    .getElementById(
+      "scoreSummary"
+    )
+    .innerHTML =
+
+      timeExpired
+
+        ? `
+          Time is up.
+          Your test was submitted automatically.
+          <br>
+          <strong>${answered}</strong>
+          of
+          <strong>140</strong>
+          questions were answered.
+        `
+
+        : `
+          You answered
+          <strong>${answered}</strong>
+          of
+          <strong>140</strong>
+          questions.
+        `;
+
+
+  testScreen
+    .classList
+    .add("hidden");
+
+  resultScreen
+    .classList
+    .remove("hidden");
+
+
+  /* SAVE TO SUPABASE */
+
+  const {
+    data:{user}
+  } =
+    await supabaseClient
+      .auth
+      .getUser();
+
+
+  if(user){
+
+    const {
+      error
+    } =
+      await supabaseClient
+        .from("learning_results")
+        .insert({
+
+          user_id:user.id,
+
+          activity_type:
+            "toefl_prediction",
+
+          score:
+            estimated,
+
+          total_questions:
+            140,
+
+          answers:{
+
+            listening:
+              scores.listening,
+
+            structure:
+              scores.structure,
+
+            reading:
+              scores.reading,
+
+            total_correct:
+              scores.listening +
+              scores.structure +
+              scores.reading,
+
+            answered_questions:
+              answered,
+
+            original_total_questions:
+              140,
+
+            time_expired:
+              timeExpired
+
+          }
+
+        });
+
+
+    if(error){
+
+      console.error(
+        "Prediction result save error:",
+        error
+      );
+
+    }
+
+  }
+
+}
+
+
+/* =========================================================
+   TEXT TO SPEECH
+========================================================= */
+
+function getEnglishVoice(prefer){
+
+  const voices =
+    speechSynthesis
+      .getVoices();
+
+  const english =
+    voices.filter(
+      voice =>
+        /^en(-|_)/i
+          .test(voice.lang)
+    );
+
+
+  if(prefer === "female"){
+
+    return (
+
+      english.find(
+        voice =>
+          /female|samantha|victoria|karen|zira|ava|susan|allison/i
+            .test(voice.name)
+      )
+
+      ||
+
+      english.find(
+        voice =>
+          /en-US/i
+            .test(voice.lang)
+      )
+
+      ||
+
+      english[0]
+
+    );
+
+  }
+
+
+  if(prefer === "male"){
+
+    return (
+
+      english.find(
+        voice =>
+          /male|daniel|alex|david|fred|george|mark|tom|guy/i
+            .test(voice.name)
+      )
+
+      ||
+
+      english.find(
+        voice =>
+          /en-US/i
+            .test(voice.lang)
+      )
+
+      ||
+
+      english[0]
+
+    );
+
+  }
+
+
+  return (
+
+    english.find(
+      voice =>
+        /en-US/i
+          .test(voice.lang)
+    )
+
+    ||
+
+    english[0]
+
+  );
+
+}
+
+
+function speak(
+  text,
+  voiceType,
+  rate = .78,
+  pitch = 1
+){
+
+  return new Promise(
+    resolve => {
+
+      if(
+        !("speechSynthesis" in window)
+      ){
+
+        resolve();
+
+        return;
+
+      }
+
+
+      const utterance =
+        new SpeechSynthesisUtterance(
+          text
+        );
+
+      utterance.lang =
+        "en-US";
+
+      utterance.rate =
+        rate;
+
+      utterance.pitch =
+        pitch;
+
+
+      const voice =
+        getEnglishVoice(
+          voiceType
+        );
+
+      if(voice)
+        utterance.voice =
+          voice;
+
+
+      utterance.onend =
+        () => resolve();
+
+      utterance.onerror =
+        () => resolve();
+
+
+      speechSynthesis
+        .speak(
+          utterance
+        );
+
+    }
+  );
+
+}
+
+
+function wait(ms){
+
+  return new Promise(
+    resolve =>
+      setTimeout(
+        resolve,
+        ms
+      )
+  );
+
+}
+
+
+/* =========================================================
+   PLAY LISTENING
+========================================================= */
+
+async function playListening(q){
+
+  if(finished)
+    return;
+
+  speechToken++;
+
+  const token =
+    speechToken;
+
+  const status =
+    document.getElementById(
+      "audioStatus"
+    );
+
+
+  if(status)
+    status.textContent =
+      "Listening...";
+
+
+  await speak(
+    `Number ${
+      sectionStarts[sectionIndex] +
+      current +
+      1
+    }.`,
+    "narrator",
+    .76,
+    .98
+  );
+
+
+  if(
+    token !== speechToken ||
+    finished
+  )
+    return;
+
+
+  await wait(500);
+
+
+  for(
+    const line of q.conversation
+  ){
+
+    if(
+      token !== speechToken ||
+      finished
+    )
+      return;
+
+
+    await speak(
+      line.text,
+      line.speaker,
+      line.speaker === "male"
+        ? .78
+        : .80,
+      line.speaker === "male"
+        ? .92
+        : 1.05
+    );
+
+
+    await wait(350);
+
+  }
+
+
+  if(
+    token !== speechToken ||
+    finished
+  )
+    return;
+
+
+  await wait(500);
+
+
+  if(status)
+    status.textContent =
+      "Question...";
+
+
+  await speak(
+    q.question,
+    "narrator",
+    .76,
+    .98
+  );
+
+
+  if(status)
+    status.textContent =
+      "Audio complete. Choose the best answer.";
+
+}
+
+
+/* =========================================================
+   STOP AUDIO
+========================================================= */
+
+function stopSpeech(){
+
+  speechToken++;
+
+
+  if(
+    "speechSynthesis" in window
+  ){
+
+    speechSynthesis.cancel();
+
+  }
+
+}
+
+
+/* =========================================================
+   LOAD VOICES
+========================================================= */
+
+if(
+  "speechSynthesis" in window
+){
+
+  speechSynthesis
+    .getVoices();
+
+  speechSynthesis
+    .onvoiceschanged =
+      () =>
+        speechSynthesis
+          .getVoices();
+
+}
+
+</script>
+
+</body>
+</html>
